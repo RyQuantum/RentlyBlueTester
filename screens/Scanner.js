@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { connect } from 'react-redux';
 
-import DiscoverLock from "./DiscoverLock";
-import { foundLock } from "../redux/locks";
+import DiscoverLock from './DiscoverLock';
+import { foundLock } from '../redux/locks';
 
 const SettingModeScreen = props => <DiscoverLock {...props} isFilterSettingMode={true}/>;
 const NonSettingModeScreen = props => <DiscoverLock {...props} isFilterSettingMode={false}/>;
 
-const Navigator =  createMaterialTopTabNavigator({
+const Navigator = createMaterialTopTabNavigator({
     setting: SettingModeScreen,
     nonSetting: NonSettingModeScreen
   }, {

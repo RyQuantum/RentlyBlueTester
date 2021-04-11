@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 // import { createStackNavigator } from 'react-navigation-stack';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Login from './Login';
-// import Scanner from './Scanner';
-// import Settings from '../screens/Settings';
+import Login from '../../screens/Login';
+import Scanner from '../../screens/Scanner';
+import Settings from '../../screens/Settings';
 
 // const MainNavigator = createStackNavigator({
 //   Scanner: Scanner,
@@ -17,23 +17,21 @@ import Login from './Login';
 // const AppContainer = createAppContainer(MainNavigator);
 const Stack = createStackNavigator();
 
-class Switch extends Component {
+class Navigator extends Component {
   render() {
     const { isLoggedIn } = this.props;
     // if (isLoggedIn) {
     //   return <AppContainer/>;
     // } else {
 
-    // if (isLoggedIn) {
-    //   return (
-    //     <Stack.Navigator>
-    //       <Stack.Screen name="Home" component={Home} />
-    //       <Stack.Screen name="Notifications" component={Notifications} />
-    //       <Stack.Screen name="Profile" component={Profile} />
-    //       <Stack.Screen name="Settings" component={Settings} />
-    //     </Stack.Navigator>
-    //   );
-    // }
+    if (isLoggedIn) {
+      return (
+        <Stack.Navigator>
+          <Stack.Screen name="Scanner" component={Scanner} />
+          <Stack.Screen name="Settings" component={Settings} />
+        </Stack.Navigator>
+      );
+    }
     return <Login />;
     // }
   }
@@ -41,4 +39,4 @@ class Switch extends Component {
 
 const mapStateToProps = state => state.auth;
 
-export default connect(mapStateToProps)(Switch);
+export default connect(mapStateToProps)(Navigator);

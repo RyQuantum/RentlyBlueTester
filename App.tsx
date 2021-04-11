@@ -13,7 +13,8 @@ import { Alert } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import { Provider } from 'react-redux';
 import store from './redux';
-import Switch from './screens/Switch';
+// import Switch from './screens/Switch';
+import Navigator from './app/navigation';
 // import { strings } from './services/i18n';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor } from './redux';
@@ -38,7 +39,8 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <Switch />
+          {/*<Switch />*/}
+          <Navigator />
         </PersistGate>
       </Provider>
     );
