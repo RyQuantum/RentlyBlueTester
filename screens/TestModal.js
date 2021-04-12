@@ -145,7 +145,7 @@ class TestModal extends PureComponent {
     const isTouched = touchedLocks.findIndex(lock => lock.lockMac === (lockObj && lockObj.lockMac)) !== -1;
     const check = <Icon name='check' type='entypo' color='green' size={28}/>;
     const cross = <Icon name='cross' type='entypo' color='red' size={34}/>;
-    const activityIndicator = <ActivityIndicator size='large'/>;
+    const activityIndicator = <ActivityIndicator size='large' color="black" />;
 
     let header;
     ((initLockState === FAILED ||

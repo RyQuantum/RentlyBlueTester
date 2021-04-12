@@ -72,7 +72,7 @@ class DiscoverLock extends Component {
           <TouchableOpacity onPress={()=> this.props.navigation.navigate('Settings')}>
             <View style={styles.row}>
               <Icon
-                  name='settings'
+                  name='cog'
                   type='material-community'
                   size={22}
                   color={textColor}
@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
   },
   header: {
     flexDirection: 'row',

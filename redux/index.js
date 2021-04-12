@@ -1,5 +1,5 @@
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
-// import thunk from 'redux-thunk';
+import thunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
 import {persistStore, persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -12,10 +12,10 @@ import test from './test';
 import test1 from './test1';
 import test2 from './test2';
 import rootSaga from './sagas';
-// const middlewares = [thunk];
+const middlewares = [thunk];
 const sagaMiddleware = createSagaMiddleware()
-const middlewares = []
-middlewares.push(sagaMiddleware);
+// const middlewares = []
+// middlewares.push(sagaMiddleware);
 
 // const middlewares = [];
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -48,7 +48,7 @@ const store = createStore(
   // composeEnhancer(applyMiddleware(...middlewares)),
 );
 
-sagaMiddleware.run(rootSaga);
+// sagaMiddleware.run(rootSaga);
 
 export const persistor = persistStore(store);
 export default store;

@@ -16,7 +16,6 @@ import {
 import { login } from '../redux/auth';
 import { strings, switchLanguage } from '../services/i18n';
 import RadioGroup from 'react-native-radio-button-group';
-import RadioGroup0 from 'react-native-radio-buttons-group';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Dropdown } from 'react-native-material-dropdown';
 import Zeroconf from 'react-native-zeroconf';
@@ -123,8 +122,9 @@ class Login extends Component {
     if (url === 'app2.keyless.rocks' && this.state.localServerIp === null) {
       return alert(strings('login.nonLocalServerMsg'));
     }
-    // await this.props.login(url, username, password, batchNo, language, partnerId, isB2b, localServer);
-    this.props.dispatch({ type: 'INCREMENT_ASYNC' });
+
+    await this.props.login(url, username, password, batchNo, language, partnerId, isB2b, localServer);
+    // this.props.dispatch({ type: 'INCREMENT_ASYNC' });
   };
 
   render() {
@@ -204,27 +204,17 @@ class Login extends Component {
               {strings('login.language') + ': '}
             </Text>
             <View style={styles.radioGroup}>
-              {/*<RadioGroup*/}
-              {/*  horizontal*/}
-              {/*  options={radiogroup_options}*/}
-              {/*  activeButtonId={(language === 'en') ? 0 : 1}*/}
-              {/*  onChange={(option) => {*/}
-              {/*    const {id} = option;*/}
-              {/*    (id === 0) ? this.setState({language: "en"}) : this.setState({language: "zh"});*/}
-              {/*    const langcode = (id === 0) ? 'en' : 'zh';*/}
-              {/*    switchLanguage(langcode, this);*/}
-              {/*    }*/}
-              {/*  }*/}
-              {/*/>*/}
-              <RadioGroup0
-                radioButtons={radiogroup_options}
-                onPress={(x) => {
-                  radiogroup_options = x;
-                  const langcode = x[0].selected ? 'en' : 'zh';
-                  this.setState({ language: langcode });
+              <RadioGroup
+                horizontal
+                options={radiogroup_options}
+                activeButtonId={(language === 'en') ? 0 : 1}
+                onChange={(option) => {
+                  const {id} = option;
+                  (id === 0) ? this.setState({language: "en"}) : this.setState({language: "zh"});
+                  const langcode = (id === 0) ? 'en' : 'zh';
                   switchLanguage(langcode, this);
-                }}
-                layout="row"
+                  }
+                }
               />
             </View>
           </View>

@@ -10,6 +10,5 @@ function* incrementAsync() {
 }
 
 export default function* rootSaga() {
-  console.log(123);
   yield* takeEvery('INCREMENT_ASYNC', incrementAsync);
 }

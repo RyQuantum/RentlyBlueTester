@@ -11,9 +11,10 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		42A008C934A77C665B189745 /* libPods-RentlyBlueTester.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF4109A811FCE000B3E22887 /* libPods-RentlyBlueTester.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		E6897162DEDEC027107E5DFD /* libPods-RentlyBlueTester-RentlyBlueTesterTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F33F0FA2BD458DBF1E88FE /* libPods-RentlyBlueTester-RentlyBlueTesterTests.a */; };
+		851B90B5F3E7C1485D5D2353 /* libPods-RentlyBlueTester-RentlyBlueTesterTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 602E4E2086F786E2B086E225 /* libPods-RentlyBlueTester-RentlyBlueTesterTests.a */; };
+		94AE6EC9262440BE00DCD436 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 94AE6EC8262440BE00DCD436 /* Fonts */; };
+		DCBA5E6F63304AC3AB6A3C0E /* libPods-RentlyBlueTester.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DA3FD7F0DC2D17E9691BD1 /* libPods-RentlyBlueTester.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,14 +37,15 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = RentlyBlueTester/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = RentlyBlueTester/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = RentlyBlueTester/main.m; sourceTree = "<group>"; };
-		1ABEAAD3E2D346D006BBB6D8 /* Pods-RentlyBlueTester-RentlyBlueTesterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RentlyBlueTester-RentlyBlueTesterTests.release.xcconfig"; path = "Target Support Files/Pods-RentlyBlueTester-RentlyBlueTesterTests/Pods-RentlyBlueTester-RentlyBlueTesterTests.release.xcconfig"; sourceTree = "<group>"; };
-		7F0A31700E3DCBA4A3278773 /* Pods-RentlyBlueTester.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RentlyBlueTester.release.xcconfig"; path = "Target Support Files/Pods-RentlyBlueTester/Pods-RentlyBlueTester.release.xcconfig"; sourceTree = "<group>"; };
+		24591FCD57FA65858B888CA8 /* Pods-RentlyBlueTester-RentlyBlueTesterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RentlyBlueTester-RentlyBlueTesterTests.debug.xcconfig"; path = "Target Support Files/Pods-RentlyBlueTester-RentlyBlueTesterTests/Pods-RentlyBlueTester-RentlyBlueTesterTests.debug.xcconfig"; sourceTree = "<group>"; };
+		5576EC5CC141740559DC4CF8 /* Pods-RentlyBlueTester.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RentlyBlueTester.release.xcconfig"; path = "Target Support Files/Pods-RentlyBlueTester/Pods-RentlyBlueTester.release.xcconfig"; sourceTree = "<group>"; };
+		602E4E2086F786E2B086E225 /* libPods-RentlyBlueTester-RentlyBlueTesterTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RentlyBlueTester-RentlyBlueTesterTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = RentlyBlueTester/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		9D03CF11241DA07E3EC016E0 /* Pods-RentlyBlueTester.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RentlyBlueTester.debug.xcconfig"; path = "Target Support Files/Pods-RentlyBlueTester/Pods-RentlyBlueTester.debug.xcconfig"; sourceTree = "<group>"; };
-		C9F33F0FA2BD458DBF1E88FE /* libPods-RentlyBlueTester-RentlyBlueTesterTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RentlyBlueTester-RentlyBlueTesterTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE7CFF585872E6521899B7EF /* Pods-RentlyBlueTester-RentlyBlueTesterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RentlyBlueTester-RentlyBlueTesterTests.debug.xcconfig"; path = "Target Support Files/Pods-RentlyBlueTester-RentlyBlueTesterTests/Pods-RentlyBlueTester-RentlyBlueTesterTests.debug.xcconfig"; sourceTree = "<group>"; };
+		94AE6EC8262440BE00DCD436 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = "../node_modules/react-native-vector-icons/Fonts"; sourceTree = "<group>"; };
+		D5DA3FD7F0DC2D17E9691BD1 /* libPods-RentlyBlueTester.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RentlyBlueTester.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB30A65DD5CF097414032ADD /* Pods-RentlyBlueTester-RentlyBlueTesterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RentlyBlueTester-RentlyBlueTesterTests.release.xcconfig"; path = "Target Support Files/Pods-RentlyBlueTester-RentlyBlueTesterTests/Pods-RentlyBlueTester-RentlyBlueTesterTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		EF4109A811FCE000B3E22887 /* libPods-RentlyBlueTester.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RentlyBlueTester.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F03ED3DEEC5A7AED9382619A /* Pods-RentlyBlueTester.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RentlyBlueTester.debug.xcconfig"; path = "Target Support Files/Pods-RentlyBlueTester/Pods-RentlyBlueTester.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6897162DEDEC027107E5DFD /* libPods-RentlyBlueTester-RentlyBlueTesterTests.a in Frameworks */,
+				851B90B5F3E7C1485D5D2353 /* libPods-RentlyBlueTester-RentlyBlueTesterTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,7 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42A008C934A77C665B189745 /* libPods-RentlyBlueTester.a in Frameworks */,
+				DCBA5E6F63304AC3AB6A3C0E /* libPods-RentlyBlueTester.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,10 +88,10 @@
 		0C54CD356E63F0ACCE64C4B2 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				9D03CF11241DA07E3EC016E0 /* Pods-RentlyBlueTester.debug.xcconfig */,
-				7F0A31700E3DCBA4A3278773 /* Pods-RentlyBlueTester.release.xcconfig */,
-				CE7CFF585872E6521899B7EF /* Pods-RentlyBlueTester-RentlyBlueTesterTests.debug.xcconfig */,
-				1ABEAAD3E2D346D006BBB6D8 /* Pods-RentlyBlueTester-RentlyBlueTesterTests.release.xcconfig */,
+				F03ED3DEEC5A7AED9382619A /* Pods-RentlyBlueTester.debug.xcconfig */,
+				5576EC5CC141740559DC4CF8 /* Pods-RentlyBlueTester.release.xcconfig */,
+				24591FCD57FA65858B888CA8 /* Pods-RentlyBlueTester-RentlyBlueTesterTests.debug.xcconfig */,
+				EB30A65DD5CF097414032ADD /* Pods-RentlyBlueTester-RentlyBlueTesterTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -103,6 +105,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				94AE6EC8262440BE00DCD436 /* Fonts */,
 			);
 			name = RentlyBlueTester;
 			sourceTree = "<group>";
@@ -111,8 +114,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				EF4109A811FCE000B3E22887 /* libPods-RentlyBlueTester.a */,
-				C9F33F0FA2BD458DBF1E88FE /* libPods-RentlyBlueTester-RentlyBlueTesterTests.a */,
+				D5DA3FD7F0DC2D17E9691BD1 /* libPods-RentlyBlueTester.a */,
+				602E4E2086F786E2B086E225 /* libPods-RentlyBlueTester-RentlyBlueTesterTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -155,12 +158,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "RentlyBlueTesterTests" */;
 			buildPhases = (
-				C15C66F3EB4EA90E1945B17B /* [CP] Check Pods Manifest.lock */,
+				E2D02B10210E3484A34E4128 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				AF7A7BDCBE0957B789B28BE3 /* [CP] Embed Pods Frameworks */,
-				8A73F0DC239E0FFFEEC0B69B /* [CP] Copy Pods Resources */,
+				980F21D841E26E97DA69E8C1 /* [CP] Embed Pods Frameworks */,
+				0F07CCF5AEC4AF6EF0333DE4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -176,14 +179,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "RentlyBlueTester" */;
 			buildPhases = (
-				BAD16CB985165B0D892A4BB6 /* [CP] Check Pods Manifest.lock */,
+				94AEB174DF6A848ACAD8D2BB /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				85F1B79B7D6F09C596C1A971 /* [CP] Embed Pods Frameworks */,
-				6188CEDB86424FABCB719C19 /* [CP] Copy Pods Resources */,
+				B193071E4D856E8946737675 /* [CP] Embed Pods Frameworks */,
+				996E33512902C09E410858D0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -242,6 +245,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94AE6EC9262440BE00DCD436 /* Fonts in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
@@ -264,41 +268,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		6188CEDB86424FABCB719C19 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RentlyBlueTester/Pods-RentlyBlueTester-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RentlyBlueTester/Pods-RentlyBlueTester-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RentlyBlueTester/Pods-RentlyBlueTester-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		85F1B79B7D6F09C596C1A971 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RentlyBlueTester/Pods-RentlyBlueTester-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RentlyBlueTester/Pods-RentlyBlueTester-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RentlyBlueTester/Pods-RentlyBlueTester-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8A73F0DC239E0FFFEEC0B69B /* [CP] Copy Pods Resources */ = {
+		0F07CCF5AEC4AF6EF0333DE4 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -315,24 +285,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RentlyBlueTester-RentlyBlueTesterTests/Pods-RentlyBlueTester-RentlyBlueTesterTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AF7A7BDCBE0957B789B28BE3 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RentlyBlueTester-RentlyBlueTesterTests/Pods-RentlyBlueTester-RentlyBlueTesterTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RentlyBlueTester-RentlyBlueTesterTests/Pods-RentlyBlueTester-RentlyBlueTesterTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RentlyBlueTester-RentlyBlueTesterTests/Pods-RentlyBlueTester-RentlyBlueTesterTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BAD16CB985165B0D892A4BB6 /* [CP] Check Pods Manifest.lock */ = {
+		94AEB174DF6A848ACAD8D2BB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -354,7 +307,58 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C15C66F3EB4EA90E1945B17B /* [CP] Check Pods Manifest.lock */ = {
+		980F21D841E26E97DA69E8C1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RentlyBlueTester-RentlyBlueTesterTests/Pods-RentlyBlueTester-RentlyBlueTesterTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RentlyBlueTester-RentlyBlueTesterTests/Pods-RentlyBlueTester-RentlyBlueTesterTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RentlyBlueTester-RentlyBlueTesterTests/Pods-RentlyBlueTester-RentlyBlueTesterTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		996E33512902C09E410858D0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RentlyBlueTester/Pods-RentlyBlueTester-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RentlyBlueTester/Pods-RentlyBlueTester-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RentlyBlueTester/Pods-RentlyBlueTester-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B193071E4D856E8946737675 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RentlyBlueTester/Pods-RentlyBlueTester-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RentlyBlueTester/Pods-RentlyBlueTester-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RentlyBlueTester/Pods-RentlyBlueTester-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E2D02B10210E3484A34E4128 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -428,7 +432,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CE7CFF585872E6521899B7EF /* Pods-RentlyBlueTester-RentlyBlueTesterTests.debug.xcconfig */;
+			baseConfigurationReference = 24591FCD57FA65858B888CA8 /* Pods-RentlyBlueTester-RentlyBlueTesterTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -455,7 +459,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1ABEAAD3E2D346D006BBB6D8 /* Pods-RentlyBlueTester-RentlyBlueTesterTests.release.xcconfig */;
+			baseConfigurationReference = EB30A65DD5CF097414032ADD /* Pods-RentlyBlueTester-RentlyBlueTesterTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -479,7 +483,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9D03CF11241DA07E3EC016E0 /* Pods-RentlyBlueTester.debug.xcconfig */;
+			baseConfigurationReference = F03ED3DEEC5A7AED9382619A /* Pods-RentlyBlueTester.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -506,7 +510,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7F0A31700E3DCBA4A3278773 /* Pods-RentlyBlueTester.release.xcconfig */;
+			baseConfigurationReference = 5576EC5CC141740559DC4CF8 /* Pods-RentlyBlueTester.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -562,7 +566,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -627,7 +631,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
