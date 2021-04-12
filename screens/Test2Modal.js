@@ -5,7 +5,7 @@ import Toast from 'react-native-simple-toast';
 
 import { stateEnum, endTest2, startTest2, linkSerialNo } from '../redux/test2';
 import { Indicator, Success, Failed, TouchToRetry, darkText, headerTextSize, lightText, subTextSize } from './Test1Modal';
-import { strings } from '../services/i18n';
+import { strings } from '../app/utils/i18n';
 import ProductScanRNCamera from '../components/ProductScanRNCamera';
 const {
   NOT_STARTED,

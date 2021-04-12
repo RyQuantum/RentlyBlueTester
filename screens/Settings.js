@@ -6,7 +6,7 @@ import { BarIndicator } from 'react-native-indicators';
 import RadioGroup from 'react-native-radio-button-group';
 
 import { setThreshold, setEnabled, getMaximumSerialNumber, setDevelopmentMode } from '../redux/locks';
-import { strings } from '../services/i18n';
+import { strings } from '../app/utils/i18n';
 
 class Settings extends Component {
   static navigationOptions ={

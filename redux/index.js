@@ -11,7 +11,7 @@ import auth from './auth';
 import test from './test';
 import test1 from './test1';
 import test2 from './test2';
-import rootSaga from './sagas';
+import rootSaga from '../app/store/sagas';
 const middlewares = [thunk];
 const sagaMiddleware = createSagaMiddleware()
 // const middlewares = []

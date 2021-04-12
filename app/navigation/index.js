@@ -1,42 +1,31 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { createAppContainer } from 'react-navigation';
-// import { createStackNavigator } from 'react-navigation-stack';
 import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 
 import Login from '../../screens/Login';
-import Scanner from '../../screens/Scanner';
+import Scanner from './Scanner';
 import Settings from '../../screens/Settings';
 
-// const MainNavigator = createStackNavigator({
-//   Scanner: Scanner,
-//   Settings: Settings,
-// }, {
-//   initialRouteName: 'Scanner',
-// });
-// const AppContainer = createAppContainer(MainNavigator);
 const Stack = createStackNavigator();
 
-class Navigator extends Component {
+class StackNavigator extends Component {
   render() {
     const { isLoggedIn } = this.props;
-    // if (isLoggedIn) {
-    //   return <AppContainer/>;
-    // } else {
 
     if (isLoggedIn) {
       return (
-        <Stack.Navigator>
-          <Stack.Screen name="Scanner" component={Scanner} />
-          <Stack.Screen name="Settings" component={Settings} />
-        </Stack.Navigator>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="Scanner" component={Scanner} options={{ headerStyle: { height: 0 } }} />
+            <Stack.Screen name="Settings" component={Settings} />
+          </Stack.Navigator>
+        </NavigationContainer>
       );
     }
     return <Login />;
-    // }
   }
 }
 
 const mapStateToProps = state => state.auth;
-
-export default connect(mapStateToProps)(Navigator);
+export default connect(mapStateToProps)(StackNavigator);

@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 
 import { login } from '../redux/auth';
-import { strings, switchLanguage } from '../services/i18n';
+import { strings, switchLanguage } from '../app/utils/i18n';
 import RadioGroup from 'react-native-radio-button-group';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Dropdown } from 'react-native-material-dropdown';

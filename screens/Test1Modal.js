@@ -4,7 +4,7 @@ import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 
 import { stateEnum, startTest1, endTest1 } from '../redux/test1';
-import { strings } from "../services/i18n";
+import { strings } from '../app/utils/i18n';
 const {
   NOT_STARTED,
   PENDING,

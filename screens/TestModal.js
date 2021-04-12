@@ -15,7 +15,7 @@ import {connect} from 'react-redux';
 import {Icon} from 'react-native-elements';
 import ProductScanRNCamera from '../components/ProductScanRNCamera';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { strings } from '../services/i18n';
+import { strings } from '../app/utils/i18n';
 
 import {
   startTest,

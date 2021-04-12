@@ -18,7 +18,7 @@ import TestModal from './TestModal';
 import Test1Modal from './Test1Modal';
 import Test2Modal from './Test2Modal';
 import {Icon} from 'react-native-elements';
-import { strings, switchLanguage } from '../services/i18n';
+import { strings, switchLanguage } from '../app/utils/i18n';
 
 const textColor = 'black';
 

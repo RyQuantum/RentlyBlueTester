@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import { strings } from '../services/i18n';
+import { strings } from '../app/utils/i18n';
 
 export default class Placeholder extends PureComponent {
   render() {

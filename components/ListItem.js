@@ -16,7 +16,7 @@ import { BarIndicator } from 'react-native-indicators';
 import * as RNLocalize from 'react-native-localize';
 import { startTest } from '../redux/test';
 import { clearLocks } from '../redux/locks';
-import { strings } from '../services/i18n';
+import { strings } from '../app/utils/i18n';
 import API from '../services/API';
 import { startTest1 } from '../redux/test1';
 import { startTest2 } from '../redux/test2';

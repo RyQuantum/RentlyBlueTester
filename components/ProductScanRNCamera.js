@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Text, View } from 'react-native';
 import { RNCamera } from 'react-native-camera';
-import { strings, switchLanguage } from '../services/i18n';
+import { strings, switchLanguage } from '../app/utils/i18n';
 
 class ProductScanRNCamera extends Component {
 

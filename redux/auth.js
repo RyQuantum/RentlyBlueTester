@@ -1,6 +1,6 @@
 import { Alert } from 'react-native';
 import API, { setAccessToken } from '../services/API';
-// import { strings } from '../services/i18n';
+import { strings } from '../app/utils/i18n';
 import { setBaseURL } from '../services/API/axios';
 
 const LOGIN_REQUEST = 'LOGIN_REQUEST';

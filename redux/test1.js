@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import API from '../services/API';
 import { delay } from './test';
-import { strings } from '../services/i18n';
+import { strings } from '../app/utils/i18n';
 
 const TEST1_DONE = 'TEST1_DONE';
 
