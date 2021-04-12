@@ -1,31 +1,45 @@
 import React, { Component } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+// import { NavigationContainer } from '@react-navigation/native';
 import { connect } from 'react-redux';
 
 import DiscoverLock from './DiscoverLock';
 import { foundLock } from '../redux/locks';
 
+const Tab = createMaterialTopTabNavigator();
 const SettingModeScreen = props => <DiscoverLock {...props} isFilterSettingMode={true}/>;
 const NonSettingModeScreen = props => <DiscoverLock {...props} isFilterSettingMode={false}/>;
 
-const Navigator = createMaterialTopTabNavigator({
-    setting: SettingModeScreen,
-    nonSetting: NonSettingModeScreen
-  }, {
-    tabBarPosition: 'top',
-    swipeEnabled: true,
-    animationEnabled: false,
-    lazy: false,
-    backBehavior: 'none',
-    tabBarOptions: {
-      style: {
-        height: 0
-      },
-      indicatorStyle: {
-        height: 0
-      }
-    }
-  }
+// const Navigator = createMaterialTopTabNavigator({
+//     setting: SettingModeScreen,
+//     nonSetting: NonSettingModeScreen
+//   }, {
+//     tabBarPosition: 'top',
+//     swipeEnabled: true,
+//     animationEnabled: false,
+//     lazy: false,
+//     backBehavior: 'none',
+//     tabBarOptions: {
+//       style: {
+//         height: 0
+//       },
+//       indicatorStyle: {
+//         height: 0
+//       }
+//     }
+//   }
+// );
+
+const Navigator = () => (
+  <Tab.Navigator
+    backBehavior="none"
+    screenOptions={{
+      tabBarIndicatorStyle: { height: 0 },
+      tabBarStyle: { height: 0 },
+    }}>
+    <Tab.Screen name="setting" component={SettingModeScreen} />
+    <Tab.Screen name="nonSetting" component={NonSettingModeScreen} />
+  </Tab.Navigator>
 );
 
 class Scanner extends Component {
