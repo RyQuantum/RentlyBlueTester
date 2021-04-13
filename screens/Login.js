@@ -11,6 +11,7 @@ import {
   PermissionsAndroid,
   Platform,
   Image,
+  Alert,
 } from 'react-native';
 
 import { login } from '../redux/auth';
@@ -112,9 +113,14 @@ class Login extends Component {
     }
 
     const { url, username, password, batchNo, language, partnerId } = this.state;
-    if (!url)
-      return alert(strings('login.envEmptyMsg'));
-    if (this.state.batchNo.length === 0 || this.isAlphaNumeric(this.state.batchNo) === false)
+
+    const bleState = await this.props.libraryObj._lockController._blePlugin.manager.state();
+    if (bleState === 'PoweredOff') return Alert.alert(strings('login.turnOnBluetooth'))
+    if (!url) return alert(strings('login.envEmptyMsg'));
+    if (
+      this.state.batchNo.length === 0 ||
+      this.isAlphaNumeric(this.state.batchNo) === false
+    )
       return alert(strings('login.batchNoValidationMsg'));
     if (!partner_options.map(p => p.id).includes(this.state.partnerId))
       return alert(strings('login.partnerEmptyMsg'));
@@ -125,8 +131,7 @@ class Login extends Component {
       return alert(strings('login.nonLocalServerMsg'));
     }
 
-    // await this.props.login(url, username, password, batchNo, language, partnerId, isB2b, localServer);
-    this.props.login(url, username, password, batchNo, language, partnerId, isB2b, localServer);
+    this.props.requestLogin({ url, username, password, batchNo, language, partnerId, isB2b, localServer });
   };
 
   render() {
@@ -335,13 +340,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = state => state.auth;
-// const mapDispatchToProps = { login };
-// dispatch => ({ sendMsg => dispatch(sendMsg(msg)))
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    login: (...args) => dispatch(requestLogin(...args)),
-  };
-};
+const mapStateToProps = state => ({ ...state.auth, libraryObj: state.locks.libraryObj });
+const mapDispatchToProps = { requestLogin };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

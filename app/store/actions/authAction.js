@@ -1,15 +1,13 @@
 import * as types from './types';
 
-export const requestLogin = (url, ...params) => ({
+export const requestLogin = ({ url, ...params }) => ({
   type: types.LOGIN_REQUEST,
-  isKeyless: url.includes('keyless') ? true : false,
-  url,
-  ...params,
+  payload: { url, isKeyless: url.includes('keyless'), ...params },
 });
 
-export const onLoginSuccess = (...params) => ({
+export const onLoginSuccess = ({ ...params }) => ({
   type: types.LOGIN_SUCCESS,
-  ...params,
+  payload: { ...params },
 });
 
 export const onLoginFailed = error => ({ type: types.LOGOUT_FAILED, error });
