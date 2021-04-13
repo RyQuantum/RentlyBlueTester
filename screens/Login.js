@@ -21,6 +21,8 @@ import { Dropdown } from 'react-native-material-dropdown';
 import Zeroconf from 'react-native-zeroconf';
 import { MapUrl } from '../services/Constants';
 
+import { requestLogin } from '../app/store/actions/authAction';
+
 const APIs = [
   { value: 'Production' },
   { value: 'Staging' },
@@ -123,8 +125,8 @@ class Login extends Component {
       return alert(strings('login.nonLocalServerMsg'));
     }
 
-    await this.props.login(url, username, password, batchNo, language, partnerId, isB2b, localServer);
-    // this.props.dispatch({ type: 'INCREMENT_ASYNC' });
+    // await this.props.login(url, username, password, batchNo, language, partnerId, isB2b, localServer);
+    this.props.login(url, username, password, batchNo, language, partnerId, isB2b, localServer);
   };
 
   render() {
@@ -334,7 +336,12 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => state.auth;
-const mapDispatchToProps = { login };
+// const mapDispatchToProps = { login };
 // dispatch => ({ sendMsg => dispatch(sendMsg(msg)))
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    login: (...args) => dispatch(requestLogin(...args)),
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

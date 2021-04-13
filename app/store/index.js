@@ -7,15 +7,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // if (__DEV__) RNAsyncStorageFlipper(AsyncStorage);
 
 import locks from '../../redux/locks';
-import auth from '../../redux/auth';
+// import auth from '../../redux/auth';
+import auth from './reducers/authReducer';
 import test from '../../redux/test';
 import test1 from '../../redux/test1';
 import test2 from '../../redux/test2';
 import rootSaga from './sagas';
-const middlewares = [thunk];
-// const sagaMiddleware = createSagaMiddleware();
-// const middlewares = []
-// middlewares.push(sagaMiddleware);
+// const middlewares = [thunk];
+const sagaMiddleware = createSagaMiddleware();
+const middlewares = [];
+middlewares.push(sagaMiddleware);
 
 // const middlewares = [];
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -48,7 +49,7 @@ const store = createStore(
   // composeEnhancer(applyMiddleware(...middlewares)),
 );
 
-// sagaMiddleware.run(rootSaga);
+sagaMiddleware.run(rootSaga);
 
 export const persistor = persistStore(store);
 export default store;
