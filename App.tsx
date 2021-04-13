@@ -12,11 +12,11 @@ import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import { Provider } from 'react-redux';
-import store from './redux';
+import store from './app/store';
 import Navigation from './app/navigation';
 import { strings } from './app/utils/i18n';
 import { PersistGate } from 'redux-persist/integration/react';
-import { persistor } from './redux';
+import { persistor } from './app/store';
 
 export default class App extends Component {
   onConnectionChange = connectionInfo => {

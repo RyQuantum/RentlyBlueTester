@@ -1,6 +1,6 @@
 import axios from 'axios';
 import OaksBleLockLibrary from 'blelocklibrary/OaksBleLockLibrary'
-import store from '../../redux'
+import store from '../../app/store';
 import { login, logout } from '../../redux/auth';
 
 const instance = axios.create({ timeout: 20000 });
