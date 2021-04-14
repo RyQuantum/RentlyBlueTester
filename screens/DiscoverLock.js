@@ -14,9 +14,10 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { logout } from '../redux/auth';
 import ListItem, {ListItemSeparator} from '../components/ListItem';
 import Placeholder from '../components/Placeholder';
-import TestModal from './TestModal';
-import Test1Modal from './Test1Modal';
-import Test2Modal from './Test2Modal';
+// import TestModal from './TestModal';
+// import Test1Modal from './Test1Modal';
+// import Test2Modal from './Test2Modal';
+import TestModal from '../app/screens/TestModal';
 import {Icon} from 'react-native-elements';
 import { strings, switchLanguage } from '../app/utils/i18n';
 
@@ -103,9 +104,10 @@ class DiscoverLock extends Component {
       >
         {header}
         <View style={styles.margin}/>
-        {this.props.isFilterSettingMode || <TestModal/>}
-        {this.props.isFilterSettingMode || <Test1Modal/>}
-        {this.props.isFilterSettingMode && <Test2Modal/>}
+        <TestModal />
+        {/*{this.props.isFilterSettingMode || <TestModal/>}*/}
+        {/*{this.props.isFilterSettingMode || <Test1Modal/>}*/}
+        {/*{this.props.isFilterSettingMode && <Test2Modal/>}*/}
         {data.length === 0 ? <Placeholder isFilterSettingMode={isFilterSettingMode}/> :
           <FlatList
             data={data}
