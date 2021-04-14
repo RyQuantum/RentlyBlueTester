@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILED, LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILED } from '../actions/types';
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILED, LOGOUT_REQUEST, LOGOUT_SUCCESS } from '../actions/types';
 import { setAccessToken } from '../../../services/API';
 
 const defaultState = {
@@ -39,7 +39,6 @@ export default (state = defaultState, action) => {
     case LOGOUT_REQUEST:
       return { ...state, isLoggedIn: false };
     case LOGOUT_SUCCESS:
-    case LOGOUT_FAILED:
       setAccessToken('');
       const { username, ...rest } = defaultState;
       return { ...state, ...rest, ...payload };

@@ -113,15 +113,15 @@ class ListItem extends PureComponent {
 
   render() {
     const {
-      eKeys,
+      // eKeys,
       lockObj: { lockMac, settingMode, rssi, battery, modelNum, hardwareVer, firmwareVer },
-      codes,
+      // codes,
       isFetchingEKey,
       isFetchingCode,
     } = this.props;
-    const { [lockMac]: eKey = {} } = eKeys;
-    const { serialNumber, isSupportIC } = eKey;
-    const { [lockMac]: code  } = codes;
+    // const { [lockMac]: eKey = {} } = eKeys;
+    // const { serialNumber, isSupportIC } = eKey;
+    // const { [lockMac]: code  } = codes;
 
     const disabled = modelNum === 3 && !this.props.isDevelopmentMode && !(this.props.lockObj.frontTested && this.props.lockObj.frontTested);
     const loading = (<ActivityIndicator color="grey" />);
@@ -139,13 +139,13 @@ class ListItem extends PureComponent {
       </View>),
       (<View key={1} style={styles.tableRow}>
         <View style={styles.tableEntry}>
-          {(isFetchingEKey && loading) ||
+          {/*{(isFetchingEKey && loading) ||*/}
           <View style={styles.tableEntry3}>
             <View style={{ flex: 1 }}/>
             <Text style={[styles.text, {flex: 6}]}>{modelNum}</Text>
             <Text style={[styles.text, {flex: 8}]}>{hardwareVer}</Text>
             <Text style={[styles.text, {flex: 2}]}>{firmwareVer}</Text>
-          </View>}
+          </View>
         </View>
         <View style={styles.batteryContainer}>
           <Icon name='battery-50' type='material-community' size={28}/>
@@ -206,15 +206,15 @@ class ListItem extends PureComponent {
       (<View key={3} style={styles.tableRow}>
         <View style={[styles.tableEntry, { padding: 0 }]}>
           <View style={styles.row}>
-            {(isFetchingCode && loading) ||
-            (<View style={styles.withRefresh}>
+            {/*{(isFetchingCode && loading) ||*/}
+            <View style={styles.withRefresh}>
               {this.state.code === 'loading' ?
                 <BarIndicator style={{ flex: 0, paddingHorizontal: 7 }} color='grey'/> :
                 <Text style={styles.text}>{this.state.code}</Text>}
               <TouchableOpacity onPress={this.getCode}>
                 <Icon type="evilicons" size={48} name="refresh" color="#757575" />
               </TouchableOpacity>
-            </View>)}
+            </View>
           </View>
         </View>
       </View>),
@@ -308,9 +308,6 @@ class ListItem extends PureComponent {
                   <Text style={{ fontSize, color: 'white' }}>{strings('Home.reset')}</Text>
                 </TouchableOpacity>}
               </View>
-              {isSupportIC && (<View style={{ marginRight: 5, justifyContent: 'center' }}>
-                <Icon type="simple-line-icon" name="credit-card" color="lightblue" />
-              </View>)}
             </View>
           </View>
         </View>

@@ -6,9 +6,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // import RNAsyncStorageFlipper from 'rn-async-storage-flipper';
 // if (__DEV__) RNAsyncStorageFlipper(AsyncStorage);
 
-import locks from '../../redux/locks';
+// import locks from '../../redux/locks';
 // import auth from '../../redux/auth';
 import auth from './reducers/authReducer';
+import locks from './reducers/locksReducer';
 import test from '../../redux/test';
 import test1 from '../../redux/test1';
 import test2 from '../../redux/test2';

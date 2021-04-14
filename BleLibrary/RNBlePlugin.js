@@ -99,11 +99,11 @@ class BlePlugin extends BluetoothPluginInterface {
                       }
 
                       if (device && device.manufacturerData !== null) {
-                          log('device in plugin ===>>>', device)
                           let manufacturerData = parseManufacturerData(new Buffer(device.manufacturerData, 'base64'));
                           let lockMac = manufacturerData.lockMac;
                           let deviceUUID = device.id;
                           let rssi = device.rssi;
+                          log('device in plugin ===>>> ' + lockMac);
 
                           let bleDevice = {
                               deviceID: device.localName && device.localName.slice(-8).toUpperCase(),
