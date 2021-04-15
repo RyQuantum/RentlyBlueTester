@@ -1,4 +1,4 @@
-import * as authAction from './authAction';
+import * as authAction from './authActions';
 
 export const ActionCreators = Object.assign(
   {},

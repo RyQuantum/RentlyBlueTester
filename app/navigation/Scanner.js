@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import DiscoverLock from '../../screens/DiscoverLock';
 // import { foundLock } from '../../redux/locks';
-import { foundLock } from '../store/actions/locksAction';
+import { foundLock } from '../store/actions/locksActions';
 
 const Tab = createMaterialTopTabNavigator();
 const SettingModeScreen = props => <DiscoverLock {...props} isFilterSettingMode={true}/>;

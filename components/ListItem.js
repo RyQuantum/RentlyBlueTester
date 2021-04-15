@@ -14,7 +14,9 @@ import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 import { BarIndicator } from 'react-native-indicators';
 import * as RNLocalize from 'react-native-localize';
-import { startTest } from '../redux/test';
+// import { startTest } from '../redux/test';
+import { requestTest } from '../app/store/actions/testActions';
+
 import { clearLocks } from '../redux/locks';
 import { strings } from '../app/utils/i18n';
 import API from '../services/API';
@@ -44,14 +46,14 @@ class ListItem extends PureComponent {
   startTest = async () => {
 
     // fix multi-click;
-    if (!this._isFirst) return;
-    this._isFirst = false;
-    setTimeout(() => this._isFirst = true, 3000);
+    // if (!this._isFirst) return;
+    // this._isFirst = false;
+    // setTimeout(() => this._isFirst = true, 3000);
 
     if (this.state.isCorrectTimeZone) {
-      const { lockObj, startTest } = this.props;
+      const { lockObj, requestTest } = this.props;
       try {
-        await startTest(lockObj);
+        await requestTest(lockObj);
       } catch (error) {
         const errorMessage =
           typeof error === 'object' ? error.message :
@@ -445,6 +447,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({ ...state.locks });
-const mapDispatchToProps = { startTest, startTest1, startTest2, clearLocks };
+const mapDispatchToProps = { requestTest, startTest1, startTest2, clearLocks };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListItem);

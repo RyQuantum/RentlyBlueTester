@@ -1,4 +1,4 @@
 import { put, call } from 'redux-saga/effects';
 
-import * as locksAction from '../actions/locksAction';
+import * as locksActions from '../actions/locksActions';
 

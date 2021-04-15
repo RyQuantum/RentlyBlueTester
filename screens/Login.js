@@ -22,7 +22,7 @@ import { Dropdown } from 'react-native-material-dropdown';
 import Zeroconf from 'react-native-zeroconf';
 import { MapUrl } from '../services/Constants';
 
-import { requestLogin } from '../app/store/actions/authAction';
+import { requestLogin } from '../app/store/actions/authActions';
 
 const APIs = [
   { value: 'Production' },

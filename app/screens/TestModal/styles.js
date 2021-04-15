@@ -16,6 +16,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     padding: 3,
   },
+  error: {
+    color: '#ff0000',
+    fontSize: 20,
+    padding: 3,
+  },
   button: {
     color: '#0000ff',
     fontSize: 20,

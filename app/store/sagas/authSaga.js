@@ -1,6 +1,6 @@
 import { put, call } from 'redux-saga/effects';
 
-import * as loginActions from '../actions/authAction';
+import * as authActions from '../actions/authActions';
 import { setBaseURL } from '../../../services/API/axios';
 import API from '../../../services/API';
 
@@ -13,9 +13,9 @@ export function* loginAsync({ payload }) {
       payload.password,
     );
     yield put(
-      loginActions.onLoginSuccess({ accessToken, expireTime, ...payload }),
+      authActions.onLoginSuccess({ accessToken, expireTime, ...payload }),
     );
   } catch (error) {
-    yield put(loginActions.onLoginFailed(error));
+    yield put(authActions.onLoginFailed(error));
   }
 }
