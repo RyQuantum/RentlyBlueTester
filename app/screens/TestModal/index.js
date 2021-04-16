@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { ActivityIndicator, Modal, ScrollView, Text, View } from 'react-native';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
+import { Icon } from 'react-native-elements';
 
 import styles from './styles';
 import * as types from '../../store/actions/types';
@@ -27,15 +28,17 @@ const Step1 = ({
   </View>
 );
 
-const Step2 = ({ state }) => {
+const Step = ({ state, name, no }) => {
+  const { code } = useSelector(state => state.test);
   if (state === types.NOT_STARTED) return null;
   return (
     <View>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Text style={styles.text}>2.初始化</Text>
+        <Text style={styles.text}>{no}.{name}测试</Text>
         {state === types.PENDING && <ActivityIndicator color="white" />}
+        {state === types.SUCCESS && no !== '9' && <Icon name="check" type="entypo" color="green" size={28} />}
       </View>
-      {state === types.SUCCESS && <Text style={styles.result}>初始化正常</Text>}
+      {state === types.SUCCESS && <Text style={styles.result}>{no !== '9' ? (name + '正常') : ('离线密码：' + code)}</Text>}
     </View>
   );
 };
@@ -58,7 +61,11 @@ class TestModal extends PureComponent {
             <Text style={styles.button}>后退</Text>
           </View>
           <Step1 state={this.props.broadcastInfo} />
-          <Step2 state={this.props.initLockState} />
+          <Step no="2" state={this.props.initLockState} name="初始化" />
+          <Step no="3" state={this.props.testRTCState} name="RTC" />
+          <Step no="4" state={this.props.testHallState} name="霍尔" />
+          <Step no="5" state={this.props.testDoorSensorState} name="门磁状态" />
+          <Step no="9" state={this.props.testOfflineCodeState} name="离线密码" />
           {/*<View>*/}
           {/*  <Text style={styles.text}>3.RTC测试</Text>*/}
           {/*  <Text style={styles.result}>RTC测试正常</Text>*/}
