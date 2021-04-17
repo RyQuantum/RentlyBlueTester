@@ -10,4 +10,5 @@ export const parseTimeStamp = timestamp => {
   const sec = parseInt(str.slice(26, 32), 2);
 
   const time = new Date(year, mon, day, hour, min, sec);
-}
+  //TODO
+};

@@ -2,7 +2,11 @@ import * as types from './types';
 
 export const requestTest = lockObj => ({
   type: types.TEST_REQUEST,
-  payload: { lockObj },
+  payload: lockObj,
+});
+
+export const scanBroadcast = () => ({
+  type: types.SCAN_BROADCAST,
 });
 
 export const verifyBroadcastInfo = payload => ({
@@ -75,12 +79,43 @@ export const testOfflineCode = () => ({
   type: types.TEST_OFFLINE_CODE_PENDING,
 });
 
-export const testOfflineCodeSuccess = code => ({
-  type: types.TEST_OFFLINE_CODE_SUCCESS,
+export const gotOfflineCode = code => ({
+  type: types.GOT_OFFLINE_CODE,
   payload: code,
+});
+
+export const testOfflineCodeSuccess = () => ({
+  type: types.TEST_OFFLINE_CODE_SUCCESS,
 });
 
 export const testOfflineCodeFailed = error => ({
   type: types.TEST_OFFLINE_CODE_FAILED,
+  error,
+});
+
+export const testAutoLock = () => ({
+  type: types.TEST_AUTO_LOCK_PENDING,
+});
+
+export const testAutoLockSuccess = () => ({
+  type: types.TEST_AUTO_LOCK_SUCCESS,
+});
+
+export const testAutoLockFailed = error => ({
+  type: types.TEST_AUTO_LOCK_FAILED,
+  error,
+});
+
+export const uploadSerialNo = serialNo => ({
+  type: types.UPLOAD_SERIAL_N0_PENDING,
+  payload: serialNo,
+});
+
+export const uploadSerialNoSuccess = () => ({
+  type: types.UPLOAD_SERIAL_N0_SUCCESS,
+});
+
+export const uploadSerialNoFailed = error => ({
+  type: types.UPLOAD_SERIAL_N0_FAILED,
   error,
 });

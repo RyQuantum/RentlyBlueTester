@@ -2,28 +2,21 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Text, View } from 'react-native';
 import { RNCamera } from 'react-native-camera';
-import { strings, switchLanguage } from '../app/utils/i18n';
 
-class ProductScanRNCamera extends Component {
+import { strings, switchLanguage } from '../utils/i18n';
 
+class Camera extends Component {
   constructor(props) {
     super(props);
     this.camera = null;
     this.stopPreview = false;
-    this.state = {
-      camera: {
-        type: RNCamera.Constants.Type.back,
-	      flashMode: RNCamera.Constants.FlashMode.auto,
-	      barcodeFinderVisible: true
-      }
-    };
   }
 
   componentDidMount() {
     switchLanguage(this.props.language, this);
   }
 
-  onBarCodeRead = async (scanResult) => {
+  onBarCodeRead = async scanResult => {
     if (!this.stopPreview) {
       this.stopPreview = true;
       await this.props.callback(scanResult.data);
@@ -47,8 +40,7 @@ class ProductScanRNCamera extends Component {
           backgroundColor: 'lightgreen',
           justifyContent: 'center',
           alignItems: 'center',
-        }}
-      >
+        }}>
         <Text>Waiting</Text>
       </View>
     );
@@ -58,27 +50,27 @@ class ProductScanRNCamera extends Component {
     return (
       <View style={styles.container}>
         <RNCamera
-            ref={ref => {
-              this.camera = ref;
-            }}
-            captureAudio = {false}
-            barcodeFinderVisible={this.state.camera.barcodeFinderVisible}
-            barcodeFinderWidth={280}
-            barcodeFinderHeight={220}
-            barcodeFinderBorderColor="white"
-            barcodeFinderBorderWidth={2}
-            defaultTouchToFocus
-            flashMode={this.state.camera.flashMode}
-            mirrorImage={false}
-            onBarCodeRead={this.onBarCodeRead.bind(this)}
-            onFocusChanged={() => {}}
-            onZoomChanged={() => {}}
-            androidCameraPermissionOptions={{
-              title: strings('LockTest.permission'),
-              message: strings('LockTest.permissiondesc'),
-            }}
-            style={styles.preview}
-            type={this.state.camera.type}
+          ref={ref => {
+            this.camera = ref;
+          }}
+          captureAudio={false}
+          barcodeFinderVisible={true}
+          barcodeFinderWidth={280}
+          barcodeFinderHeight={220}
+          barcodeFinderBorderColor="white"
+          barcodeFinderBorderWidth={2}
+          defaultTouchToFocus
+          flashMode={RNCamera.Constants.FlashMode.auto}
+          mirrorImage={false}
+          onBarCodeRead={this.onBarCodeRead.bind(this)}
+          onFocusChanged={() => {}}
+          onZoomChanged={() => {}}
+          androidCameraPermissionOptions={{
+            title: strings('LockTest.permission'),
+            message: strings('LockTest.permissiondesc'),
+          }}
+          style={styles.preview}
+          type={RNCamera.Constants.Type.back}
         />
         <View style={[styles.overlay, styles.topOverlay]}>
           <Text style={styles.scanScreenMessage}>{strings('LockTest.scanInfo')}</Text>
@@ -100,53 +92,53 @@ class ProductScanRNCamera extends Component {
 
 const styles = {
   container: {
-    flex: 1
+    flex: 1,
   },
   preview: {
     flex: 1,
     justifyContent: 'flex-end',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   overlay: {
     position: 'absolute',
     padding: 16,
     right: 0,
     left: 0,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   topOverlay: {
     top: 0,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   centerOverlay: {
     height: '80%',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   bottomOverlay: {
     bottom: 0,
     backgroundColor: 'rgba(0,0,0,0.4)',
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   enterBarcodeManualButton: {
     padding: 15,
     backgroundColor: 'white',
-    borderRadius: 40
+    borderRadius: 40,
   },
   scanScreenMessage: {
     fontSize: 14,
     color: 'white',
     textAlign: 'center',
     alignItems: 'center',
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 };
 
 const mapStateToProps = state => ({ language: state.auth.language });
-export default connect(mapStateToProps)(ProductScanRNCamera);
+export default connect(mapStateToProps)(Camera);

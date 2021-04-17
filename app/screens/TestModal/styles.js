@@ -6,6 +6,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     padding: 10,
   },
+  title: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   text: {
     color: 'white',
     fontSize: 20,

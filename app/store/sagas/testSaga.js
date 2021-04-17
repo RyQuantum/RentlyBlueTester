@@ -1,6 +1,7 @@
 import { put, select } from 'redux-saga/effects';
 
 import {
+  requestTest,
   verifyBroadcastInfo,
   verifyBroadcastInfoSuccess,
   verifyBroadcastInfoFailed,
@@ -16,20 +17,50 @@ import {
   testDoorSensor,
   testDoorSensorSuccess,
   testDoorSensorFailed,
+  testOfflineCode,
   testOfflineCodeFailed,
-  testOfflineCodeSuccess, testOfflineCode,
+  gotOfflineCode,
+  uploadSerialNoFailed,
+  uploadSerialNoSuccess,
+  testAutoLock,
+  testAutoLockSuccess,
+  testAutoLockFailed,
 } from '../actions/testActions';
 import API from '../../../services/API';
 import { delay, parseTimeStamp } from '../../utils/others';
+import { strings } from '../../utils/i18n';
+//TODO retry
+//TODO identify the accurate error of multiple actions
 
-export function* verifyBroadcastInfoAsync({ payload }) {
-  const { lockMac, modelNum, hardwareVer, firmwareVer, rssi, battery } = payload.lockObj;
+export function* verifyBroadcastInfoAsync({ payload: lockObj }) {
+  const { lockMac, modelNum, hardwareVer, firmwareVer, rssi, battery } = lockObj;
   yield put(verifyBroadcastInfo({ lockMac, modelNum, hardwareVer, firmwareVer, rssi, battery }));
-  if (modelNum === 2 && hardwareVer === 3 && firmwareVer === 5 && rssi < 0 && battery > 0) {
+  const errors = [];
+  if (modelNum !== 2) errors.push('Invalid model number');
+  if (hardwareVer !== 2) errors.push('Invalid hardware version');
+  if (firmwareVer !== 13) errors.push('Invalid firmware version');
+  if (rssi >= 0) errors.push('Invalid rssi');
+  if (battery < 0) errors.push('Low battery');
+  if (errors.length === 0) {
     return yield put(verifyBroadcastInfoSuccess());
   }
-  //TODO divide different errors
-  yield put(verifyBroadcastInfoFailed(new Error('Broadcast info error')));
+  yield put(verifyBroadcastInfoFailed(new Error(errors)));
+}
+
+export function* scanBroadcastAsync() {
+  yield put(verifyBroadcastInfo({}));
+  const { test: { lockObj }, locks: { libraryObj } } = yield select();
+  let info;
+  for(let i = 0; i < 100; i++) {
+    try {
+      info = yield libraryObj._lockController._blePlugin.getLockBroadcastInfo(lockObj.lockMac);
+    } catch (error) {
+      yield delay(1000);
+    }
+    if (info) break;
+  }
+  Object.assign(lockObj, info);
+  yield put(requestTest(lockObj));
 }
 
 export function* initializeLockAsync() {
@@ -89,8 +120,34 @@ export function* testOfflineCodeAsync() {
   const { test: { lockObj: { lockMac, deviceAuthToken } } } = yield select();
   try {
     const { code } = yield API.createAutoCode(lockMac, deviceAuthToken);
-    yield put(testOfflineCodeSuccess(code));
+    yield put(gotOfflineCode(code));
   } catch (error) {
     yield put(testOfflineCodeFailed(error));
+  }
+}
+
+export function* testAutoLockAsync() {
+  yield put(testAutoLock());
+  const { test: { lockObj } } = yield select();
+  try {
+    yield lockObj.setAutoLockTime(1);
+    yield put(testAutoLockSuccess());
+  } catch (error) {
+    yield put(testAutoLockFailed(error));
+  }
+}
+
+export function* uploadSerialNoAsync({ payload: serialNo }) {
+  const { test: { lockObj: { lockMac } }, auth: { batchNo }} = yield select();
+  try {
+    if (parseInt(serialNo).toString() !== serialNo || !(serialNo >= 10000000) || !(serialNo < 12000000)) {
+      const error = new Error(strings('LockTest.invalidSN'));
+    }
+    //TODO upload to local server
+    const params = { deviceMac: lockMac, batchNum: batchNo, serialNo };
+    yield API.updateDeviceBySuperAdmin(params);
+    yield put(uploadSerialNoSuccess());
+  } catch (error) {
+    yield put(uploadSerialNoFailed(error));
   }
 }

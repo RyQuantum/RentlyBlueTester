@@ -22,9 +22,16 @@ import {
   TEST_DOOR_SENSOR_SUCCESS,
   TEST_DOOR_SENSOR_FAILED,
   TEST_OFFLINE_CODE_FAILED,
+  GOT_OFFLINE_CODE,
   TEST_OFFLINE_CODE_SUCCESS,
   TEST_OFFLINE_CODE_PENDING,
-} from "../actions/types";
+  TEST_AUTO_LOCK_PENDING,
+  TEST_AUTO_LOCK_SUCCESS,
+  TEST_AUTO_LOCK_FAILED,
+  UPLOAD_SERIAL_N0_PENDING,
+  UPLOAD_SERIAL_N0_SUCCESS,
+  UPLOAD_SERIAL_N0_FAILED,
+} from '../actions/types';
 
 const defaultState = {
   lockObj: null,
@@ -41,14 +48,14 @@ const defaultState = {
   initLockState: NOT_STARTED,
   testRTCState: NOT_STARTED,
   testHallState: NOT_STARTED,
+  testDoorSensorState: NOT_STARTED,
   testTouchButtonState: NOT_STARTED,
   touchButton: Array(10).fill(false),
   testNfcChipState: NOT_STARTED,
   fobNumber: '',
-  testAutoLockState: NOT_STARTED,
-  testDoorSensorState: NOT_STARTED,
   testOfflineCodeState: NOT_STARTED,
   code: '',
+  testAutoLockState: NOT_STARTED,
   uploadSerialNoState: NOT_STARTED,
   serialNo: '',
   error: '',
@@ -58,7 +65,7 @@ export default (state = defaultState, action) => {
   const { type, payload, error } = action;
   switch (type) {
     case TEST_REQUEST:
-      return { ...state, testState: PENDING, ...payload };
+      return { ...state, testState: PENDING, lockObj: payload };
     // case TEST_SUCCESS:
     //   return { ...state, testState: SUCCESS };
     case TEST_FAILED:
@@ -68,7 +75,7 @@ export default (state = defaultState, action) => {
       return { ...state, testBroadcastState: PENDING, broadcastInfo: { lockMac, modelNum, hardwareVer, firmwareVer, rssi, battery } };
     }
     case TEST_BROADCAST_INFO_SUCCESS:
-      return { ...state, testBroadcastState: SUCCESS };
+      return { ...state, testBroadcastState: SUCCESS, error: '' };
     case TEST_BROADCAST_INFO_FAILED:
       return { ...state, testBroadcastState: FAILED, error };
     case INIT_LOCK_PENDING:
@@ -97,10 +104,24 @@ export default (state = defaultState, action) => {
       return { ...state, testDoorSensorState: FAILED, error };
     case TEST_OFFLINE_CODE_PENDING:
       return { ...state, testOfflineCodeState: PENDING };
+    case GOT_OFFLINE_CODE:
+      return { ...state, code: payload };
     case TEST_OFFLINE_CODE_SUCCESS:
-      return { ...state, testOfflineCodeState: SUCCESS, code: payload };
+      return { ...state, testOfflineCodeState: SUCCESS };
     case TEST_OFFLINE_CODE_FAILED:
       return { ...state, testOfflineCodeState: FAILED, error };
+    case TEST_AUTO_LOCK_PENDING:
+      return { ...state, testAutoLockState: PENDING };
+    case TEST_AUTO_LOCK_SUCCESS:
+      return { ...state, testAutoLockState: SUCCESS };
+    case TEST_AUTO_LOCK_FAILED:
+      return { ...state, testAutoLockState: FAILED, error };
+    case UPLOAD_SERIAL_N0_PENDING:
+      return { ...state, uploadSerialNoState: PENDING, serialNo: payload };
+    case UPLOAD_SERIAL_N0_SUCCESS:
+      return { ...state, uploadSerialNoState: SUCCESS };
+    case UPLOAD_SERIAL_N0_FAILED:
+      return { ...state, uploadSerialNoState: FAILED, error };
     // case TEST_DONE:
     //   return defaultState;
     default:
