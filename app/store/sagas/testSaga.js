@@ -2,6 +2,7 @@ import { put, select } from 'redux-saga/effects';
 
 import {
   requestTest,
+  testSuccess,
   verifyBroadcastInfo,
   verifyBroadcastInfoSuccess,
   verifyBroadcastInfoFailed,
@@ -25,10 +26,13 @@ import {
   testAutoLock,
   testAutoLockSuccess,
   testAutoLockFailed,
+  // endTestCancel,
+  // endTestConfirm,
 } from '../actions/testActions';
 import API from '../../../services/API';
 import { delay, parseTimeStamp } from '../../utils/others';
 import { strings } from '../../utils/i18n';
+
 //TODO retry
 //TODO identify the accurate error of multiple actions
 
@@ -95,7 +99,6 @@ export function* testHallAsync() {
   yield put(testHall());
   const { test: { lockObj } } = yield select();
   try {
-    yield lockObj.unlock();
     yield lockObj.lock();
     yield put(testHallSuccess());
   } catch (error) {
@@ -115,17 +118,6 @@ export function* testDoorSensorAsync() {
   }
 }
 
-export function* testOfflineCodeAsync() {
-  yield put(testOfflineCode());
-  const { test: { lockObj: { lockMac, deviceAuthToken } } } = yield select();
-  try {
-    const { code } = yield API.createAutoCode(lockMac, deviceAuthToken);
-    yield put(gotOfflineCode(code));
-  } catch (error) {
-    yield put(testOfflineCodeFailed(error));
-  }
-}
-
 export function* testAutoLockAsync() {
   yield put(testAutoLock());
   const { test: { lockObj } } = yield select();
@@ -137,17 +129,45 @@ export function* testAutoLockAsync() {
   }
 }
 
-export function* uploadSerialNoAsync({ payload: serialNo }) {
-  const { test: { lockObj: { lockMac } }, auth: { batchNo }} = yield select();
+export function* testOfflineCodeAsync() {
+  yield put(testOfflineCode());
+  const { test: { lockObj: { lockMac, deviceAuthToken } } } = yield select();
   try {
-    if (parseInt(serialNo).toString() !== serialNo || !(serialNo >= 10000000) || !(serialNo < 12000000)) {
-      const error = new Error(strings('LockTest.invalidSN'));
+    const { code } = yield API.createAutoCode(lockMac, deviceAuthToken);
+    yield put(gotOfflineCode(code));
+  } catch (error) {
+    yield put(testOfflineCodeFailed(error));
+  }
+}
+
+export function* uploadSerialNoAsync({ payload: serialNoStr }) {
+  const { test: { lockObj: { lockMac } }, auth: { batchNo }} = yield select();
+  const serialNo = parseInt(serialNoStr);
+  try {
+    if (serialNo.toString() !== serialNoStr || !(serialNo >= 10000000) || !(serialNo < 12000000)) {
+      throw new Error(strings('LockTest.invalidSN'));
     }
     //TODO upload to local server
     const params = { deviceMac: lockMac, batchNum: batchNo, serialNo };
     yield API.updateDeviceBySuperAdmin(params);
     yield put(uploadSerialNoSuccess());
+    yield put(testSuccess());
   } catch (error) {
     yield put(uploadSerialNoFailed(error));
   }
 }
+//TODO add all incomplete cases
+
+// export function* endTestAsync() {
+//   const { test: { testState } } = yield select();
+//   if (testState !== types.SUCCESS) {
+//     return Alert.alert(
+//       strings('LockTest.warning'),
+//       strings('LockTest.warningInfo1'),
+//       [
+//         { text: strings('LockTest.cancel'), onPress: function* () { yield put(endTestCancel());} },
+//         { text: strings('LockTest.backHome'), onPress: function* () { yield put(endTestConfirm());} },
+//       ],
+//     );
+//   }
+// }

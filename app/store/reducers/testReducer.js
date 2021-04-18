@@ -31,6 +31,10 @@ import {
   UPLOAD_SERIAL_N0_PENDING,
   UPLOAD_SERIAL_N0_SUCCESS,
   UPLOAD_SERIAL_N0_FAILED,
+  END_TEST_REQUEST,
+  END_TEST_CONFIRM,
+  END_TEST_CANCEL,
+  END_TEST,
 } from '../actions/types';
 
 const defaultState = {
@@ -58,7 +62,7 @@ const defaultState = {
   testAutoLockState: NOT_STARTED,
   uploadSerialNoState: NOT_STARTED,
   serialNo: '',
-  error: '',
+  error: null,
 };
 
 export default (state = defaultState, action) => {
@@ -66,64 +70,66 @@ export default (state = defaultState, action) => {
   switch (type) {
     case TEST_REQUEST:
       return { ...state, testState: PENDING, lockObj: payload };
-    // case TEST_SUCCESS:
-    //   return { ...state, testState: SUCCESS };
-    case TEST_FAILED:
-      return { ...state, testState: FAILED, error };
-    case TEST_BROADCAST_INFO_PENDING: {
-      const { lockMac, modelNum, hardwareVer, firmwareVer, rssi, battery } = payload;
-      return { ...state, testBroadcastState: PENDING, broadcastInfo: { lockMac, modelNum, hardwareVer, firmwareVer, rssi, battery } };
-    }
+    case TEST_SUCCESS:
+      return { ...state, testState: SUCCESS };
+    // case TEST_FAILED:
+    //   return { ...state, testState: FAILED, error };
+    case TEST_BROADCAST_INFO_PENDING:
+      return { ...state, testBroadcastState: PENDING, broadcastInfo: payload };
     case TEST_BROADCAST_INFO_SUCCESS:
-      return { ...state, testBroadcastState: SUCCESS, error: '' };
+      return { ...state, testBroadcastState: SUCCESS, error: null };
     case TEST_BROADCAST_INFO_FAILED:
       return { ...state, testBroadcastState: FAILED, error };
     case INIT_LOCK_PENDING:
       return { ...state, initLockState: PENDING };
     case INIT_LOCK_SUCCESS:
-      return { ...state, initLockState: SUCCESS };
+      return { ...state, initLockState: SUCCESS, error: null };
     case INIT_LOCK_FAILED:
       return { ...state, initLockState: FAILED, error };
     case TEST_RTC_PENDING:
       return { ...state, testRTCState: PENDING };
     case TEST_RTC_SUCCESS:
-      return { ...state, testRTCState: SUCCESS };
+      return { ...state, testRTCState: SUCCESS, error: null };
     case TEST_RTC_FAILED:
       return { ...state, testRTCState: FAILED, error };
     case TEST_HALL_PENDING:
       return { ...state, testHallState: PENDING };
     case TEST_HALL_SUCCESS:
-      return { ...state, testHallState: SUCCESS };
+      return { ...state, testHallState: SUCCESS, error: null };
     case TEST_HALL_FAILED:
       return { ...state, testHallState: FAILED, error };
     case TEST_DOOR_SENSOR_PENDING:
       return { ...state, testDoorSensorState: PENDING };
     case TEST_DOOR_SENSOR_SUCCESS:
-      return { ...state, testDoorSensorState: SUCCESS };
+      return { ...state, testDoorSensorState: SUCCESS, error: null };
     case TEST_DOOR_SENSOR_FAILED:
       return { ...state, testDoorSensorState: FAILED, error };
-    case TEST_OFFLINE_CODE_PENDING:
-      return { ...state, testOfflineCodeState: PENDING };
-    case GOT_OFFLINE_CODE:
-      return { ...state, code: payload };
-    case TEST_OFFLINE_CODE_SUCCESS:
-      return { ...state, testOfflineCodeState: SUCCESS };
-    case TEST_OFFLINE_CODE_FAILED:
-      return { ...state, testOfflineCodeState: FAILED, error };
     case TEST_AUTO_LOCK_PENDING:
       return { ...state, testAutoLockState: PENDING };
     case TEST_AUTO_LOCK_SUCCESS:
       return { ...state, testAutoLockState: SUCCESS };
     case TEST_AUTO_LOCK_FAILED:
       return { ...state, testAutoLockState: FAILED, error };
+    case TEST_OFFLINE_CODE_PENDING:
+      return { ...state, testOfflineCodeState: PENDING };
+    case GOT_OFFLINE_CODE:
+      return { ...state, code: payload };
+    case TEST_OFFLINE_CODE_SUCCESS:
+      return { ...state, testOfflineCodeState: SUCCESS, error: null };
+    case TEST_OFFLINE_CODE_FAILED:
+      return { ...state, testOfflineCodeState: FAILED, error };
     case UPLOAD_SERIAL_N0_PENDING:
-      return { ...state, uploadSerialNoState: PENDING, serialNo: payload };
+      return { ...state, uploadSerialNoState: PENDING, serialNo: payload, error: null };
     case UPLOAD_SERIAL_N0_SUCCESS:
-      return { ...state, uploadSerialNoState: SUCCESS };
+      return { ...state, uploadSerialNoState: SUCCESS, error: null };
     case UPLOAD_SERIAL_N0_FAILED:
       return { ...state, uploadSerialNoState: FAILED, error };
-    // case TEST_DONE:
+    // case END_TEST_CONFIRM:
     //   return defaultState;
+    // case END_TEST_REQUEST:
+    // case END_TEST_CANCEL:
+    case END_TEST:
+      return defaultState;
     default:
       return state;
   }

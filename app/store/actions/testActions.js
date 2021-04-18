@@ -75,6 +75,19 @@ export const testDoorSensorFailed = error => ({
   error,
 });
 
+export const testAutoLock = () => ({
+  type: types.TEST_AUTO_LOCK_PENDING,
+});
+
+export const testAutoLockSuccess = () => ({
+  type: types.TEST_AUTO_LOCK_SUCCESS,
+});
+
+export const testAutoLockFailed = error => ({
+  type: types.TEST_AUTO_LOCK_FAILED,
+  error,
+});
+
 export const testOfflineCode = () => ({
   type: types.TEST_OFFLINE_CODE_PENDING,
 });
@@ -93,19 +106,6 @@ export const testOfflineCodeFailed = error => ({
   error,
 });
 
-export const testAutoLock = () => ({
-  type: types.TEST_AUTO_LOCK_PENDING,
-});
-
-export const testAutoLockSuccess = () => ({
-  type: types.TEST_AUTO_LOCK_SUCCESS,
-});
-
-export const testAutoLockFailed = error => ({
-  type: types.TEST_AUTO_LOCK_FAILED,
-  error,
-});
-
 export const uploadSerialNo = serialNo => ({
   type: types.UPLOAD_SERIAL_N0_PENDING,
   payload: serialNo,
@@ -119,3 +119,19 @@ export const uploadSerialNoFailed = error => ({
   type: types.UPLOAD_SERIAL_N0_FAILED,
   error,
 });
+
+export const testSuccess = () => ({
+  type: types.TEST_SUCCESS,
+});
+
+export const endTest = () => ({
+  type: types.END_TEST,
+});
+
+// export const endTestConfirm = () => ({
+//   type: types.END_TEST_CONFIRM,
+// });
+//
+// export const endTestCancel = () => ({
+//   type: types.END_TEST_CANCEL,
+// });

@@ -3,20 +3,23 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    // backgroundColor: 'black',
     padding: 10,
+  },
+  back: {
+    alignSelf: 'flex-start',
   },
   title: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   text: {
-    color: 'white',
+    // color: 'white',
     fontSize: 20,
     padding: 3,
   },
   result: {
-    color: '#00ff00',
+    color: '#00bb00',
     fontSize: 20,
     padding: 3,
   },
@@ -29,6 +32,16 @@ const styles = StyleSheet.create({
     color: '#0000ff',
     fontSize: 20,
     padding: 3,
+  },
+  image: {
+    width: 100,
+    height: 100,
+  },
+  retryInstruction: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
   },
 });
 

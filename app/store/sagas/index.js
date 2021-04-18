@@ -12,6 +12,7 @@ import {
   testOfflineCodeAsync,
   uploadSerialNoAsync,
   testAutoLockAsync,
+  endTestAsync,
 } from './testSaga';
 
 export default function* rootSaga() {
@@ -22,7 +23,8 @@ export default function* rootSaga() {
   yield takeEvery(types.INIT_LOCK_SUCCESS, testRTCAsync);
   yield takeEvery(types.TEST_RTC_SUCCESS, testHallAsync);
   yield takeEvery(types.TEST_HALL_SUCCESS, testDoorSensorAsync);
-  yield takeEvery(types.TEST_DOOR_SENSOR_SUCCESS, testOfflineCodeAsync);
-  yield takeEvery(types.TEST_OFFLINE_CODE_SUCCESS, testAutoLockAsync);
+  yield takeEvery(types.TEST_DOOR_SENSOR_SUCCESS, testAutoLockAsync);
+  yield takeEvery(types.TEST_AUTO_LOCK_SUCCESS, testOfflineCodeAsync);
   yield takeEvery(types.UPLOAD_SERIAL_N0_PENDING, uploadSerialNoAsync);
+  // yield takeLatest(types.END_TEST_REQUEST, endTestAsync);
 }
