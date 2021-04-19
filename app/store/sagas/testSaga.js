@@ -40,9 +40,9 @@ export function* verifyBroadcastInfoAsync({ payload: lockObj }) {
   const { lockMac, modelNum, hardwareVer, firmwareVer, rssi, battery } = lockObj;
   yield put(verifyBroadcastInfo({ lockMac, modelNum, hardwareVer, firmwareVer, rssi, battery }));
   const errors = [];
-  if (modelNum !== 2) errors.push('Invalid model number');
-  if (hardwareVer !== 2) errors.push('Invalid hardware version');
-  if (firmwareVer !== 13) errors.push('Invalid firmware version');
+  if (![2, 3, 4].includes(modelNum)) errors.push('Invalid model number');
+  if (modelNum === 2 && hardwareVer < 3) errors.push('Invalid hardware version');
+  if (firmwareVer < 5) errors.push('Invalid firmware version');
   if (rssi >= 0) errors.push('Invalid rssi');
   if (battery < 0) errors.push('Low battery');
   if (errors.length === 0) {
@@ -99,7 +99,8 @@ export function* testHallAsync() {
   yield put(testHall());
   const { test: { lockObj } } = yield select();
   try {
-    yield lockObj.lock();
+    yield lockObj.unlock();
+    // yield lockObj.lock();
     yield put(testHallSuccess());
   } catch (error) {
     yield put(testHallFailed(error));

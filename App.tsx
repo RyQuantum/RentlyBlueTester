@@ -10,24 +10,27 @@
 
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo, { NetInfoSubscription } from '@react-native-community/netinfo';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+
 import store from './app/store';
 import Navigation from './app/navigation';
 import { strings } from './app/utils/i18n';
-import { PersistGate } from 'redux-persist/integration/react';
 import { persistor } from './app/store';
 
-export default class App extends Component {
-  onConnectionChange = connectionInfo => {
-    const { type } = connectionInfo;
-    if (type === 'none') {
-      Alert.alert(strings('login.noNetwork'), strings('login.checkNetwork'));
-    }
-  };
+export interface Props {}
 
-  UNSAFE_componentWillMount() {
-    this.unsubscribe = NetInfo.addEventListener(this.onConnectionChange);
+export default class App extends Component {
+  private readonly unsubscribe: NetInfoSubscription;
+  constructor(props: Props) {
+    super(props);
+    this.unsubscribe = NetInfo.addEventListener(connectionInfo => {
+      const { type } = connectionInfo;
+      if (type === 'none') {
+        Alert.alert(strings('login.noNetwork'), strings('login.checkNetwork'));
+      }
+    });
   }
 
   componentWillUnmount() {

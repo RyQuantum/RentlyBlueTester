@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { connect } from 'react-redux';
 
-import DiscoverLock from '../../screens/DiscoverLock';
+import DiscoverLock from '../screens/DiscoverLock';
 // import { foundLock } from '../../redux/locks';
 import { foundLock } from '../store/actions/locksActions';
 

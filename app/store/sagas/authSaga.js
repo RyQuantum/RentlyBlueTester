@@ -13,9 +13,9 @@ export function* loginAsync({ payload }) {
       payload.password,
     );
     yield put(
-      authActions.onLoginSuccess({ accessToken, expireTime, ...payload }),
+      authActions.loginSuccess({ accessToken, expireTime, ...payload }),
     );
   } catch (error) {
-    yield put(authActions.onLoginFailed(error));
+    yield put(authActions.loginFailed(error));
   }
 }

@@ -36,27 +36,27 @@ const Step1 = () => {
   return (
     <View>
       <View style={styles.title}>
-        <Text style={styles.text}>1.广播检测</Text>
+        <Text style={styles.text}>1.{strings('Test.verifyBroadcast')}</Text>
         {testBroadcastState === types.PENDING && <ActivityIndicator />}
         {testBroadcastState === types.SUCCESS && <Icon name="check" type="entypo" color="green" size={28} />}
         {testBroadcastState === types.FAILED && <Icon name="cross" type="entypo" color="red" size={28} />}
         {testBroadcastState === types.FAILED && <RetryButton no="1" />}
       </View>
       <Text style={styles.text}>
-        MAC地址: <Text style={styles.result}>{lockMac}</Text>
+        {strings('Test.mac')}: <Text style={styles.result}>{lockMac}</Text>
       </Text>
       <Text style={styles.text}>
-        型号:<Text style={styles.result}>{modelNum}</Text> 硬件版本:
-        <Text style={styles.result}>{hardwareVer}</Text> 固件版本:
-        <Text style={styles.result}>{firmwareVer}</Text>
+        {strings('Test.model')}: <Text style={styles.result}>{modelNum} </Text>
+        {strings('Test.hardwareVer')}: <Text style={styles.result}>{hardwareVer} </Text>
+        {strings('Test.firmwareVer')}: <Text style={styles.result}>{firmwareVer}</Text>
       </Text>
       <Text style={styles.text}>
-        蓝牙信号强度: <Text style={styles.result}>{rssi}</Text>
+        {strings('Test.rssi')}: <Text style={styles.result}>{rssi}</Text>
       </Text>
       <Text style={styles.text}>
-        电量:<Text style={styles.result}>{battery}%</Text>
+        {strings('Test.battery')}: <Text style={styles.result}>{battery}%</Text>
       </Text>
-      {testBroadcastState === types.SUCCESS && <Text style={styles.result}>广播正常</Text>}
+      {testBroadcastState === types.SUCCESS && <Text style={styles.result}>{strings('Test.pass')}</Text>}
     </View>
   );
 };
@@ -66,13 +66,13 @@ const Step = ({ state, name, no }) => {
   return (
     <View>
       <View style={styles.title}>
-        <Text style={styles.text}>{no}.{name}测试</Text>
+        <Text style={styles.text}>{no}.{name}</Text>
         {state === types.PENDING && <ActivityIndicator />}
         {state === types.SUCCESS && <Icon name="check" type="entypo" color="green" size={28} />}
         {state === types.FAILED && <Icon name="cross" type="entypo" color="red" size={28} />}
         {state === types.FAILED && <RetryButton no={no} />}
       </View>
-      {state === types.SUCCESS && <Text style={styles.result}>{name + '正常'}</Text>}
+      {state === types.SUCCESS && <Text style={styles.result}>{strings('Test.pass')}</Text>}
     </View>
   );
 };
@@ -83,17 +83,17 @@ const Step9 = ({ state, code }) => {
   return (
     <View>
       <View style={styles.title}>
-        <Text style={styles.text}>9.离线密码测试</Text>
+        <Text style={styles.text}>9.{strings('Test.offlineCode')}</Text>
         {state === types.PENDING && <ActivityIndicator />}
         {state === types.SUCCESS && <Icon name="check" type="entypo" color="green" size={28} />}
         {state === types.FAILED && <Icon name="cross" type="entypo" color="red" size={28} />}
         {state === types.FAILED && <RetryButton no='8' />}
       </View>
-      {code !== '' && <Text style={styles.result}>离线密码:{code}，请在门锁上输入</Text>}
+      {code !== '' && <Text style={styles.result}>{strings('Test.oneTimeCode')}: {code}, {strings('Test.offlineCodeInstruction')}</Text>}
       {code !== '' && state !== types.SUCCESS && (
         <View style={{ alignSelf: 'start'}}>
           <Button
-            title="有效"
+            title={strings('Test.valid')}
             onPress={() => dispatch(testOfflineCodeSuccess())}
           />
         </View>
@@ -108,13 +108,13 @@ const Step10 = ({ onPressScan }) => {
   return (
     <View>
       <View style={styles.title}>
-        <Text style={styles.text}>10.上传SN号</Text>
-        <Button title="扫描" onPress={onPressScan} disabled={uploadSerialNoState === types.SUCCESS} />
+        <Text style={styles.text}>10.{strings('Test.upload')} {strings('Test.serialNo')}</Text>
+        <Button title={strings('Test.scan')} onPress={onPressScan} disabled={uploadSerialNoState === types.SUCCESS} />
         {uploadSerialNoState === types.PENDING && <ActivityIndicator />}
         {uploadSerialNoState === types.SUCCESS && <Icon name="check" type="entypo" color="green" size={28} />}
       </View>
-      {uploadSerialNoState === types.PENDING && <Text style={styles.result}>上传: {serialNo}...</Text>}
-      {uploadSerialNoState === types.SUCCESS && <Text style={styles.result}>SN号: {serialNo}上传成功</Text>}
+      {uploadSerialNoState === types.PENDING && <Text style={styles.result}>{strings('Test.upload')}: {serialNo}...</Text>}
+      {uploadSerialNoState === types.SUCCESS && <Text style={styles.result}>{strings('Test.serialNo')}: {serialNo} {strings('Test.uploadSuccess')}</Text>}
     </View>
   );
 };
@@ -165,7 +165,7 @@ const RetryInstruction = () => {
   const isTouched = touchedLocks.find(lock => lock.lockMac === lockObj.lockMac);
   return (error && !isTouched && uploadSerialNoState !== types.FAILED) ? (
     <View style={styles.retryInstruction}>
-      <Text style={styles.text}>{strings('LockTest.touchToRetry')}</Text>
+      <Text style={styles.text}>{strings('Test.touchToRetry')}</Text>
       <Image
         source={require('../../../assets/touch.png')}
         style={styles.image}
@@ -198,30 +198,30 @@ class TestModal extends PureComponent {
     //TODO upload lock test record
     if (this.props.testState === types.SUCCESS) return this.props.endTest();
     Alert.alert(
-      strings('LockTest.warning'),
-      strings('LockTest.warningInfo1'),
+      strings('Test.warning'),
+      strings('Test.warningInfo'),
       [
-      { text: strings('LockTest.cancel'), onPress: () => {} },
-      { text: strings('LockTest.backHome'), onPress: this.props.endTest },
+      { text: strings('Test.cancel'), onPress: () => {} },
+      { text: strings('Test.backHome'), onPress: this.props.endTest },
     ]);
   };
-
+//TODO Add DMS process
 //TODO reorder steps
   render() {
     return (
       <Modal visible={this.props.testState !== types.NOT_STARTED}>
         <ScrollView style={styles.container}>
           <View style={styles.back}>
-            <Button title="后退" onPress={this.endTest} disabled={!this.props.error} />
+            <Button title={strings('Test.back')} onPress={this.endTest} disabled={!this.props.error} />
           </View>
           <Step1 />
-          <Step no="2" state={this.props.initLockState} name="初始化" />
-          <Step no="3" state={this.props.testRTCState} name="RTC" />
-          <Step no="4" state={this.props.testHallState} name="霍尔" />
-          <Step no="5" state={this.props.testDoorSensorState} name="门磁状态" />
+          <Step no="2" state={this.props.initLockState} name={strings('Test.initialization')} />
+          <Step no="3" state={this.props.testRTCState} name={strings('Test.RTC')} />
+          <Step no="4" state={this.props.testHallState} name={strings('Test.hall')} />
+          <Step no="5" state={this.props.testDoorSensorState} name={strings('Test.doorSensor')} />
           {/*<Step6 />*/}
           {/*<Step7 />*/}
-          <Step no="8" state={this.props.testAutoLockState} name="自动关锁" />
+          <Step no="8" state={this.props.testAutoLockState} name={strings('Test.autoLock')} />
           <Step9 state={this.props.testOfflineCodeState} code={this.props.code} />
           <Step10 onPressScan={() => this.setState({ isScanning: true })} />
           {/*  <Text style={styles.text}>6.按键触摸测试</Text>*/}
@@ -236,8 +236,8 @@ class TestModal extends PureComponent {
             {this.props.error && <Text style={styles.error}>{this.props.error.message}</Text>}
           </View>
           <RetryInstruction />
-          <View style={{ paddingBottom: 25 }}>
-            <Button title="完成" style={styles.button} onPress={this.endTest} disabled={this.props.testState !== types.SUCCESS}/>
+          <View style={{ paddingBottom: 25, flexDirection: 'row', justifyContent: 'center' }}>
+            <Button title={strings('Test.done')} style={styles.button} onPress={this.endTest} disabled={this.props.testState !== types.SUCCESS}/>
           </View>
         </ScrollView>
         {this.state.isScanning && <Camera dismiss={this.cameraDismiss} callback={this.barcodeCallBack} />}

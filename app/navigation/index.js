@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
-import Login from '../../screens/Login';
+import Login from '../screens/Login';
 import Scanner from './Scanner';
-import Settings from '../../screens/Settings';
+import Settings from '../screens/Settings';
 
 const Stack = createStackNavigator();
 

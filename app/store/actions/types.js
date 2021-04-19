@@ -4,10 +4,10 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILED = 'LOGIN_FAILED';
 
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
-export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 
 //locks
 export const UPDATE_LOCK = 'UPDATE_LOCK';
+export const UPDATE_LOCKS = 'UPDATE_LOCKS';
 export const CLEAR_LOCKS = 'CLEAR_LOCKS';
 
 export const SET_RSSI_FILTER = 'SET_RSSI_FILTER';

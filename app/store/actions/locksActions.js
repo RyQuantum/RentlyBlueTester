@@ -1,6 +1,11 @@
 import * as types from './types';
 
-export const foundLock = lock => ({
+export const foundLock = payload => ({
   type: types.UPDATE_LOCK,
-  payload: { lock },
+  payload,
+});
+
+export const updateLocks = payload => ({
+  type: types.UPDATE_LOCKS,
+  payload,
 });

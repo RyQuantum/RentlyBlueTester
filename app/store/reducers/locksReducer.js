@@ -1,4 +1,13 @@
-import { UPDATE_LOCK, CLEAR_LOCKS, SET_THRESHOLD, SET_RSSI_FILTER, GET_MAX_SERIAL_NUM_REQUEST, GET_MAX_SERIAL_NUM_SUCCESS, GET_MAX_SERIAL_NUM_FAILED } from '../actions/types';
+import {
+  UPDATE_LOCK,
+  CLEAR_LOCKS,
+  SET_THRESHOLD,
+  SET_RSSI_FILTER,
+  GET_MAX_SERIAL_NUM_REQUEST,
+  GET_MAX_SERIAL_NUM_SUCCESS,
+  GET_MAX_SERIAL_NUM_FAILED,
+  UPDATE_LOCKS,
+} from "../actions/types";
 import { OaksBleLockLibrary, PersistencePlugin, RNBlePlugin } from '../../../BleLibrary/lib';
 import API from '../../../services/API';
 
@@ -10,6 +19,7 @@ const defaultState = {
   nonSettingLocks: [],
   codes: {}, //TODO
   libraryObj,
+  // isDevelopmentMode: false,
   // checkEnabled: false,
   // rssiThreshold: -100,
   // maxSerialNumber: null,
@@ -18,30 +28,12 @@ const defaultState = {
 
 export default (state = defaultState, action) => {
   const { type, payload, error } = action;
-  let { touchedLocks, settingLocks, nonSettingLocks, libraryObj } = state;
   switch (type) {
-    case UPDATE_LOCK: {
-      const { lockMac, touch, settingMode, battery, rssi } = payload.lock;
-      if (touch === false) {
-        touchedLocks = touchedLocks.filter(lock => lock.lockMac !== lockMac);
-        settingLocks = settingLocks.filter(lock => lock.lockMac !== lockMac);
-        nonSettingLocks = nonSettingLocks.filter(lock => lock.lockMac !== lockMac);
-        return { ...state, touchedLocks, settingLocks, nonSettingLocks };
-      }
-      const index = touchedLocks.findIndex(lock => lock.lockMac === lockMac);
-      if (index !== -1) {
-        Object.assign(touchedLocks[index], { touch, settingMode, battery, rssi });
-        settingLocks = touchedLocks.filter(lock => lock.settingMode === true);
-        nonSettingLocks = touchedLocks.filter(lock => lock.settingMode === false);
-        return { ...state, touchedLocks, settingLocks, nonSettingLocks };
-      }
-      const lockObject = libraryObj.createDevice(payload.lock);
-      lockObject.refreshToken();
-      touchedLocks.push(lockObject);
-      settingLocks = touchedLocks.filter(lock => lock.settingMode === true);
-      nonSettingLocks = touchedLocks.filter(lock => lock.settingMode === false);
-      return { ...state, touchedLocks, settingLocks, nonSettingLocks };
-    }
+    case UPDATE_LOCK:
+      return state;
+
+    case UPDATE_LOCKS:
+      return { ...state, ...payload };
 
     case CLEAR_LOCKS:
       return { ...state, touchedLocks: [], settingLocks: [], nonSettingLocks: [] };

@@ -1,4 +1,25 @@
-import { put, call } from 'redux-saga/effects';
+import { put, select } from 'redux-saga/effects';
 
-import * as locksActions from '../actions/locksActions';
+import { updateLocks } from '../actions/locksActions';
 
+export function* updateLockAsync({ payload }) {
+  let { locks: { touchedLocks, settingLocks, nonSettingLocks, libraryObj } } = yield select();
+  const { lockMac, touch, settingMode, battery, rssi } = payload;
+  const index = touchedLocks.findIndex(lock => lock.lockMac === lockMac);
+  if (touch === false) {
+    touchedLocks = touchedLocks.filter(lock => lock.lockMac !== lockMac);
+    settingLocks = settingLocks.filter(lock => lock.lockMac !== lockMac);
+    nonSettingLocks = nonSettingLocks.filter(lock => lock.lockMac !== lockMac);
+  } else if (index !== -1) {
+    Object.assign(touchedLocks[index], { touch, settingMode, battery, rssi });
+    settingLocks = touchedLocks.filter(lock => lock.settingMode === true);
+    nonSettingLocks = touchedLocks.filter(lock => lock.settingMode === false);
+  } else {
+    const lockObject = libraryObj.createDevice(payload);
+    lockObject.refreshToken();
+    touchedLocks.push(lockObject);
+    settingLocks = touchedLocks.filter(lock => lock.settingMode === true);
+    nonSettingLocks = touchedLocks.filter(lock => lock.settingMode === false);
+  }
+  return yield put(updateLocks({ touchedLocks, settingLocks, nonSettingLocks }));
+}

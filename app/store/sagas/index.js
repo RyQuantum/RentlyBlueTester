@@ -15,6 +15,8 @@ import {
   endTestAsync,
 } from './testSaga';
 
+import { updateLockAsync } from './locksSaga';
+
 export default function* rootSaga() {
   yield takeLatest(types.LOGIN_REQUEST, loginAsync);
   yield takeLatest(types.TEST_REQUEST, verifyBroadcastInfoAsync);
@@ -27,4 +29,5 @@ export default function* rootSaga() {
   yield takeEvery(types.TEST_AUTO_LOCK_SUCCESS, testOfflineCodeAsync);
   yield takeEvery(types.UPLOAD_SERIAL_N0_PENDING, uploadSerialNoAsync);
   // yield takeLatest(types.END_TEST_REQUEST, endTestAsync);
+  yield takeEvery(types.UPDATE_LOCK, updateLockAsync);
 }

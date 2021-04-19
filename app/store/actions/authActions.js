@@ -5,9 +5,16 @@ export const requestLogin = ({ url, ...params }) => ({
   payload: { url, isKeyless: url.includes('keyless'), ...params },
 });
 
-export const onLoginSuccess = ({ ...params }) => ({
+export const loginSuccess = ({ ...params }) => ({
   type: types.LOGIN_SUCCESS,
-  payload: { ...params },
+  payload: params,
 });
 
-export const onLoginFailed = error => ({ type: types.LOGOUT_FAILED, error });
+export const loginFailed = error => ({
+  type: types.LOGIN_FAILED,
+  error,
+});
+
+export const requestLogout = () => ({
+  type: types.LOGOUT_REQUEST,
+});

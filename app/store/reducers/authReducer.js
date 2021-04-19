@@ -37,11 +37,12 @@ export default (state = defaultState, action) => {
     case LOGIN_FAILED:
       return { ...state, ...defaultState, error };
     case LOGOUT_REQUEST:
-      return { ...state, isLoggedIn: false };
-    case LOGOUT_SUCCESS:
       setAccessToken('');
-      const { username, ...rest } = defaultState;
-      return { ...state, ...rest, ...payload };
+      return { ...state, isLoggedIn: false };
+    // case LOGOUT_SUCCESS:
+    //   setAccessToken('');
+    //   const { username, ...rest } = defaultState;
+    //   return { ...state, ...rest, ...payload };
     default:
       return state;
   }
