@@ -7,9 +7,9 @@ import {
   GET_MAX_SERIAL_NUM_SUCCESS,
   GET_MAX_SERIAL_NUM_FAILED,
   UPDATE_LOCKS,
-} from "../actions/types";
+} from '../actions/types';
 import { OaksBleLockLibrary, PersistencePlugin, RNBlePlugin } from '../../../BleLibrary/lib';
-import API from '../../../services/API';
+import API from '../../services/API';
 
 const libraryObj = new OaksBleLockLibrary(API.getDeviceToken, new RNBlePlugin(), new PersistencePlugin());
 libraryObj.timezoneString = 'Pacific Time (US & Canada)';
@@ -20,9 +20,9 @@ const defaultState = {
   codes: {}, //TODO
   libraryObj,
   // isDevelopmentMode: false,
-  // checkEnabled: false,
-  // rssiThreshold: -100,
-  // maxSerialNumber: null,
+  checkEnabled: false,
+  rssiThreshold: -100,
+  maxSerialNumber: '',
   error: null,
 };
 

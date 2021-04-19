@@ -1,5 +1,5 @@
-import API from "../services/API";
-import { Alert } from "react-native";
+import { Alert } from 'react-native';
+import API from '../app/services/API';
 import { strings } from '../app/utils/i18n';
 
 const TEST2_DONE = 'TEST2_DONE';

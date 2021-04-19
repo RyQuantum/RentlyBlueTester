@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { CLEAR_LOCKS } from './locks';
 import { strings } from '../app/utils/i18n';
-import API from '../services/API';
+import API from '../app/services/API';
 
 const TEST_PENDING = 'TEST_PENDING';
 const TEST_SUCCESS = 'TEST_SUCCESS';

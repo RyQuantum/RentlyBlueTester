@@ -12,7 +12,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { Icon } from 'react-native-elements';
 
 import ListItem, {ListItemSeparator} from '../../../components/ListItem';
-import Placeholder from '../../../components/Placeholder';
+import Placeholder from '../../components/Placeholder';
 // import Test1Modal from './Test1Modal';
 // import Test2Modal from './Test2Modal';
 import TestModal from '../../screens/TestModal';

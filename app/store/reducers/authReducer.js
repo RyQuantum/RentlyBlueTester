@@ -1,5 +1,5 @@
 import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILED, LOGOUT_REQUEST, LOGOUT_SUCCESS } from '../actions/types';
-import { setAccessToken } from '../../../services/API';
+import { setAccessToken } from '../../services/API';
 
 const defaultState = {
   url: '',

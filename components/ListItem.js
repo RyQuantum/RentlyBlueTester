@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent } from 'react';
 import {
   View,
   Text,
@@ -19,7 +19,7 @@ import { requestTest } from '../app/store/actions/testActions';
 
 import { clearLocks } from '../redux/locks';
 import { strings } from '../app/utils/i18n';
-import API from '../services/API';
+import API from '../app/services/API';
 import { startTest1 } from '../redux/test1';
 import { startTest2 } from '../redux/test2';
 
@@ -28,8 +28,8 @@ export const ListItemSeparator = () => (<View style={styles.separator} />);
 class ListItem extends PureComponent {
   state = {
     code: '',
-    isCorrectTimeZone: false
-   };
+    isCorrectTimeZone: false,
+  };
 
   componentDidMount() {
     this._isMounted = true;
@@ -68,9 +68,10 @@ class ListItem extends PureComponent {
 
   resetAlert = () => {
     Alert.alert( strings('Home.resetWarning'), `MAC - ${this.props.lockObj.lockMac}`, [
-      { text: strings('Home.cancel'), onPress: () => {} },
-      { text: strings('Home.reset'), onPress: this.reset },
-      ]);
+        { text: strings('Home.cancel'), onPress: () => {} },
+        { text: strings('Home.reset'), onPress: this.reset },
+      ],
+    );
   };
 
   reset = async () => {
@@ -94,12 +95,12 @@ class ListItem extends PureComponent {
   startTest1 = async () => {
     const { lockObj, startTest1 } = this.props;
     await startTest1(lockObj);
-  }
+  };
 
   startTest2 = async () => {
     const { lockObj, startTest2 } = this.props;
     await startTest2(lockObj);
-  }
+  };
 
   getCode = async () => {
     const { lockObj } = this.props;
@@ -157,7 +158,7 @@ class ListItem extends PureComponent {
     ];
 
     const instructions = [
-        ...info,
+      ...info,
       (<View key={2} style={styles.tableRowHeader}>
         <View style={styles.tableEntry1}>
           <Text style={styles.instructionsText}>{strings('Home.instructions')}</Text>
@@ -199,7 +200,7 @@ class ListItem extends PureComponent {
     ];
 
     const serial = [
-        ...info,
+      ...info,
       (<View key={2} style={styles.tableRowHeader}>
         <View style={styles.tableEntry}>
           <Text style={styles.text}>{strings('LockTest.passcode')}</Text>
@@ -224,73 +225,73 @@ class ListItem extends PureComponent {
 
     if (this.props.lockObj.imei) {
       instructions[4] = (<View key={4} style={styles.tableRow}>
-        <View style={styles.tableEntry}>
-          <View style={styles.row}>
-            <Text style={styles.text}>{'2. '}</Text>
-            <Text style={styles.flexText}>{strings('Home.passFrontBackPanel')}</Text>
-          </View>
-          <View style={[styles.row, { justifyContent: 'space-around' }]}>
+          <View style={styles.tableEntry}>
             <View style={styles.row}>
-              <Text style={styles.text}>{strings('Home.frontPanel')}:</Text>
-              {this.props.lockObj.frontTested ?
-                <Icon name="check" type="entypo" color="green" size={28}/> :
-                <Icon name="cross" type="entypo" color="red" size={28}/>}
+              <Text style={styles.text}>{'2. '}</Text>
+              <Text style={styles.flexText}>{strings('Home.passFrontBackPanel')}</Text>
             </View>
-            <View style={styles.row}>
-              <Text style={styles.text}>{strings('Home.backPanel')}:</Text>
-              {this.props.lockObj.backTested ?
-                <Icon name="check" type="entypo" color="green" size={28}/> :
-                <Icon name="cross" type="entypo" color="red" size={28}/>}
+            <View style={[styles.row, { justifyContent: 'space-around' }]}>
+              <View style={styles.row}>
+                <Text style={styles.text}>{strings('Home.frontPanel')}:</Text>
+                {this.props.lockObj.frontTested ?
+                  <Icon name="check" type="entypo" color="green" size={28}/> :
+                  <Icon name="cross" type="entypo" color="red" size={28}/>}
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.text}>{strings('Home.backPanel')}:</Text>
+                {this.props.lockObj.backTested ?
+                  <Icon name="check" type="entypo" color="green" size={28}/> :
+                  <Icon name="cross" type="entypo" color="red" size={28}/>}
+              </View>
             </View>
           </View>
-        </View>
-      </View>);
+        </View>);
 
       instructions[5] = (<View key={5} style={styles.tableRow}>
-        <View style={styles.tableEntry}>
-          <View style={styles.row}>
-            <Text style={styles.text}>{'3.  '}</Text>
-            <TouchableHighlight style={[styles.button, { width: 250, backgroundColor: disabled ? '#b3b3b3' : '#317ef5' }]} onPress={this.startTest1} disabled={disabled}>
-              <Text style={styles.buttonText}>
-                {strings('Home.startTest1')}
-              </Text>
-            </TouchableHighlight>
+          <View style={styles.tableEntry}>
+            <View style={styles.row}>
+              <Text style={styles.text}>{'3.  '}</Text>
+              <TouchableHighlight style={[styles.button, { width: 250, backgroundColor: disabled ? '#b3b3b3' : '#317ef5' }]} onPress={this.startTest1} disabled={disabled}>
+                <Text style={styles.buttonText}>
+                  {strings('Home.startTest1')}
+                </Text>
+              </TouchableHighlight>
+            </View>
           </View>
-        </View>
-      </View>);
+        </View>);
 
       serial[2] = (<View key={2} style={styles.tableRowHeader}>
-        <View style={styles.tableEntry1}>
-          <Text style={styles.instructionsText}>{strings('Home.instructions')}</Text>
-          {/*<Text style={styles.rssiText}>{rssi} RSSI</Text>*/}
-        </View>
-      </View>);
+          <View style={styles.tableEntry1}>
+            <Text style={styles.instructionsText}>{strings('Home.instructions')}</Text>
+            {/*<Text style={styles.rssiText}>{rssi} RSSI</Text>*/}
+          </View>
+        </View>);
 
       serial[3] = (<View key={3} style={styles.tableRow}>
-        <View style={styles.tableEntry}>
-          <View style={styles.row}>
-            <Text style={styles.text}>{'1.  '}</Text>
-            <Text style={styles.flexText}>{strings('Home.turnThumbturn')}</Text>
-            <Image
-              source={require('../assets/unlock.png')}
-              style={styles.image}
-              resizeMode='contain'/>
+          <View style={styles.tableEntry}>
+            <View style={styles.row}>
+              <Text style={styles.text}>{'1.  '}</Text>
+              <Text style={styles.flexText}>{strings('Home.turnThumbturn')}</Text>
+              <Image
+                source={require('../assets/unlock.png')}
+                style={styles.image}
+                resizeMode='contain'/>
+            </View>
           </View>
-        </View>
-      </View>);
+        </View>);
 
       serial[4] = (<View key={4} style={styles.tableRow}>
-        <View style={styles.tableEntry}>
-          <View style={styles.row}>
-            <Text style={styles.text}>{'2.  '}</Text>
-            <TouchableHighlight style={[styles.button, { width: 250 }]} onPress={this.startTest2}>
-              <Text style={styles.buttonText}>
-                {strings('Home.startTest2')}
-              </Text>
-            </TouchableHighlight>
+          <View style={styles.tableEntry}>
+            <View style={styles.row}>
+              <Text style={styles.text}>{'2.  '}</Text>
+              <TouchableHighlight style={[styles.button, { width: 250 }]} onPress={this.startTest2}>
+                <Text style={styles.buttonText}>
+                  {strings('Home.startTest2')}
+                </Text>
+              </TouchableHighlight>
+            </View>
           </View>
-        </View>
-      </View>);
+        </View>);
     }
 
     return (
@@ -307,8 +308,8 @@ class ListItem extends PureComponent {
                   <Text style={styles.tableHeaderText}>{lockMac}</Text>
                 </View>
                 {settingMode || <TouchableOpacity style={{ backgroundColor: 'red', borderRadius: 5, paddingHorizontal: 5, }} onPress={this.resetAlert}>
-                  <Text style={{ fontSize, color: 'white' }}>{strings('Home.reset')}</Text>
-                </TouchableOpacity>}
+                    <Text style={{ fontSize, color: 'white' }}>{strings('Home.reset')}</Text>
+                  </TouchableOpacity>}
               </View>
             </View>
           </View>
@@ -412,12 +413,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  instructionsText:{
+  instructionsText: {
     alignContent: 'flex-start',
-    fontWeight:'bold',
+    fontWeight: 'bold',
     fontSize,
   },
-  rssiText:{
+  rssiText: {
     fontWeight: 'bold',
     fontSize,
     paddingLeft: 3,
@@ -430,7 +431,7 @@ const styles = StyleSheet.create({
   batteryContainer: {
     paddingTop: 5,
     borderTopWidth: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   button: {
     alignItems: 'center',
@@ -442,8 +443,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 45,
-    color: 'white'
-  }
+    color: 'white',
+  },
 });
 
 const mapStateToProps = state => ({ ...state.locks });

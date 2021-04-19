@@ -12,12 +12,12 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     height: 140,
     width: '60%',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
-  api:{
+  api: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   envText: {
     fontSize: 16,
@@ -26,17 +26,17 @@ const styles = StyleSheet.create({
   },
   languageView: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   languageText: {
     fontSize: 16,
     fontWeight: 'bold',
-    paddingBottom: 5
+    paddingBottom: 5,
   },
   radioGroup: {
     top: 6,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   error: {
     color: 'red',
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     fontSize: 16,
     color: '#ffffff',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   inputIOS: {
     fontSize: 16,

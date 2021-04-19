@@ -29,7 +29,7 @@ import {
   // endTestCancel,
   // endTestConfirm,
 } from '../actions/testActions';
-import API from '../../../services/API';
+import API from '../../services/API';
 import { delay, parseTimeStamp } from '../../utils/others';
 import { strings } from '../../utils/i18n';
 

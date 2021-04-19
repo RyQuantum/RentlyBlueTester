@@ -1,5 +1,5 @@
 import { OaksBleLockLibrary, RNBlePlugin, PersistencePlugin } from '../BleLibrary/lib';
-import API from '../services/API';
+import API from '../app/services/API';
 
 const UPDATE_LOCKS = 'UPDATE_LOCKS';
 export const CLEAR_LOCKS = 'CLEAR_LOCKS';

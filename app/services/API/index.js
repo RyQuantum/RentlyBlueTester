@@ -1,5 +1,5 @@
 import axios from './axios';
-import store from '../../app/store';
+import store from '../../store';
 
 const login = async (username, password) => {
   if (store.getState().auth.isKeyless) {
@@ -16,7 +16,7 @@ const login = async (username, password) => {
     clientSecret: password
   });
   return { accessToken, expireTime: Date.now() + expiresAt * 1000 + 100, };
-}
+};
 
 const getDeviceToken = async (mac) => {
   if (store.getState().auth.isKeyless) {
@@ -31,11 +31,11 @@ const getDeviceToken = async (mac) => {
       deviceMac: mac,
       role: 'ADMIN',
       validity: 1
-    }
+    },
   });
   if (data.success == false) throw new Error(data.message);
   return data.token;
-}
+};
 
 const addLockToDMS = async (deviceMac, deviceId) => {
   const params = { deviceMac, deviceId };
@@ -47,7 +47,7 @@ const addLockToDMS = async (deviceMac, deviceId) => {
   }
   if (typeof res.data !== 'object' || res.data == null) throw new Error(res.data);
   return res.data;
-}
+};
 
 const setDeviceTimezone = async (deviceMac, deviceToken) => {
   const timezone = store.getState().locks.libraryObj.timezoneString;
@@ -57,12 +57,12 @@ const setDeviceTimezone = async (deviceMac, deviceToken) => {
     res = await axios.post(`/api/devices/${deviceMac}/setDeviceTimezone`, params);
   } else {
     res = await axios.post('/oakslock/device/setDeviceTimezone', null, {
-      headers: { 'Authorization': `Bearer ${deviceToken}` },
-      params
+      headers: { Authorization: `Bearer ${deviceToken}` },
+      params,
     });
   }
   return res.data;
-}
+};
 
 const updateDeviceBySuperAdmin = async (params) => {
   let res;
@@ -72,7 +72,7 @@ const updateDeviceBySuperAdmin = async (params) => {
     res = await axios.put('/oakslock/device/updateDeviceBySuperAdmin', null, { params });
   }
   return res.data;
-}
+};
 
 const createAutoCode = async (lockMac, deviceToken) => {
   let res;
@@ -92,7 +92,7 @@ const createAutoCode = async (lockMac, deviceToken) => {
     });
   }
   return res.data;
-}
+};
 
 const lockTestRecord = async (lockMac, params) => {
   let res;
@@ -102,7 +102,7 @@ const lockTestRecord = async (lockMac, params) => {
     res = await axios.post('/oakslock/lockTestRecord', null, { params });
   }
   return res.data;
-}
+};
 
 const getMaxV3SerialNo = async (modelNum) => {
   let res;
@@ -112,13 +112,13 @@ const getMaxV3SerialNo = async (modelNum) => {
     res = await axios.get('/oakslock/device/getMaxV3SerialNo', { params: { modelNum } });
   }
   return res.data;
-}
+};
 
 const getLockDetails = async (lockMac, deviceToken) => {
   const url = 'https://' + store.getState().auth.url.replace('keyless', 'api');
   const res = await axios.get(`${url}/oakslock/locks/${lockMac}`, { headers: { Authorization: `Bearer ${deviceToken}` } });
   return res.data;
-}
+};
 
 export const setAccessToken = (accessToken) => axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
 

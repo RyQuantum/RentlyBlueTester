@@ -1,25 +1,20 @@
-import React, {PureComponent} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-} from 'react-native';
-import { strings } from '../app/utils/i18n';
+import React, { PureComponent } from 'react';
+import { View, Text, StyleSheet, Image } from 'react-native';
+import { strings } from '../utils/i18n';
 
 export default class Placeholder extends PureComponent {
   render() {
     const isFilterSettingMode = this.props.isFilterSettingMode;
-    const swipeImage = isFilterSettingMode ? require('../assets/swipe-left.png') : require('../assets/swipe-right.png');
+    const swipeImage = isFilterSettingMode ? require('../../assets/swipe-left.png') : require('../../assets/swipe-right.png');
 
     return (
       <View style={styles.container}>
         <View style={[styles.SwipeImgContainer, { alignSelf: isFilterSettingMode ? 'flex-start' : 'flex-end' }]}>
-          <Image style={styles.swipeLeft} resizeMode='contain' source={swipeImage}/>
+          <Image style={styles.swipeLeft} resizeMode="contain" source={swipeImage}/>
           <Text style={styles.swipeImg}>{isFilterSettingMode ? strings('Home.toScanNonsettingModeLocks') : strings('Home.toScanSettingModeLocks')}</Text>
         </View>
         <View style={styles.keypadContainer}>
-          <Image style={styles.image} source={require('../assets/touch.png')} resizeMode='contain'/>
+          <Image style={styles.image} source={require('../../assets/touch.png')} resizeMode="contain"/>
           <Text style={styles.keypadImg}>{strings('Home.touchLock')}</Text>
         </View>
       </View>
@@ -46,7 +41,7 @@ const styles = StyleSheet.create({
   keypadContainer: {
     flex: 1,
     justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   image: {
     width: 150,
@@ -55,11 +50,11 @@ const styles = StyleSheet.create({
   swipeImg: {
     paddingTop: 5,
     fontSize: 16,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   keypadImg: {
     paddingTop: 10,
     fontSize: 28,
     color: 'black',
-  }
+  },
 });

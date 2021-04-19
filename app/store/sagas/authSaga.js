@@ -1,8 +1,8 @@
 import { put, call } from 'redux-saga/effects';
 
 import * as authActions from '../actions/authActions';
-import { setBaseURL } from '../../../services/API/axios';
-import API from '../../../services/API';
+import { setBaseURL } from '../../services/API/axios';
+import API from '../../services/API';
 
 export function* loginAsync({ payload }) {
   setBaseURL(payload.url);

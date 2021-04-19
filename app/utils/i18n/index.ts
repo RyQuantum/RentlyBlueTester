@@ -1,4 +1,6 @@
+import { Component } from 'react';
 import ReactNative from 'react-native';
+// @ts-ignore
 import I18n from 'react-native-i18n';
 
 // Import all locales
@@ -12,7 +14,7 @@ I18n.fallbacks = true;
 // Define the supported translations
 I18n.translations = {
   en,
-  zh
+  zh,
 };
 
 const currentLocale = I18n.currentLocale();
@@ -24,13 +26,13 @@ export const isRTL = currentLocale.indexOf('he') === 0 || currentLocale.indexOf(
 ReactNative.I18nManager.allowRTL(isRTL);
 
 // The method we'll use instead of a regular string
-export function strings(name, params = {}) {
+export function strings(name: string, params = {}) {
   return I18n.t(name, params);
-};
+}
 
-export const switchLanguage = (lang, component) => {
-    I18n.locale = lang;
-    component.forceUpdate();
+export const switchLanguage = (lang: string, component: Component) => {
+  I18n.locale = lang;
+  component.forceUpdate();
 };
 
 export default I18n;

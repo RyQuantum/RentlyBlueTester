@@ -1,5 +1,5 @@
 import { Alert } from 'react-native';
-import API from '../services/API';
+import API from '../app/services/API';
 import { delay } from './test';
 import { strings } from '../app/utils/i18n';
 

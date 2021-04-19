@@ -17,10 +17,10 @@ const styles = StyleSheet.create({
   largestSn: {
     marginVertical: 20,
   },
-  getSerialNumberView:{
+  getSerialNumberView: {
     flexDirection: 'row',
   },
-  serialNumber:{
+  serialNumber: {
     marginLeft: 10,
     fontWeight: 'bold',
     fontSize: 20,
