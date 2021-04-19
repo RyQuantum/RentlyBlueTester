@@ -19,11 +19,9 @@ import Navigation from './app/navigation';
 import { strings } from './app/utils/i18n';
 import { persistor } from './app/store';
 
-export interface Props {}
-
 export default class App extends Component {
   private readonly unsubscribe: NetInfoSubscription;
-  constructor(props: Props) {
+  constructor(props: {}) {
     super(props);
     this.unsubscribe = NetInfo.addEventListener(connectionInfo => {
       const { type } = connectionInfo;
