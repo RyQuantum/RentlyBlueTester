@@ -20,7 +20,7 @@ import { requestTest } from '../store/actions/testActions';
 // import { clearLocks } from '../redux/locks';
 import { strings } from '../utils/i18n';
 import API from '../services/API';
-import { alertIOS } from '../utils/others';
+import { alertIOS } from '../utils';
 // import { startTest1 } from '../redux/test1';
 // import { startTest2 } from '../redux/test2';
 
@@ -204,7 +204,7 @@ class ListItem extends PureComponent {
       ...info,
       (<View key={2} style={styles.tableRowHeader}>
         <View style={styles.tableEntry}>
-          <Text style={styles.text}>{strings('LockTest.passcode')}</Text>
+          <Text style={styles.text}>{strings('Home.passcode')}</Text>
         </View>
       </View>),
       (<View key={3} style={styles.tableRow}>

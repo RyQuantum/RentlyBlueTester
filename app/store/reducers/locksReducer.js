@@ -3,7 +3,7 @@ import {
   CLEAR_LOCKS,
   SET_ENABLED,
   SET_THRESHOLD,
-  GET_MAX_SERIAL_NUM_REQUEST,
+  GET_MAX_SERIAL_NUM_PENDING,
   GET_MAX_SERIAL_NUM_SUCCESS,
   GET_MAX_SERIAL_NUM_FAILED,
   UPDATE_LOCKS,
@@ -12,7 +12,7 @@ import {
   OaksBleLockLibrary,
   PersistencePlugin,
   RNBlePlugin,
-} from '../../utils/BleLibrary/lib';
+} from '../../services/BleLibrary/lib';
 import API from '../../services/API';
 
 const libraryObj = new OaksBleLockLibrary(API.getDeviceToken, new RNBlePlugin(), new PersistencePlugin());
@@ -48,7 +48,7 @@ export default (state = defaultState, action) => {
     case SET_THRESHOLD:
       return { ...state, rssiThreshold: payload };
 
-    case GET_MAX_SERIAL_NUM_REQUEST:
+    case GET_MAX_SERIAL_NUM_PENDING:
       return { ...state, maxSerialNumber: -1 };
 
     case GET_MAX_SERIAL_NUM_SUCCESS:

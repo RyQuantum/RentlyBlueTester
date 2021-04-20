@@ -18,7 +18,7 @@ import {
 } from 'react-native';
 
 import { strings, switchLanguage } from '../../utils/i18n';
-import { MapUrl } from '../../services/Constants';
+import { MapUrl } from '../../utils';
 import { requestLogin } from '../../store/actions/authActions';
 import styles from './styles';
 

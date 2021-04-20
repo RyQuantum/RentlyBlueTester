@@ -23,6 +23,19 @@ export const verifyBroadcastInfoFailed = error => ({
   error,
 });
 
+export const registerLockToDMS = () => ({
+  type: types.ADD_LOCK_TO_DMS_PENDING,
+});
+
+export const registerLockToDMSSuccess = () => ({
+  type: types.ADD_LOCK_TO_DMS_SUCCESS,
+});
+
+export const registerLockToDMSFailed = error => ({
+  type: types.ADD_LOCK_TO_DMS_FAILED,
+  error,
+});
+
 export const initializeLock = () => ({
   type: types.INIT_LOCK_PENDING,
 });

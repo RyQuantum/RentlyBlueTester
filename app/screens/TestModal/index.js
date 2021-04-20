@@ -21,7 +21,7 @@ import {
 } from '../../store/actions/testActions';
 import { strings } from '../../utils/i18n';
 
-const Step1 = () => {
+const Step0 = () => {
   const {
     testBroadcastState,
     broadcastInfo: {
@@ -36,7 +36,7 @@ const Step1 = () => {
   return (
     <View>
       <View style={styles.title}>
-        <Text style={styles.text}>1.{strings('Test.verifyBroadcast')}</Text>
+        <Text style={styles.text}>0. {strings('Test.verifyBroadcast')}</Text>
         {testBroadcastState === types.PENDING && <ActivityIndicator />}
         {testBroadcastState === types.SUCCESS && <Icon name="check" type="entypo" color="green" size={28} />}
         {testBroadcastState === types.FAILED && <Icon name="cross" type="entypo" color="red" size={28} />}
@@ -66,7 +66,7 @@ const Step = ({ state, name, no }) => {
   return (
     <View>
       <View style={styles.title}>
-        <Text style={styles.text}>{no}.{name}</Text>
+        <Text style={styles.text}>{no}. {name}</Text>
         {state === types.PENDING && <ActivityIndicator />}
         {state === types.SUCCESS && <Icon name="check" type="entypo" color="green" size={28} />}
         {state === types.FAILED && <Icon name="cross" type="entypo" color="red" size={28} />}
@@ -83,7 +83,7 @@ const Step9 = ({ state, code }) => {
   return (
     <View>
       <View style={styles.title}>
-        <Text style={styles.text}>9.{strings('Test.offlineCode')}</Text>
+        <Text style={styles.text}>9. {strings('Test.offlineCode')}</Text>
         {state === types.PENDING && <ActivityIndicator />}
         {state === types.SUCCESS && <Icon name="check" type="entypo" color="green" size={28} />}
         {state === types.FAILED && <Icon name="cross" type="entypo" color="red" size={28} />}
@@ -108,7 +108,7 @@ const Step10 = ({ onPressScan }) => {
   return (
     <View>
       <View style={styles.title}>
-        <Text style={styles.text}>10.{strings('Test.upload')} {strings('Test.serialNo')}</Text>
+        <Text style={styles.text}>10. {strings('Test.upload')} {strings('Test.serialNo')}</Text>
         <Button title={strings('Test.scan')} onPress={onPressScan} disabled={uploadSerialNoState === types.SUCCESS} />
         {uploadSerialNoState === types.PENDING && <ActivityIndicator />}
         {uploadSerialNoState === types.SUCCESS && <Icon name="check" type="entypo" color="green" size={28} />}
@@ -214,7 +214,8 @@ class TestModal extends PureComponent {
           <View style={styles.back}>
             <Button title={strings('Test.back')} onPress={this.endTest} disabled={!this.props.error} />
           </View>
-          <Step1 />
+          <Step0 />
+          <Step no="1" state={this.props.registerLockToDMSState} name={strings('Test.registerToDMS')} />
           <Step no="2" state={this.props.initLockState} name={strings('Test.initialization')} />
           <Step no="3" state={this.props.testRTCState} name={strings('Test.RTC')} />
           <Step no="4" state={this.props.testHallState} name={strings('Test.hall')} />

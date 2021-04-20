@@ -20,7 +20,7 @@ export const setThreshold = payload => ({
 });
 
 export const getMaximumSerialNoRequest = payload => ({
-  type: types.GET_MAX_SERIAL_NUM_REQUEST,
+  type: types.GET_MAX_SERIAL_NUM_PENDING,
   payload,
 });
 

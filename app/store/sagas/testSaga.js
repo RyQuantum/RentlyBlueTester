@@ -6,6 +6,9 @@ import {
   verifyBroadcastInfo,
   verifyBroadcastInfoSuccess,
   verifyBroadcastInfoFailed,
+  registerLockToDMS,
+  registerLockToDMSSuccess,
+  registerLockToDMSFailed,
   initializeLock,
   initializeLockSuccess,
   initializeLockFailed,
@@ -26,11 +29,9 @@ import {
   testAutoLock,
   testAutoLockSuccess,
   testAutoLockFailed,
-  // endTestCancel,
-  // endTestConfirm,
 } from '../actions/testActions';
 import API from '../../services/API';
-import { delay, parseTimeStamp } from '../../utils/others';
+import { delay, parseTimeStamp } from '../../utils';
 import { strings } from '../../utils/i18n';
 
 //TODO retry
@@ -65,6 +66,17 @@ export function* scanBroadcastAsync() {
   }
   Object.assign(lockObj, info);
   yield put(requestTest(lockObj));
+}
+
+export function* registerLockToDMSAsync() {
+  try {
+    yield put(registerLockToDMS());
+    const { test: { lockObj } } = yield select();
+    yield API.addLockToDMS(lockObj.lockMac, lockObj.deviceID);
+    yield put(registerLockToDMSSuccess());
+  } catch (error) {
+    yield put(registerLockToDMSFailed(error));
+  }
 }
 
 export function* initializeLockAsync() {

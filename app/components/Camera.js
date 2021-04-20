@@ -66,14 +66,14 @@ class Camera extends Component {
           onFocusChanged={() => {}}
           onZoomChanged={() => {}}
           androidCameraPermissionOptions={{
-            title: strings('LockTest.permission'),
-            message: strings('LockTest.permissiondesc'),
+            title: strings('Test.permission'),
+            message: strings('Test.permissionDesc'),
           }}
           style={styles.preview}
           type={RNCamera.Constants.Type.back}
         />
         <View style={[styles.overlay, styles.topOverlay]}>
-          <Text style={styles.scanScreenMessage}>{strings('LockTest.scanInfo')}</Text>
+          <Text style={styles.scanScreenMessage}>{strings('Test.scanInfo')}</Text>
         </View>
         <View style={[styles.overlay, styles.centerOverlay]}>
           <View style={{ width: '60%', height:'40%', borderWidth: 1, borderColor: '#317ef5', }}/>
@@ -82,7 +82,7 @@ class Camera extends Component {
           <Button
             onPress={this.props.dismiss}
             style={styles.enterBarcodeManualButton}
-            title={strings('LockTest.close')}
+            title={strings('Test.close')}
           />
         </View>
       </View>
