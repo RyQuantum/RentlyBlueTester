@@ -5,7 +5,8 @@ import { CheckBox } from 'react-native-elements';
 import { BarIndicator } from 'react-native-indicators';
 import RadioGroup from 'react-native-radio-button-group';
 
-import { setThreshold, setEnabled, getMaximumSerialNumber, setDevelopmentMode } from '../../../redux/locks';
+// import { setDevelopmentMode } from '../../../redux/locks';
+import { setEnabled, setThreshold, getMaximumSerialNoRequest } from '../../store/actions/locksActions';
 import { strings } from '../../utils/i18n';
 import styles from './styles';
 
@@ -35,7 +36,8 @@ class Settings extends Component {
             <CheckBox
               title="Development Mode"
               checked={this.props.isDevelopmentMode}
-              onPress={this.props.setDevelopmentMode}/>
+              // onPress={this.props.setDevelopmentMode}
+            />
             <CheckBox
               title={strings('Settings.threshold')}
               checked={this.props.checkEnabled}
@@ -69,12 +71,12 @@ class Settings extends Component {
             />
             <View style={styles.getSerialNumberView}>
               <Button
-                onPress={() => this.props.getMaximumSerialNumber(this.state.modelNum)}
+                onPress={() => this.props.getMaximumSerialNoRequest(this.state.modelNum)}
                 disabled={this.state.modelNum === 0}
                 title={strings('Settings.getSnButton')}
                 style={styles.button}
               />
-              {this.props.maxSerialNumber === 'loading' ?
+              {this.props.maxSerialNumber === -1 ?
                 <BarIndicator style={{ flex: 0, paddingHorizontal: 7 }} color='grey'/> :
                 <Text style={styles.serialNumber}>{this.props.maxSerialNumber}</Text>}
             </View>
@@ -89,8 +91,8 @@ const mapStateToProps = (state) => state.locks;
 const mapDispatchToProps = {
   setThreshold,
   setEnabled,
-  setDevelopmentMode,
-  getMaximumSerialNumber,
+  // setDevelopmentMode,
+  getMaximumSerialNoRequest,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Settings)
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

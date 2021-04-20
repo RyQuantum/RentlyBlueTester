@@ -14,16 +14,17 @@ import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 import { BarIndicator } from 'react-native-indicators';
 import * as RNLocalize from 'react-native-localize';
+
 // import { startTest } from '../redux/test';
-import { requestTest } from '../app/store/actions/testActions';
+import { requestTest } from '../store/actions/testActions';
+// import { clearLocks } from '../redux/locks';
+import { strings } from '../utils/i18n';
+import API from '../services/API';
+import { alertIOS } from '../utils/others';
+// import { startTest1 } from '../redux/test1';
+// import { startTest2 } from '../redux/test2';
 
-import { clearLocks } from '../redux/locks';
-import { strings } from '../app/utils/i18n';
-import API from '../app/services/API';
-import { startTest1 } from '../redux/test1';
-import { startTest2 } from '../redux/test2';
-
-export const ListItemSeparator = () => (<View style={styles.separator} />);
+// export const ListItemSeparator = () => (<View style={styles.separator} />);
 
 class ListItem extends PureComponent {
   state = {
@@ -46,9 +47,9 @@ class ListItem extends PureComponent {
   startTest = async () => {
 
     // fix multi-click;
-    // if (!this._isFirst) return;
-    // this._isFirst = false;
-    // setTimeout(() => this._isFirst = true, 3000);
+    if (!this._isFirst) return;
+    this._isFirst = false;
+    setTimeout(() => this._isFirst = true, 3000);
 
     if (this.state.isCorrectTimeZone) {
       const { lockObj, requestTest } = this.props;
@@ -81,14 +82,14 @@ class ListItem extends PureComponent {
       if (!lockObj.deviceAuthToken) await lockObj.refreshToken();
       await lockObj.setLockTime();
       await lockObj.resetLock();
-      this.props.onChangeLoading(false, () => setTimeout(() => Alert.alert(strings('Home.resetSuccess')), 150));
+      this.props.onChangeLoading(false, () => alertIOS(strings('Home.resetSuccess')));
     } catch (error) {
       const errorMessage =
         typeof error === 'object' ? error.message :
           typeof error === 'string' ? error : 'unknown';
-      this.props.onChangeLoading(false, () => setTimeout(() => Alert.alert('Error', errorMessage), 150));
-    } finally {
-      this.props.clearLocks(lockObj.lockMac);
+      this.props.onChangeLoading(false, () => alertIOS(strings('Home.resetSuccess')));
+    // } finally {
+    //   this.props.clearLocks(lockObj.lockMac);
     }
   };
 
@@ -448,6 +449,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({ ...state.locks });
-const mapDispatchToProps = { requestTest, startTest1, startTest2, clearLocks };
+// const mapDispatchToProps = { requestTest, startTest1, startTest2, clearLocks };
+const mapDispatchToProps = { requestTest };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListItem);

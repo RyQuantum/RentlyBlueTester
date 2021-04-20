@@ -146,7 +146,7 @@ export function* uploadSerialNoAsync({ payload: serialNoStr }) {
   const serialNo = parseInt(serialNoStr);
   try {
     if (serialNo.toString() !== serialNoStr || !(serialNo >= 10000000) || !(serialNo < 12000000)) {
-      throw new Error(strings('LockTest.invalidSN'));
+      throw new Error(serialNoStr + ' - ' + strings('Test.invalidSN'));
     }
     //TODO upload to local server
     const params = { deviceMac: lockMac, batchNum: batchNo, serialNo };

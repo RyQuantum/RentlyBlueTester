@@ -1,14 +1,18 @@
 import {
   UPDATE_LOCK,
   CLEAR_LOCKS,
+  SET_ENABLED,
   SET_THRESHOLD,
-  SET_RSSI_FILTER,
   GET_MAX_SERIAL_NUM_REQUEST,
   GET_MAX_SERIAL_NUM_SUCCESS,
   GET_MAX_SERIAL_NUM_FAILED,
   UPDATE_LOCKS,
 } from '../actions/types';
-import { OaksBleLockLibrary, PersistencePlugin, RNBlePlugin } from '../../../BleLibrary/lib';
+import {
+  OaksBleLockLibrary,
+  PersistencePlugin,
+  RNBlePlugin,
+} from '../../utils/BleLibrary/lib';
 import API from '../../services/API';
 
 const libraryObj = new OaksBleLockLibrary(API.getDeviceToken, new RNBlePlugin(), new PersistencePlugin());
@@ -38,17 +42,21 @@ export default (state = defaultState, action) => {
     case CLEAR_LOCKS:
       return { ...state, touchedLocks: [], settingLocks: [], nonSettingLocks: [] };
 
-    case SET_THRESHOLD:
-      const { rssiThreshold } = payload;
-      return { ...state, rssiThreshold: rssiThreshold };
-
-    case SET_RSSI_FILTER:
+    case SET_ENABLED:
       return { ...state, checkEnabled: !state.checkEnabled };
+
+    case SET_THRESHOLD:
+      return { ...state, rssiThreshold: payload };
+
     case GET_MAX_SERIAL_NUM_REQUEST:
-      return { ...state, ...payload };
+      return { ...state, maxSerialNumber: -1 };
+
     case GET_MAX_SERIAL_NUM_SUCCESS:
-      const { maxSerialNumber } = payload;
-      return { ...state, maxSerialNumber };
+      return { ...state, maxSerialNumber: payload };
+
+    case GET_MAX_SERIAL_NUM_FAILED:
+      return { ...state, error };
+
     default:
       return state;
   }

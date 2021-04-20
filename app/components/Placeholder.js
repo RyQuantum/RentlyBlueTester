@@ -5,7 +5,7 @@ import { strings } from '../utils/i18n';
 export default class Placeholder extends PureComponent {
   render() {
     const isFilterSettingMode = this.props.isFilterSettingMode;
-    const swipeImage = isFilterSettingMode ? require('../../assets/swipe-left.png') : require('../../assets/swipe-right.png');
+    const swipeImage = isFilterSettingMode ? require('../assets/swipe-left.png') : require('../assets/swipe-right.png');
 
     return (
       <View style={styles.container}>
@@ -14,7 +14,7 @@ export default class Placeholder extends PureComponent {
           <Text style={styles.swipeImg}>{isFilterSettingMode ? strings('Home.toScanNonsettingModeLocks') : strings('Home.toScanSettingModeLocks')}</Text>
         </View>
         <View style={styles.keypadContainer}>
-          <Image style={styles.image} source={require('../../assets/touch.png')} resizeMode="contain"/>
+          <Image style={styles.image} source={require('../assets/touch.png')} resizeMode="contain"/>
           <Text style={styles.keypadImg}>{strings('Home.touchLock')}</Text>
         </View>
       </View>

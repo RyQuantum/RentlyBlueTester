@@ -10,7 +10,7 @@ export const UPDATE_LOCK = 'UPDATE_LOCK';
 export const UPDATE_LOCKS = 'UPDATE_LOCKS';
 export const CLEAR_LOCKS = 'CLEAR_LOCKS';
 
-export const SET_RSSI_FILTER = 'SET_RSSI_FILTER';
+export const SET_ENABLED = 'SET_ENABLED';
 export const SET_THRESHOLD = 'SET_THRESHOLD';
 
 export const GET_MAX_SERIAL_NUM_REQUEST = 'GET_MAX_SERIAL_NUM_REQUEST';

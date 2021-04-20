@@ -150,7 +150,7 @@ class Login extends Component {
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollView}>
-          <Image source={require('../../../assets/logo.png')} style={styles.logo} />
+          <Image source={require('../../assets/logo.png')} style={styles.logo} />
           <View style={styles.api}>
             <Dropdown
               label="Environment"

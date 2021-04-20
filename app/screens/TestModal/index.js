@@ -87,7 +87,7 @@ const Step9 = ({ state, code }) => {
         {state === types.PENDING && <ActivityIndicator />}
         {state === types.SUCCESS && <Icon name="check" type="entypo" color="green" size={28} />}
         {state === types.FAILED && <Icon name="cross" type="entypo" color="red" size={28} />}
-        {state === types.FAILED && <RetryButton no='8' />}
+        {state === types.FAILED && <RetryButton no="9" />}
       </View>
       {code !== '' && <Text style={styles.result}>{strings('Test.oneTimeCode')}: {code}, {strings('Test.offlineCodeInstruction')}</Text>}
       {code !== '' && state !== types.SUCCESS && (
@@ -167,7 +167,7 @@ const RetryInstruction = () => {
     <View style={styles.retryInstruction}>
       <Text style={styles.text}>{strings('Test.touchToRetry')}</Text>
       <Image
-        source={require('../../../assets/touch.png')}
+        source={require('../../assets/touch.png')}
         style={styles.image}
         resizeMode="contain"
       />

@@ -11,3 +11,11 @@ export const parseTimeStamp = (timestamp: string) => {
 
   return new Date(year, mon, day, hour, min, sec);
 };
+
+export const alertIOS = (...args: any[]) => {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      alert(...args);
+    });
+  });
+};

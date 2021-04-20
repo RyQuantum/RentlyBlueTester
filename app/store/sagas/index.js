@@ -15,7 +15,7 @@ import {
   endTestAsync,
 } from './testSaga';
 
-import { updateLockAsync } from './locksSaga';
+import { getMaximumSerialNoAsync, updateLockAsync } from './locksSaga';
 
 export default function* rootSaga() {
   yield takeLatest(types.LOGIN_REQUEST, loginAsync);
@@ -30,4 +30,5 @@ export default function* rootSaga() {
   yield takeEvery(types.UPLOAD_SERIAL_N0_PENDING, uploadSerialNoAsync);
   // yield takeLatest(types.END_TEST_REQUEST, endTestAsync);
   yield takeEvery(types.UPDATE_LOCK, updateLockAsync);
+  yield takeEvery(types.GET_MAX_SERIAL_NUM_REQUEST, getMaximumSerialNoAsync);
 }

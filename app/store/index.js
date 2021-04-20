@@ -12,8 +12,8 @@ import auth from './reducers/authReducer';
 import locks from './reducers/locksReducer';
 // import test from '../../redux/test';
 import test from './reducers/testReducer';
-import test1 from '../../redux/test1';
-import test2 from '../../redux/test2';
+// import test1 from '../../redux/test1';
+// import test2 from '../../redux/test2';
 import rootSaga from './sagas';
 // const middlewares = [thunk];
 const sagaMiddleware = createSagaMiddleware();
@@ -41,8 +41,8 @@ const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, auth),
   locks: persistReducer(lockPersistConfig, locks),
   test,
-  test1,
-  test2,
+  // test1,
+  // test2,
 });
 
 const store = createStore(

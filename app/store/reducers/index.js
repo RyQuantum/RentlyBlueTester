@@ -1,3 +1,4 @@
 import * as authReducer from './authReducer';
 import * as locksReducer from './locksReducer';
-export default Object.assign(authReducer, locksReducer);
+import * as testReducer from './testReducer';
+export default Object.assign(authReducer, locksReducer, testReducer);

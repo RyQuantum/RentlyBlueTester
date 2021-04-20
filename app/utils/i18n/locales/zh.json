@@ -119,6 +119,7 @@
     "serialNo": "SN号",
     "upload": "上传",
     "uploadSuccess": "上传成功",
+    "invalidSN": "无效的SN号",
     "valid": "有效",
     "scan": "扫描",
     "done": "完成",
