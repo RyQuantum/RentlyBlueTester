@@ -205,7 +205,7 @@ class TestModal extends PureComponent {
       { text: strings('Test.backHome'), onPress: this.props.endTest },
     ]);
   };
-//TODO Add DMS process
+
 //TODO reorder steps
   render() {
     return (
