@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, Slider, Button } from 'react-native';
+import { View, Text, Button } from 'react-native';
 import { connect } from 'react-redux';
 import { CheckBox } from 'react-native-elements';
+import Slider from '@react-native-community/slider';
 import { BarIndicator } from 'react-native-indicators';
 import RadioGroup from 'react-native-radio-button-group';
 

@@ -77,6 +77,23 @@ const Step = ({ state, name, no }) => {
   );
 };
 
+const Step7 = ({ state, fobNumber }) => {
+  if (state === types.NOT_STARTED) return null;
+  return (
+    <View>
+      <View style={styles.title}>
+        <Text style={styles.text}>7. {strings('Test.nfcChip')}</Text>
+        {state === types.PENDING && <ActivityIndicator />}
+        {state === types.SUCCESS && <Icon name="check" type="entypo" color="green" size={28} />}
+        {state === types.FAILED && <Icon name="cross" type="entypo" color="red" size={28} />}
+        {state === types.FAILED && <RetryButton no={7} />}
+      </View>
+      {state === types.SUCCESS && <Text style={styles.result}>{strings('Test.fobNumber')}: {fobNumber}. {strings('Test.pass')}</Text>}
+      {state === types.FAILED && <Text style={styles.error}>{strings('Test.fobNumber')}: {fobNumber}. {strings('Test.wrongFobNumber')}</Text>}
+    </View>
+  );
+};
+
 const Step9 = ({ state, code }) => {
   const dispatch = useDispatch();
   if (state === types.NOT_STARTED) return null;
@@ -220,8 +237,8 @@ class TestModal extends PureComponent {
           <Step no="3" state={this.props.testRTCState} name={strings('Test.RTC')} />
           <Step no="4" state={this.props.testHallState} name={strings('Test.hall')} />
           <Step no="5" state={this.props.testDoorSensorState} name={strings('Test.doorSensor')} />
-          {/*<Step6 />*/}
-          {/*<Step7 />*/}
+          <Step no="6" state={this.props.testTouchKeyState} name={strings('Test.touchKey')} />
+          <Step7 state={this.props.testNfcChipState} fobNumber={this.props.fobNumber} />
           <Step no="8" state={this.props.testAutoLockState} name={strings('Test.autoLock')} />
           <Step9 state={this.props.testOfflineCodeState} code={this.props.code} />
           <Step10 onPressScan={() => this.setState({ isScanning: true })} />

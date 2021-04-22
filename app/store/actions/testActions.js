@@ -88,6 +88,33 @@ export const testDoorSensorFailed = error => ({
   error,
 });
 
+export const testTouchKey = () => ({
+  type: types.TEST_TOUCH_KEY_PENDING,
+});
+
+export const testTouchKeySuccess = () => ({
+  type: types.TEST_TOUCH_KEY_SUCCESS,
+});
+
+export const testTouchKeyFailed = error => ({
+  type: types.TEST_TOUCH_KEY_FAILED,
+  error,
+});
+
+export const testNfcChip = () => ({
+  type: types.TEST_NFC_CHIP_PENDING,
+});
+
+export const testNfcChipSuccess = payload => ({
+  type: types.TEST_NFC_CHIP_SUCCESS,
+  payload,
+});
+
+export const testNfcChipFailed = error => ({
+  type: types.TEST_NFC_CHIP_FAILED,
+  error,
+});
+
 export const testAutoLock = () => ({
   type: types.TEST_AUTO_LOCK_PENDING,
 });

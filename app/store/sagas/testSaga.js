@@ -21,14 +21,20 @@ import {
   testDoorSensor,
   testDoorSensorSuccess,
   testDoorSensorFailed,
+  testTouchKey,
+  testTouchKeySuccess,
+  testTouchKeyFailed,
+  testNfcChip,
+  testNfcChipSuccess,
+  testNfcChipFailed,
+  testAutoLock,
+  testAutoLockSuccess,
+  testAutoLockFailed,
   testOfflineCode,
   testOfflineCodeFailed,
   gotOfflineCode,
   uploadSerialNoFailed,
   uploadSerialNoSuccess,
-  testAutoLock,
-  testAutoLockSuccess,
-  testAutoLockFailed,
 } from '../actions/testActions';
 import API from '../../services/API';
 import { delay, parseTimeStamp } from '../../utils';
@@ -128,6 +134,40 @@ export function* testDoorSensorAsync() {
     yield put(testDoorSensorSuccess());
   } catch (error) {
     yield put(testDoorSensorFailed(error));
+  }
+}
+
+export function* testTouchKeyAsync() {
+  yield put(testTouchKey());
+  const { test: { lockObj } } = yield select();
+  try {
+    // const { keys } = yield lockObj.sendFactoryTestingCommand(1);
+    // if (!keys.every(key => key === true)) {
+    //   const arr = keys.map((key, i) => key || i + 1).filter(key => key !== true);
+    //   throw new Error(`[${arr.toString()}] are not been touched`);
+    // }
+    yield lockObj.getLockTime();
+    yield put(testTouchKeySuccess());
+  } catch (error) {
+    yield put(testTouchKeyFailed(error));
+  }
+}
+
+export function* testNfcChipAsync() {
+  yield put(testNfcChip());
+  const { test: { lockObj } } = yield select();
+  try {
+    // let { fobNumber } = yield lockObj.sendFactoryTestingCommand(2);
+    // fobNumber = parseInt(fobNumber, 16).toString().padStart(10, '0');
+    // if (!keys.every(key => key === true)) {
+    //   const arr = keys.map((key, i) => key || i + 1).filter(key => key !== true);
+    //   throw new Error(`[${arr.toString()}] are not been touched`);
+    // }
+    yield lockObj.getLockTime();
+    const fobNumber = '1234567890';
+    yield put(testNfcChipSuccess(fobNumber));
+  } catch (error) {
+    yield put(testNfcChipFailed(error));
   }
 }
 

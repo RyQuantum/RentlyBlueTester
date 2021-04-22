@@ -24,13 +24,19 @@ import {
   TEST_DOOR_SENSOR_PENDING,
   TEST_DOOR_SENSOR_SUCCESS,
   TEST_DOOR_SENSOR_FAILED,
+  TEST_TOUCH_KEY_PENDING,
+  TEST_TOUCH_KEY_SUCCESS,
+  TEST_TOUCH_KEY_FAILED,
+  TEST_NFC_CHIP_PENDING,
+  TEST_NFC_CHIP_SUCCESS,
+  TEST_NFC_CHIP_FAILED,
+  TEST_AUTO_LOCK_PENDING,
+  TEST_AUTO_LOCK_SUCCESS,
+  TEST_AUTO_LOCK_FAILED,
   TEST_OFFLINE_CODE_FAILED,
   GOT_OFFLINE_CODE,
   TEST_OFFLINE_CODE_SUCCESS,
   TEST_OFFLINE_CODE_PENDING,
-  TEST_AUTO_LOCK_PENDING,
-  TEST_AUTO_LOCK_SUCCESS,
-  TEST_AUTO_LOCK_FAILED,
   UPLOAD_SERIAL_N0_PENDING,
   UPLOAD_SERIAL_N0_SUCCESS,
   UPLOAD_SERIAL_N0_FAILED,
@@ -54,13 +60,13 @@ const defaultState = {
   testRTCState: NOT_STARTED,
   testHallState: NOT_STARTED,
   testDoorSensorState: NOT_STARTED,
-  testTouchButtonState: NOT_STARTED,
-  touchButton: Array(10).fill(false),
+  testTouchKeyState: NOT_STARTED,
+  // touchButton: Array(10).fill(false),
   testNfcChipState: NOT_STARTED,
   fobNumber: '',
+  testAutoLockState: NOT_STARTED,
   testOfflineCodeState: NOT_STARTED,
   code: '',
-  testAutoLockState: NOT_STARTED,
   uploadSerialNoState: NOT_STARTED,
   serialNo: '',
   error: null,
@@ -111,10 +117,22 @@ export default (state = defaultState, action) => {
       return { ...state, testDoorSensorState: SUCCESS, error: null };
     case TEST_DOOR_SENSOR_FAILED:
       return { ...state, testDoorSensorState: FAILED, error };
+    case TEST_TOUCH_KEY_PENDING:
+      return { ...state, testTouchKeyState: PENDING };
+    case TEST_TOUCH_KEY_SUCCESS:
+      return { ...state, testTouchKeyState: SUCCESS, error: null };
+    case TEST_TOUCH_KEY_FAILED:
+      return { ...state, testTouchKeyState: FAILED, error };
+    case TEST_NFC_CHIP_PENDING:
+      return { ...state, testNfcChipState: PENDING };
+    case TEST_NFC_CHIP_SUCCESS:
+      return { ...state, testNfcChipState: SUCCESS, fobNumber: payload, error: null };
+    case TEST_NFC_CHIP_FAILED:
+      return { ...state, testNfcChipState: FAILED, error };
     case TEST_AUTO_LOCK_PENDING:
       return { ...state, testAutoLockState: PENDING };
     case TEST_AUTO_LOCK_SUCCESS:
-      return { ...state, testAutoLockState: SUCCESS };
+      return { ...state, testAutoLockState: SUCCESS, error: null };
     case TEST_AUTO_LOCK_FAILED:
       return { ...state, testAutoLockState: FAILED, error };
     case TEST_OFFLINE_CODE_PENDING:
