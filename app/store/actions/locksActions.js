@@ -10,8 +10,19 @@ export const updateLocks = payload => ({
   payload,
 });
 
-export const setEnabled = () => ({
+export const updateCriteria = payload => ({
+  type: types.UPDATE_CRITERIA,
+  payload,
+});
+
+export const setIndex = payload => ({
+  type: types.SET_INDEX,
+  payload,
+});
+
+export const setEnabled = payload => ({
   type: types.SET_ENABLED,
+  payload,
 });
 
 export const setThreshold = payload => ({

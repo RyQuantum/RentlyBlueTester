@@ -1,15 +1,95 @@
 import React, { Component, useState } from 'react';
-import { View, Text, Button, ScrollView } from 'react-native';
+import { View, Text, Button, ScrollView, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import { ButtonGroup, CheckBox, Icon, Input, ListItem } from 'react-native-elements';
+import { ButtonGroup, Icon, Input, ListItem } from 'react-native-elements';
 import Slider from '@react-native-community/slider';
-import { BarIndicator } from 'react-native-indicators';
-import RadioGroup from 'react-native-radio-button-group';
 
 // import { setDevelopmentMode } from '../../../redux/locks';
-import { setEnabled, setThreshold, getMaximumSerialNoRequest } from '../../store/actions/locksActions';
+import {
+  updateCriteria,
+  setIndex,
+  getMaximumSerialNoRequest,
+  setEnabled,
+  setThreshold,
+} from '../../store/actions/locksActions';
 import { strings } from '../../utils/i18n';
 import styles from './styles';
+
+const CriteriaSlider = ({ name, min, max, value: v, unit, callback }) => {
+  const [value, setValue] = useState(v);
+  return (
+    <>
+      <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+        <View>
+          <Text>{name}</Text>
+        </View>
+        <View style={{ flex: 1 }} />
+        <View>
+          <Text>{value}{unit}</Text>
+        </View>
+      </View>
+      <Slider
+        step={1}
+        width="100%"
+        minimumValue={min}
+        maximumValue={max}
+        minimumTrackTintColor="lightgrey"
+        maximumTrackTintColor="#07f"
+        value={value}
+        onValueChange={v => setValue(v)}
+        onSlidingComplete={v => callback(v)}
+      />
+    </>
+  );
+};
+
+const FobNumberInput = ({ callback, value }) => {
+  const [fobNumber, setFobNumber] = useState(value);
+  const errorMsg = 'The length of fob number is less than 10 digits';
+  let errorMessage = (fobNumber && fobNumber.length !== 10) ? errorMsg : '';
+  return (
+    <Input
+      maxLength={10}
+      keyboardType="number-pad"
+      placeholder="Fob number"
+      value={fobNumber}
+      leftIcon={{ type: 'font-awesome', name: 'credit-card' }}
+      style={styles}
+      errorMessage={errorMessage}
+      onChangeText={text => {
+        setFobNumber(text);
+        errorMessage = (text && text.length !== 10) ? errorMsg : '';
+        if (errorMessage) return;
+        callback(text);
+      }}
+    />
+  );
+}
+
+const RssiListItem = ({ callback, value }) => {
+  const [rssi, setRssi] = useState(value);
+  return (
+    <>
+      <ListItem.Subtitle style={{ paddingRight: 10 }}>
+        <Text>RSSI</Text>
+      </ListItem.Subtitle>
+      <Slider
+        step={1}
+        width="80%"
+        minimumValue={-100}
+        maximumValue={0}
+        minimumTrackTintColor="lightgrey"
+        maximumTrackTintColor="#07f"
+        value={rssi}
+        onValueChange={setRssi}
+        onSlidingComplete={v => callback(v)}
+      />
+      <ListItem.Subtitle style={{ paddingLeft: 2 }}>
+        <Text>{rssi}</Text>
+      </ListItem.Subtitle>
+    </>
+  );
+};
 
 class Settings extends Component {
   static navigationOptions ={
@@ -19,182 +99,126 @@ class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      initialRssiThreshold: props.rssiThreshold,
-      modelNum: 0,
-      partner_options: [
-        { id: 10, label: strings('Settings.v3Lock') },
-        { id: 11, label: strings('Settings.commonAccess') },
-        { id: 12, label: strings('Settings.nbLock') },
-      ]
+      ...props.criteria,
+      // expanded: props.checkEnabled,
+      selectedIndex: props.selectedIndex,
     };
   }
+
+  updateCriteria = () => {
+    this.props.updateCriteria({ rssi :this.state.rssi, battery :this.state.battery, fobNumber :this.state.fobNumber });
+  };
 
   render() {
     return (
       <ScrollView>
         <View style={styles.settingsView}>
-          <View style={{ opacity: this.props.checkEnabled ? 1: 0.5 }}>
-            <CheckBox
-              title="Development Mode"
-              checked={this.props.isDevelopmentMode}
-              // onPress={this.props.setDevelopmentMode}
-            />
-            <CheckBox
-              title={strings('Settings.threshold')}
-              checked={this.props.checkEnabled}
-              onPress={this.props.setEnabled}/>
-            <Text style={{marginStart: 20}}>
-              {strings('Settings.rssiText')}
-            </Text>
-          </View>
-          {this.props.checkEnabled && (
-            <View style={styles.SliderView}>
-              <Slider
-                step={1}
-                width={200}
-                minimumValue={-100}
-                maximumValue={0}
-                value={this.state.initialRssiThreshold}
-                onValueChange={this.props.setThreshold}
-              />
-              <Text>{this.props.rssiThreshold}</Text>
-            </View>
-          )}
-          <View>
-            <Text style={styles.largestSn}>
-              {strings('Settings.getSn')}
-            </Text>
-            <RadioGroup
-              horizontal
-              options={this.state.partner_options}
-              activeButtonId={this.state.partnerId}
-              onChange={({ id }) => this.setState({ modelNum: id })}
-            />
-            <View style={styles.getSerialNumberView}>
-              <Button
-                onPress={() => this.props.getMaximumSerialNoRequest(this.state.modelNum)}
-                disabled={this.state.modelNum === 0}
-                title={strings('Settings.getSnButton')}
-                style={styles.button}
-              />
-              {this.props.maxSerialNumber === -1 ?
-                <BarIndicator style={{ flex: 0, paddingHorizontal: 7 }} color='grey'/> :
-                <Text style={styles.serialNumber}>{this.props.maxSerialNumber}</Text>}
-            </View>
-          </View>
+          {/*<View style={{ opacity: this.props.checkEnabled ? 1: 0.5 }}>*/}
+          {/*  <CheckBox*/}
+          {/*    title="Development Mode"*/}
+          {/*    checked={this.props.isDevelopmentMode}*/}
+          {/*    // onPress={this.props.setDevelopmentMode}*/}
+          {/*  />*/}
+          {/*</View>*/}
           <ListItem
-            containerStyle={{}}
             disabledStyle={{ opacity: 0.5 }}
-            onLongPress={() => console.log("onLongPress()")}
-            onPress={() => console.log("onPress()")}
+            Component={View}
             pad={20}>
             <ListItem.Content>
-              {/*<ListItem.Title>*/}
-              {/*  <Text>Pranshu Chittora</Text>*/}
-              {/*</ListItem.Title>*/}
-              <ListItem.Subtitle>
-                <Text>RSSI</Text>
-              </ListItem.Subtitle>
-              <Slider
-                step={1}
-                width="100%"
-                minimumValue={-100}
-                maximumValue={0}
-                value={this.state.initialRssiThreshold}
-                onValueChange={()=> {}}
+              <ListItem.Title>
+                <Text>Evaluation Criteria</Text>
+              </ListItem.Title>
+              <View style={{ height: 10 }}/>
+              <CriteriaSlider
+                name="RSSI"
+                min={-100}
+                max={0}
+                value={this.state.rssi}
+                unit=" dBm"
+                callback={rssi =>
+                  this.setState({ rssi }, () => this.updateCriteria())
+                }
               />
-              <ListItem.Subtitle>
-                <Text>Battery</Text>
-              </ListItem.Subtitle>
-              <Slider
-                step={1}
-                width="100%"
-                minimumValue={-100}
-                maximumValue={0}
-                value={this.state.initialRssiThreshold}
-                onValueChange={()=> {}}
+              <CriteriaSlider
+                name="Battery"
+                min={0}
+                max={100}
+                value={this.state.battery}
+                unit="%"
+                callback={battery =>
+                  this.setState({ battery }, () => this.updateCriteria())
+                }
               />
-              <Input
-                placeholder="Fob number"
-                leftIcon={{ type: 'font-awesome', name: 'credit-card' }}
-                style={styles}
-                onChangeText={value => this.setState({ comment: value })}
+              <FobNumberInput
+                value={this.state.fobNumber}
+                callback={fobNumber => {
+                  this.setState({ fobNumber }, () => this.updateCriteria());
+                }}
               />
             </ListItem.Content>
           </ListItem>
+          <Text style={{ padding: 14, color: 'grey' }}>The result beyond criteria is considered a failure</Text>
           <View style={{ height: 20 }}/>
           <ListItem
             containerStyle={{}}
             disabledStyle={{ opacity: 0.5 }}
-            onLongPress={() => console.log("onLongPress()")}
-            onPress={() => console.log("onPress()")}
+            Component={View}
             pad={20}>
             <ListItem.Content>
-              <Text style={{ paddingBottom: 5 }}>Please get the current largest serial number</Text>
+              <ListItem.Title>
+                <Text>Maximum Serial Number</Text>
+              </ListItem.Title>
+              <View style={{ height: 10 }} />
               <ButtonGroup
-                onPress={() => {}}
-                selectedIndex={1}
+                onPress={selectedIndex => {
+                  this.setState({ selectedIndex }, () => this.props.setIndex(selectedIndex));
+                }}
+                selectedIndex={this.state.selectedIndex}
                 buttons={['V3 Lock', 'Access Panel', '5G Lock']}
-                containerStyle={{}}
               />
-              <Button title="Get Largest SN" />
+              <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', paddingRight: 10 }}>
+                <Button title="Get Largest SN" onPress={() => this.props.getMaximumSerialNoRequest('1' + this.props.selectedIndex)} />
+                {this.props.maxSerialNumber === -1 ?
+                  <ActivityIndicator style={{ paddingHorizontal: 40 }} color='grey'/> :
+                  <Text style={styles.serialNumber}>{this.props.maxSerialNumber}</Text>}
+              </View>
             </ListItem.Content>
           </ListItem>
+          <Text style={{ padding: 14, color: 'grey' }}>Press to get the current largest serial number</Text>
           <View style={{ height: 20 }} />
-          <App />
+          <ListItem.Accordion
+            content={
+              <>
+                <Icon name="signal-cellular-alt" size={30} />
+                <ListItem.Content>
+                  <ListItem.Title>RSSI Threshold</ListItem.Title>
+                </ListItem.Content>
+              </>
+            }
+            isExpanded={this.props.checkEnabled}
+            icon={{ name: 'checkbox-blank-outline', type: 'material-community' }}
+            expandIcon={{ name: 'checkbox-marked-outline', type: 'material-community' }}
+            noRotation={true}
+            onPress={() => this.props.setEnabled(!this.props.checkEnabled)}
+          >
+            <ListItem style={{ width: '100%' }}>
+              <RssiListItem value={this.props.rssiThreshold} callback={this.props.setThreshold} />
+            </ListItem>
+          </ListItem.Accordion>
+          <Text style={{ padding: 14, color: 'grey' }}>{strings('Settings.rssiText')}</Text>
         </View>
       </ScrollView>
     );
   }
 }
-function App() {
-  const [expanded, setExpanded] = useState(false);
-  const list = [
-    {
-      name: 'Amy Farha',
-      avatar_url:
-        'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-      subtitle: 'Vice President',
-    }
-  ];
-  return (
-    <ListItem.Accordion
-      content={
-        <>
-          <Icon name="place" size={30} />
-          <ListItem.Content>
-            <ListItem.Title>RSSI filter</ListItem.Title>
-          </ListItem.Content>
-        </>
-      }
-      isExpanded={expanded}
-      onPress={() => {
-        setExpanded(!expanded);
-      }}>
-      {list.map((l, i) => (
-        <ListItem key={i} bottomDivider>
-          <ListItem.Subtitle>
-            <Text>RSSI</Text>
-          </ListItem.Subtitle>
-          <Slider
-            step={1}
-            width="80%"
-            minimumValue={-100}
-            maximumValue={0}
-            value={-50}
-            onValueChange={()=> {}}
-          />
-        </ListItem>
-      ))}
-    </ListItem.Accordion>
-  );
-}
 
-const mapStateToProps = (state) => state.locks;
+const mapStateToProps = state => state.locks;
 const mapDispatchToProps = {
+  setIndex,
   setThreshold,
   setEnabled,
   // setDevelopmentMode,
+  updateCriteria,
   getMaximumSerialNoRequest,
 };
 

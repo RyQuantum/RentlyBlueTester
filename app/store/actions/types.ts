@@ -10,12 +10,15 @@ export const UPDATE_LOCK = 'UPDATE_LOCK';
 export const UPDATE_LOCKS = 'UPDATE_LOCKS';
 export const CLEAR_LOCKS = 'CLEAR_LOCKS';
 
-export const SET_ENABLED = 'SET_ENABLED';
-export const SET_THRESHOLD = 'SET_THRESHOLD';
+export const UPDATE_CRITERIA = 'UPDATE_CRITERIA';
 
 export const GET_MAX_SERIAL_NUM_PENDING = 'GET_MAX_SERIAL_NUM_PENDING';
 export const GET_MAX_SERIAL_NUM_SUCCESS = 'GET_MAX_SERIAL_NUM_SUCCESS';
 export const GET_MAX_SERIAL_NUM_FAILED = 'GET_MAX_SERIAL_NUM_FAILED';
+
+export const SET_INDEX = 'SET_INDEX';
+export const SET_ENABLED = 'SET_ENABLED';
+export const SET_THRESHOLD = 'SET_THRESHOLD';
 
 //test
 const stateEnum = {

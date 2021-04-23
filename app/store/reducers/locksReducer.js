@@ -1,12 +1,14 @@
 import {
   UPDATE_LOCK,
   CLEAR_LOCKS,
+  SET_INDEX,
   SET_ENABLED,
   SET_THRESHOLD,
   GET_MAX_SERIAL_NUM_PENDING,
   GET_MAX_SERIAL_NUM_SUCCESS,
   GET_MAX_SERIAL_NUM_FAILED,
   UPDATE_LOCKS,
+  UPDATE_CRITERIA,
 } from '../actions/types';
 import {
   OaksBleLockLibrary,
@@ -24,8 +26,14 @@ const defaultState = {
   codes: {}, //TODO
   libraryObj,
   // isDevelopmentMode: false,
+  criteria: {
+    rssi: -100,
+    battery: 0,
+    fobNumber: '',
+  },
   checkEnabled: false,
   rssiThreshold: -100,
+  selectedIndex: -1,
   maxSerialNumber: '',
   error: null,
 };
@@ -42,8 +50,14 @@ export default (state = defaultState, action) => {
     case CLEAR_LOCKS:
       return { ...state, touchedLocks: [], settingLocks: [], nonSettingLocks: [] };
 
+    case UPDATE_CRITERIA:
+      return { ...state, criteria: payload };
+
+    case SET_INDEX:
+      return { ...state, selectedIndex: payload };
+
     case SET_ENABLED:
-      return { ...state, checkEnabled: !state.checkEnabled };
+      return { ...state, checkEnabled: payload };
 
     case SET_THRESHOLD:
       return { ...state, rssiThreshold: payload };

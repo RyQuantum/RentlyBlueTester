@@ -32,7 +32,7 @@ const authPersistConfig = {
 
 const lockPersistConfig = {
   key: 'locks',
-  whitelist: ['rssiThreshold', 'checkEnabled', 'isDevelopmentMode'],
+  whitelist: ['criteria', 'checkEnabled', 'rssiThreshold'],
   storage: AsyncStorage,
   timeout: null,
 };
