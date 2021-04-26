@@ -63,6 +63,7 @@ const Step0 = () => {
 };
 
 const Step = ({ state, name, no }) => {
+  const { error } = useSelector(state => state.test);
   if (state === types.NOT_STARTED) return null;
   return (
     <View>
@@ -74,6 +75,8 @@ const Step = ({ state, name, no }) => {
         {state === types.FAILED && <RetryButton no={no} />}
       </View>
       {state === types.SUCCESS && <Text style={styles.result}>{strings('Test.pass')}</Text>}
+      {state === types.FAILED && <Text style={styles.error}>{error.message}</Text>}
+      {state === types.FAILED && <RetryInstruction no={no} />}
     </View>
   );
 };
@@ -142,6 +145,7 @@ const RetryButton = ({ no }) => {
   const { test: { lockObj }, locks: { touchedLocks } } = useSelector(state => state);
   const dispatch = useDispatch();
   let retry = () => {};
+  let disabled = !touchedLocks.find(lock => lock.lockMac === lockObj.lockMac);
   switch (no) {
     case '0':
       retry = () => dispatch(scanBroadcast());
@@ -154,6 +158,7 @@ const RetryButton = ({ no }) => {
       break;
     case '3':
       retry = () => dispatch(initializeLockSuccess());
+      disabled = false;
       break;
     case '4':
       retry = () => dispatch(testRTCSuccess());
@@ -173,27 +178,23 @@ const RetryButton = ({ no }) => {
       break;
   }
   return (
-    <Button
-      title={strings('Test.retry')}
-      onPress={retry}
-      disabled={!touchedLocks.find(lock => lock.lockMac === lockObj.lockMac)}
-    />
+    <Button title={strings('Test.retry')} onPress={retry} disabled={disabled} />
   );
 };
 
-const ErrorMessage = () => {
-  const { error } = useSelector(state => state.test);
-  return error && (
-      <View>
-        <Text style={styles.error}>{error.message}</Text>
-      </View>
-  );
-};
+// const ErrorMessage = () => {
+//   const { error } = useSelector(state => state.test);
+//   return error && (
+//       <View>
+//         <Text style={styles.error}>{error.message}</Text>
+//       </View>
+//   );
+// };
 
-const RetryInstruction = () => {
-  const { test: { lockObj, error, uploadSerialNoState }, locks: { touchedLocks } } = useSelector(state => state);
+const RetryInstruction = ({ no }) => {
+  const { test: { lockObj, uploadSerialNoState }, locks: { touchedLocks } } = useSelector(state => state);
   const isTouched = touchedLocks.find(lock => lock.lockMac === lockObj.lockMac);
-  return (error && !isTouched && uploadSerialNoState !== types.FAILED) ? (
+  const touchToRetry = !isTouched && (
     <View style={styles.retryInstruction}>
       <Text style={styles.text}>{strings('Test.touchToRetry')}</Text>
       <Image
@@ -202,7 +203,36 @@ const RetryInstruction = () => {
         resizeMode="contain"
       />
     </View>
-  ) : null;
+  );
+  const enableDoorSensor = (
+    <View style={styles.retryInstruction}>
+      <Text style={styles.text}>Enable the door sensor{'\n'} switch on the back panel</Text>
+      <Image
+        source={require('../../assets/door-sensor-switch.png')}
+        style={styles.image}
+        resizeMode="contain"
+      />
+    </View>
+  );
+  const map = {
+    2: touchToRetry,
+    3: enableDoorSensor,
+    4: touchToRetry,
+    5: enableDoorSensor,
+    6: touchToRetry,
+    8: touchToRetry,
+  };
+  // return !isTouched ? (
+  //   <View style={styles.retryInstruction}>
+  //     <Text style={styles.text}>{strings('Test.touchToRetry')}</Text>
+  //     <Image
+  //       source={require('../../assets/touch.png')}
+  //       style={styles.image}
+  //       resizeMode="contain"
+  //     />
+  //   </View>
+  // ) : null;
+  return map[no];
 };
 
 class TestModal extends PureComponent {
@@ -236,7 +266,7 @@ class TestModal extends PureComponent {
     ]);
   };
 
-//TODO reorder steps
+  //TODO reorder steps
   render() {
     return (
       <Modal visible={this.props.testState !== types.NOT_STARTED}>
@@ -263,8 +293,8 @@ class TestModal extends PureComponent {
           {/*  <Text style={styles.result}>卡ID:1234567890，读卡芯片正常</Text>*/}
           {/*</View>*/}
           {/*<View>*/}
-          <ErrorMessage />
-          <RetryInstruction />
+          {/*<ErrorMessage />*/}
+          {/*<RetryInstruction />*/}
           <View style={{ paddingBottom: 25, flexDirection: 'row', justifyContent: 'center' }}>
             <Button title={strings('Test.done')} style={styles.button} onPress={this.endTest} disabled={this.props.testState !== types.SUCCESS}/>
           </View>

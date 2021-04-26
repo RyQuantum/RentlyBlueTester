@@ -107,7 +107,7 @@ export function* testRTCAsync() {
     yield delay(2000);
     const { timestamp: timestamp2 } = yield lockObj.getLockTime();
     const diff = parseTimeStamp(timestamp2) - parseTimeStamp(timestamp);
-    if (diff < 0 || diff > 5000) {
+    if (diff < 0 || diff > 1000) {
       throw new Error(`RTC error, time diff is ${diff / 1000}s. Should between 0 to 5s.`);
     }
     yield put(testRTCSuccess());
