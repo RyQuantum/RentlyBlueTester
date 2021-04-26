@@ -54,7 +54,7 @@ const FobNumberInput = ({ callback, value }) => {
       placeholder="Fob number"
       value={fobNumber}
       leftIcon={{ type: 'font-awesome', name: 'credit-card' }}
-      style={styles}
+      style={styles} //TODO fix style
       errorMessage={errorMessage}
       onChangeText={text => {
         setFobNumber(text);
@@ -106,7 +106,14 @@ class Settings extends Component {
   }
 
   updateCriteria = () => {
-    this.props.updateCriteria({ rssi :this.state.rssi, battery :this.state.battery, fobNumber :this.state.fobNumber });
+    this.props.updateCriteria({
+      model: this.state.model,
+      hardwareVer: this.state.hardwareVer,
+      firmwareVer: this.state.firmwareVer,
+      rssi: this.state.rssi,
+      battery: this.state.battery,
+      fobNumber: this.state.fobNumber,
+    });
   };
 
   render() {
@@ -128,7 +135,35 @@ class Settings extends Component {
               <ListItem.Title>
                 <Text>Evaluation Criteria</Text>
               </ListItem.Title>
-              <View style={{ height: 10 }}/>
+              <View style={{ paddingTop: 10, width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View style={{ width: '33%' }}>
+                  <Input
+                    maxLength={2}
+                    keyboardType="number-pad"
+                    placeholder="Model"
+                    value={this.state.model}
+                    onChangeText={model => this.setState({ model }, () => this.updateCriteria())}
+                  />
+                </View>
+                <View style={{ width: '33%' }}>
+                  <Input
+                    maxLength={2}
+                    keyboardType="number-pad"
+                    placeholder="Hardware"
+                    value={this.state.hardwareVer}
+                    onChangeText={hardwareVer => this.setState({ hardwareVer }, () => this.updateCriteria())}
+                  />
+                </View>
+                <View style={{ width: '33%' }}>
+                  <Input
+                    maxLength={2}
+                    keyboardType="number-pad"
+                    placeholder="Firmware"
+                    value={this.state.firmwareVer}
+                    onChangeText={firmwareVer => this.setState({ firmwareVer }, () => this.updateCriteria())}
+                  />
+                </View>
+              </View>
               <CriteriaSlider
                 name="RSSI"
                 min={-100}
@@ -141,7 +176,7 @@ class Settings extends Component {
               />
               <CriteriaSlider
                 name="Battery"
-                min={0}
+                min={1}
                 max={100}
                 value={this.state.battery}
                 unit="%"

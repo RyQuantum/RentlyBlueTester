@@ -27,8 +27,11 @@ const defaultState = {
   libraryObj,
   // isDevelopmentMode: false,
   criteria: {
+    model: '',
+    hardwareVer: '',
+    firmwareVer: '',
     rssi: -100,
-    battery: 0,
+    battery: 1,
     fobNumber: '',
   },
   checkEnabled: false,

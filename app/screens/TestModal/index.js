@@ -10,6 +10,7 @@ import Camera from '../../components/Camera';
 import {
   scanBroadcast,
   verifyBroadcastInfoSuccess,
+  registerLockToDMSSuccess,
   initializeLockSuccess,
   testRTCSuccess,
   testHallSuccess,
@@ -40,7 +41,7 @@ const Step0 = () => {
         {testBroadcastState === types.PENDING && <ActivityIndicator />}
         {testBroadcastState === types.SUCCESS && <Icon name="check" type="entypo" color="green" size={28} />}
         {testBroadcastState === types.FAILED && <Icon name="cross" type="entypo" color="red" size={28} />}
-        {testBroadcastState === types.FAILED && <RetryButton no="1" />}
+        {testBroadcastState === types.FAILED && <RetryButton no="0" />}
       </View>
       <Text style={styles.text}>
         {strings('Test.mac')}: <Text style={styles.result}>{lockMac}</Text>
@@ -142,11 +143,14 @@ const RetryButton = ({ no }) => {
   const dispatch = useDispatch();
   let retry = () => {};
   switch (no) {
-    case '1':
+    case '0':
       retry = () => dispatch(scanBroadcast());
       break;
-    case '2':
+    case '1':
       retry = () => dispatch(verifyBroadcastInfoSuccess());
+      break;
+    case '2':
+      retry = () => dispatch(registerLockToDMSSuccess());
       break;
     case '3':
       retry = () => dispatch(initializeLockSuccess());
@@ -170,10 +174,19 @@ const RetryButton = ({ no }) => {
   }
   return (
     <Button
-      title="重试"
+      title={strings('Test.retry')}
       onPress={retry}
       disabled={!touchedLocks.find(lock => lock.lockMac === lockObj.lockMac)}
     />
+  );
+};
+
+const ErrorMessage = () => {
+  const { error } = useSelector(state => state.test);
+  return error && (
+      <View>
+        <Text style={styles.error}>{error.message}</Text>
+      </View>
   );
 };
 
@@ -250,9 +263,7 @@ class TestModal extends PureComponent {
           {/*  <Text style={styles.result}>卡ID:1234567890，读卡芯片正常</Text>*/}
           {/*</View>*/}
           {/*<View>*/}
-          <View>
-            {this.props.error && <Text style={styles.error}>{this.props.error.message}</Text>}
-          </View>
+          <ErrorMessage />
           <RetryInstruction />
           <View style={{ paddingBottom: 25, flexDirection: 'row', justifyContent: 'center' }}>
             <Button title={strings('Test.done')} style={styles.button} onPress={this.endTest} disabled={this.props.testState !== types.SUCCESS}/>

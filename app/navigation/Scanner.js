@@ -75,7 +75,7 @@ class Scanner extends Component {
   }
 }
 
-const mapStateToProps = (state) => state.locks;
+const mapStateToProps = state => state.locks;
 const mapDispatchToProps = { foundLock };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Scanner);

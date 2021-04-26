@@ -45,13 +45,15 @@ import { strings } from '../../utils/i18n';
 
 export function* verifyBroadcastInfoAsync({ payload: lockObj }) {
   const { lockMac, modelNum, hardwareVer, firmwareVer, rssi, battery } = lockObj;
+  const { locks:{ criteria } } = yield select();
   yield put(verifyBroadcastInfo({ lockMac, modelNum, hardwareVer, firmwareVer, rssi, battery }));
+
   const errors = [];
-  if (![2, 3, 4].includes(modelNum)) errors.push('Invalid model number');
-  if (modelNum === 2 && hardwareVer < 3) errors.push('Invalid hardware version');
-  if (firmwareVer < 5) errors.push('Invalid firmware version');
-  if (rssi >= 0) errors.push('Invalid rssi');
-  if (battery < 0) errors.push('Low battery');
+  if (criteria.model && modelNum.toString() !== criteria.model) errors.push('Invalid model number');
+  if (criteria.hardwareVer && hardwareVer.toString() !== criteria.hardwareVer) errors.push('Invalid hardware version');
+  if (criteria.firmwareVer && firmwareVer.toString() !== criteria.firmwareVer) errors.push('Invalid firmwareVer nversionumber');
+  if (rssi >= 0 || rssi < criteria.rssi) errors.push('Invalid model rssi');
+  if (battery > 100 || battery < criteria.battery) errors.push('Invalid battery');
   if (errors.length === 0) {
     return yield put(verifyBroadcastInfoSuccess());
   }
@@ -100,12 +102,13 @@ export function* testRTCAsync() {
   yield put(testRTC());
   const { test: { lockObj } } = yield select();
   try {
+    yield lockObj.setLockTime();
     const { timestamp } = yield lockObj.getLockTime();
-    yield delay(1500);
+    yield delay(2000);
     const { timestamp: timestamp2 } = yield lockObj.getLockTime();
     const diff = parseTimeStamp(timestamp2) - parseTimeStamp(timestamp);
     if (diff < 0 || diff > 5000) {
-      throw new Error('RTC error');
+      throw new Error(`RTC error, time diff is ${diff / 1000}s. Should between 0 to 5s.`);
     }
     yield put(testRTCSuccess());
   } catch (error) {

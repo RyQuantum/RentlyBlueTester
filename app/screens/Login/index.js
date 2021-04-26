@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { TextField } from 'react-native-material-textfield';
+import { TextField } from 'rn-material-ui-textfield';
 import RadioGroup from 'react-native-radio-button-group';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Dropdown } from 'react-native-material-dropdown';

@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 import Login from '../screens/Login';
+// import Instruction from '../screens/Instruction';
 import Scanner from './Scanner';
 import Settings from '../screens/Settings';
 
@@ -24,6 +25,7 @@ class StackNavigator extends Component {
       );
     }
     return <Login />;
+    // return <Instruction />;
   }
 }
 
