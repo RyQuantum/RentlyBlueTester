@@ -51,7 +51,7 @@ const FobNumberInput = ({ callback, value }) => {
     <Input
       maxLength={10}
       keyboardType="number-pad"
-      placeholder="Fob number"
+      placeholder={strings('Settings.fobNumber')}
       value={fobNumber}
       leftIcon={{ type: 'font-awesome', name: 'credit-card' }}
       style={styles} //TODO fix style
@@ -133,14 +133,14 @@ class Settings extends Component {
             pad={20}>
             <ListItem.Content>
               <ListItem.Title>
-                <Text>Evaluation Criteria</Text>
+                <Text>{strings('Settings.criteria')}</Text>
               </ListItem.Title>
               <View style={{ paddingTop: 10, width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View style={{ width: '33%' }}>
                   <Input
                     maxLength={2}
                     keyboardType="number-pad"
-                    placeholder="Model"
+                    placeholder={strings('Settings.model')}
                     value={this.state.model}
                     onChangeText={model => this.setState({ model }, () => this.updateCriteria())}
                   />
@@ -149,7 +149,7 @@ class Settings extends Component {
                   <Input
                     maxLength={2}
                     keyboardType="number-pad"
-                    placeholder="Hardware"
+                    placeholder={strings('Settings.hardware')}
                     value={this.state.hardwareVer}
                     onChangeText={hardwareVer => this.setState({ hardwareVer }, () => this.updateCriteria())}
                   />
@@ -158,14 +158,14 @@ class Settings extends Component {
                   <Input
                     maxLength={2}
                     keyboardType="number-pad"
-                    placeholder="Firmware"
+                    placeholder={strings('Settings.firmware')}
                     value={this.state.firmwareVer}
                     onChangeText={firmwareVer => this.setState({ firmwareVer }, () => this.updateCriteria())}
                   />
                 </View>
               </View>
               <CriteriaSlider
-                name="RSSI"
+                name={strings('Settings.rssi')}
                 min={-100}
                 max={0}
                 value={this.state.rssi}
@@ -175,8 +175,8 @@ class Settings extends Component {
                 }
               />
               <CriteriaSlider
-                name="Battery"
-                min={1}
+                name={strings('Settings.battery')}
+                min={0}
                 max={100}
                 value={this.state.battery}
                 unit="%"
@@ -192,7 +192,7 @@ class Settings extends Component {
               />
             </ListItem.Content>
           </ListItem>
-          <Text style={{ padding: 14, color: 'grey' }}>The result beyond criteria is considered a failure</Text>
+          <Text style={{ padding: 14, color: 'grey' }}>{strings('Settings.criteriaText')}</Text>
           <View style={{ height: 20 }}/>
           <ListItem
             containerStyle={{}}
@@ -201,7 +201,7 @@ class Settings extends Component {
             pad={20}>
             <ListItem.Content>
               <ListItem.Title>
-                <Text>Maximum Serial Number</Text>
+                <Text>{strings('Settings.maxSn')}</Text>
               </ListItem.Title>
               <View style={{ height: 10 }} />
               <ButtonGroup
@@ -209,24 +209,24 @@ class Settings extends Component {
                   this.setState({ selectedIndex }, () => this.props.setIndex(selectedIndex));
                 }}
                 selectedIndex={this.state.selectedIndex}
-                buttons={['V3 Lock', 'Access Panel', '5G Lock']}
+                buttons={[strings('Settings.v3Lock'), strings('Settings.commonAccess'), strings('Settings.nbLock')]}
               />
               <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', paddingRight: 10 }}>
-                <Button title="Get Largest SN" onPress={() => this.props.getMaximumSerialNoRequest('1' + this.props.selectedIndex)} />
+                <Button title={strings('Settings.getSnButton')} onPress={() => this.props.getMaximumSerialNoRequest('1' + this.props.selectedIndex)} />
                 {this.props.maxSerialNumber === -1 ?
                   <ActivityIndicator style={{ paddingHorizontal: 40 }} color='grey'/> :
                   <Text style={styles.serialNumber}>{this.props.maxSerialNumber}</Text>}
               </View>
             </ListItem.Content>
           </ListItem>
-          <Text style={{ padding: 14, color: 'grey' }}>Press to get the current largest serial number</Text>
+          <Text style={{ padding: 14, color: 'grey' }}>{strings('Settings.getSn')}</Text>
           <View style={{ height: 20 }} />
           <ListItem.Accordion
             content={
               <>
                 <Icon name="signal-cellular-alt" size={30} />
                 <ListItem.Content>
-                  <ListItem.Title>RSSI Threshold</ListItem.Title>
+                  <ListItem.Title>{strings('Settings.threshold')}</ListItem.Title>
                 </ListItem.Content>
               </>
             }
@@ -240,7 +240,10 @@ class Settings extends Component {
               <RssiListItem value={this.props.rssiThreshold} callback={this.props.setThreshold} />
             </ListItem>
           </ListItem.Accordion>
-          <Text style={{ padding: 14, color: 'grey' }}>{strings('Settings.rssiText')}</Text>
+          <Text style={{ padding: 18, color: 'grey' }}>{strings('Settings.rssiText')}</Text>
+          <ListItem style={{ width: '100%', paddingTop: 14 }}>
+            <Button title={strings('Settings.viewInstruction')} onPress={() => this.props.navigation.navigate('Instruction')} />
+          </ListItem>
         </View>
       </ScrollView>
     );

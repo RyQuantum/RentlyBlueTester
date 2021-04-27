@@ -67,7 +67,7 @@ class DiscoverLock extends Component {
 
     const header = (
       <View style={styles.header}>
-        <TouchableOpacity onPress={()=> this.props.navigation.navigate('Settings')}>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('Settings')}>
           <View style={styles.row}>
             <Icon
               name="cog"

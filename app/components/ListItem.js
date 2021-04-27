@@ -20,7 +20,7 @@ import { requestTest } from '../store/actions/testActions';
 // import { clearLocks } from '../redux/locks';
 import { strings } from '../utils/i18n';
 import API from '../services/API';
-import { alertIOS } from '../utils';
+import { alertIOS, alertIOSwithParams } from '../utils';
 // import { startTest1 } from '../redux/test1';
 // import { startTest2 } from '../redux/test2';
 
@@ -87,7 +87,7 @@ class ListItem extends PureComponent {
       const errorMessage =
         typeof error === 'object' ? error.message :
           typeof error === 'string' ? error : 'unknown';
-      this.props.onChangeLoading(false, () => alertIOS(strings('Home.resetSuccess')));
+      this.props.onChangeLoading(false, () => alertIOSwithParams(strings('Home.resetFailed'), 'Error: ' + errorMessage));
     // } finally {
     //   this.props.clearLocks(lockObj.lockMac);
     }

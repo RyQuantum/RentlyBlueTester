@@ -15,6 +15,8 @@ import {
   testRTCSuccess,
   testHallSuccess,
   testDoorSensorSuccess,
+  testTouchKeySuccess,
+  testNfcChipSuccess,
   testAutoLockSuccess,
   testOfflineCodeSuccess,
   uploadSerialNo,
@@ -33,6 +35,7 @@ const Step0 = () => {
       rssi,
       battery,
     },
+    error,
   } = useSelector(state => state.test);
   return (
     <View>
@@ -58,6 +61,8 @@ const Step0 = () => {
         {strings('Test.battery')}: <Text style={styles.result}>{battery}%</Text>
       </Text>
       {testBroadcastState === types.SUCCESS && <Text style={styles.result}>{strings('Test.pass')}</Text>}
+      {testBroadcastState === types.FAILED && <Text style={styles.error}>{error.message}</Text>}
+      {testBroadcastState === types.FAILED && <RetryInstruction no="0" />}
     </View>
   );
 };
@@ -81,37 +86,61 @@ const Step = ({ state, name, no }) => {
   );
 };
 
-const Step7 = ({ state, fobNumber }) => {
-  if (state === types.NOT_STARTED) return null;
+const Step6 = () => {
+  const { testTouchKeyState, error } = useSelector(state => state.test);
+  if (testTouchKeyState === types.NOT_STARTED) return null;
   return (
     <View>
       <View style={styles.title}>
-        <Text style={styles.text}>7. {strings('Test.nfcChip')}</Text>
-        {state === types.PENDING && <ActivityIndicator />}
-        {state === types.SUCCESS && <Icon name="check" type="entypo" color="green" size={28} />}
-        {state === types.FAILED && <Icon name="cross" type="entypo" color="red" size={28} />}
-        {state === types.FAILED && <RetryButton no={7} />}
+        <Text style={styles.text}>6. {strings('Test.touchKey')}</Text>
+        {testTouchKeyState === types.PENDING && <ActivityIndicator />}
+        {testTouchKeyState === types.SUCCESS && <Icon name="check" type="entypo" color="green" size={28} />}
+        {testTouchKeyState === types.FAILED && <Icon name="cross" type="entypo" color="red" size={28} />}
+        {testTouchKeyState === types.FAILED && <RetryButton no="6" />}
       </View>
-      {state === types.SUCCESS && <Text style={styles.result}>{strings('Test.fobNumber')}: {fobNumber}. {strings('Test.pass')}</Text>}
-      {state === types.FAILED && <Text style={styles.error}>{strings('Test.fobNumber')}: {fobNumber}. {strings('Test.wrongFobNumber')}</Text>}
+      {testTouchKeyState === types.PENDING && <Text style={styles.instruction}>{strings('Test.touchKeyInstruction')}</Text>}
+      {testTouchKeyState === types.SUCCESS && <Text style={styles.result}>{strings('Test.pass')}</Text>}
+      {testTouchKeyState === types.FAILED && <Text style={styles.error}>{error.message}</Text>}
+      {testTouchKeyState === types.FAILED && <RetryInstruction no="6" />}
     </View>
   );
 };
 
-const Step9 = ({ state, code }) => {
+const Step7 = () => {
+  const { testNfcChipState, fobNumber, error } = useSelector(state => state.test);
+  if (testNfcChipState === types.NOT_STARTED) return null;
+  return (
+    <View>
+      <View style={styles.title}>
+        <Text style={styles.text}>7. {strings('Test.nfcChip')}</Text>
+        {testNfcChipState === types.PENDING && <ActivityIndicator />}
+        {testNfcChipState === types.SUCCESS && <Icon name="check" type="entypo" color="green" size={28} />}
+        {testNfcChipState === types.FAILED && <Icon name="cross" type="entypo" color="red" size={28} />}
+        {testNfcChipState === types.FAILED && <RetryButton no={7} />}
+      </View>
+      {testNfcChipState === types.PENDING && <Text style={styles.instruction}>{strings('Test.nfcChipInstruction')}</Text>}
+      {testNfcChipState === types.SUCCESS && <Text style={styles.result}>{strings('Test.fobNumber')}: {fobNumber}. {strings('Test.pass')}</Text>}
+      {testNfcChipState === types.FAILED && <Text style={styles.error}>{strings('Test.fobNumber')}: {fobNumber}. {strings('Test.wrongFobNumber')}</Text>}
+      {testNfcChipState === types.FAILED && <RetryInstruction no="7" />}
+    </View>
+  );
+};
+
+const Step9 = () => {
+  const { testOfflineCodeState, code, error } = useSelector(state => state.test);
   const dispatch = useDispatch();
-  if (state === types.NOT_STARTED) return null;
+  if (testOfflineCodeState === types.NOT_STARTED) return null;
   return (
     <View>
       <View style={styles.title}>
         <Text style={styles.text}>9. {strings('Test.offlineCode')}</Text>
-        {state === types.PENDING && <ActivityIndicator />}
-        {state === types.SUCCESS && <Icon name="check" type="entypo" color="green" size={28} />}
-        {state === types.FAILED && <Icon name="cross" type="entypo" color="red" size={28} />}
-        {state === types.FAILED && <RetryButton no="9" />}
+        {testOfflineCodeState === types.PENDING && <ActivityIndicator />}
+        {testOfflineCodeState === types.SUCCESS && <Icon name="check" type="entypo" color="green" size={28} />}
+        {testOfflineCodeState === types.FAILED && <Icon name="cross" type="entypo" color="red" size={28} />}
+        {testOfflineCodeState === types.FAILED && <RetryButton no="9" />}
       </View>
       {code !== '' && <Text style={styles.result}>{strings('Test.oneTimeCode')}: {code}, {strings('Test.offlineCodeInstruction')}</Text>}
-      {code !== '' && state !== types.SUCCESS && (
+      {code !== '' && testOfflineCodeState !== types.SUCCESS && (
         <View style={{ alignSelf: 'start'}}>
           <Button
             title={strings('Test.valid')}
@@ -119,12 +148,13 @@ const Step9 = ({ state, code }) => {
           />
         </View>
       )}
+      {testOfflineCodeState === types.FAILED && <Text style={styles.error}>{error.message}</Text>}
     </View>
   );
 };
 
 const Step10 = ({ onPressScan }) => {
-  const { testOfflineCodeState, uploadSerialNoState, serialNo } = useSelector(state => state.test);
+  const { testOfflineCodeState, uploadSerialNoState, serialNo, error } = useSelector(state => state.test);
   if (testOfflineCodeState !== types.SUCCESS) return null;
   return (
     <View>
@@ -136,13 +166,14 @@ const Step10 = ({ onPressScan }) => {
       </View>
       {uploadSerialNoState === types.PENDING && <Text style={styles.result}>{strings('Test.upload')}: {serialNo}...</Text>}
       {uploadSerialNoState === types.SUCCESS && <Text style={styles.result}>{strings('Test.serialNo')}: {serialNo} {strings('Test.uploadSuccess')}</Text>}
+      {uploadSerialNoState === types.FAILED && <Text style={styles.error}>{error.message}</Text>}
     </View>
   );
 };
 
 //TODO 测试所有retry
 const RetryButton = ({ no }) => {
-  const { test: { lockObj }, locks: { touchedLocks } } = useSelector(state => state);
+  const { test: { lockObj, fobNumber }, locks: { touchedLocks } } = useSelector(state => state);
   const dispatch = useDispatch();
   let retry = () => {};
   let disabled = !touchedLocks.find(lock => lock.lockMac === lockObj.lockMac);
@@ -152,23 +183,31 @@ const RetryButton = ({ no }) => {
       break;
     case '1':
       retry = () => dispatch(verifyBroadcastInfoSuccess());
+      disabled = false;
       break;
     case '2':
       retry = () => dispatch(registerLockToDMSSuccess());
       break;
     case '3':
       retry = () => dispatch(initializeLockSuccess());
-      disabled = false;
+      // disabled = false;
       break;
     case '4':
       retry = () => dispatch(testRTCSuccess());
       break;
     case '5':
       retry = () => dispatch(testHallSuccess());
+      disabled = false;
+      break;
+    case '6':
+      retry = () => dispatch(testDoorSensorSuccess());
+      break;
+    case '7':
+      retry = () => dispatch(testTouchKeySuccess());
       break;
     case '8':
       //TODO after integrate new command, refactor case 8
-      retry = () => dispatch(testDoorSensorSuccess());
+      retry = () => dispatch(testNfcChipSuccess(fobNumber));
       break;
     case '9':
       //TODO implement and test error case of offline code
@@ -192,7 +231,7 @@ const RetryButton = ({ no }) => {
 // };
 
 const RetryInstruction = ({ no }) => {
-  const { test: { lockObj, uploadSerialNoState }, locks: { touchedLocks } } = useSelector(state => state);
+  const { test: { lockObj }, locks: { touchedLocks } } = useSelector(state => state);
   const isTouched = touchedLocks.find(lock => lock.lockMac === lockObj.lockMac);
   const touchToRetry = !isTouched && (
     <View style={styles.retryInstruction}>
@@ -215,23 +254,16 @@ const RetryInstruction = ({ no }) => {
     </View>
   );
   const map = {
+    0: touchToRetry,
+    1: <></>,
     2: touchToRetry,
-    3: enableDoorSensor,
+    3: touchToRetry,
     4: touchToRetry,
     5: enableDoorSensor,
     6: touchToRetry,
+    7: touchToRetry,
     8: touchToRetry,
   };
-  // return !isTouched ? (
-  //   <View style={styles.retryInstruction}>
-  //     <Text style={styles.text}>{strings('Test.touchToRetry')}</Text>
-  //     <Image
-  //       source={require('../../assets/touch.png')}
-  //       style={styles.image}
-  //       resizeMode="contain"
-  //     />
-  //   </View>
-  // ) : null;
   return map[no];
 };
 
@@ -280,10 +312,11 @@ class TestModal extends PureComponent {
           <Step no="3" state={this.props.testRTCState} name={strings('Test.RTC')} />
           <Step no="4" state={this.props.testHallState} name={strings('Test.hall')} />
           <Step no="5" state={this.props.testDoorSensorState} name={strings('Test.doorSensor')} />
-          <Step no="6" state={this.props.testTouchKeyState} name={strings('Test.touchKey')} />
-          <Step7 state={this.props.testNfcChipState} fobNumber={this.props.fobNumber} />
+          {/*<Step no="6" state={this.props.testTouchKeyState} name={strings('Test.touchKey')} />*/}
+          <Step6 />
+          <Step7 />
           <Step no="8" state={this.props.testAutoLockState} name={strings('Test.autoLock')} />
-          <Step9 state={this.props.testOfflineCodeState} code={this.props.code} />
+          <Step9 />
           <Step10 onPressScan={() => this.setState({ isScanning: true })} />
           {/*  <Text style={styles.text}>6.按键触摸测试</Text>*/}
           {/*  <Text style={styles.result}>按键123456789⛔️0✅️，触摸正常</Text>*/}

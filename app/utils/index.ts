@@ -1,3 +1,5 @@
+import { Alert } from 'react-native';
+
 export const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
 export const parseTimeStamp = (timestamp: string) => {
@@ -16,6 +18,14 @@ export const alertIOS = (...args: any[]) => {
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       alert(...args);
+    });
+  });
+};
+
+export const alertIOSwithParams = (...args: any[]) => {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      Alert.alert(...args);
     });
   });
 };

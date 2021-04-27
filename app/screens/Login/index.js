@@ -153,7 +153,7 @@ class Login extends Component {
           <Image source={require('../../assets/logo.png')} style={styles.logo} />
           <View style={styles.api}>
             <Dropdown
-              label="Environment"
+              label={strings('login.environment')}
               value={this.state.url ? MapUrl.find(item => item.url === (this.state.url)).name : this.state.url}
               dropdownMargins={{ min: 8, max: 16 }}
               containerStyle={{ width: "60%" }}

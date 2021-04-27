@@ -49,11 +49,11 @@ export function* verifyBroadcastInfoAsync({ payload: lockObj }) {
   yield put(verifyBroadcastInfo({ lockMac, modelNum, hardwareVer, firmwareVer, rssi, battery }));
 
   const errors = [];
-  if (criteria.model && modelNum.toString() !== criteria.model) errors.push('Invalid model number');
-  if (criteria.hardwareVer && hardwareVer.toString() !== criteria.hardwareVer) errors.push('Invalid hardware version');
-  if (criteria.firmwareVer && firmwareVer.toString() !== criteria.firmwareVer) errors.push('Invalid firmwareVer nversionumber');
-  if (rssi >= 0 || rssi < criteria.rssi) errors.push('Invalid model rssi');
-  if (battery > 100 || battery < criteria.battery) errors.push('Invalid battery');
+  if (criteria.model && modelNum.toString() !== criteria.model) errors.push(strings('Test.InvalidModel'));
+  if (criteria.hardwareVer && hardwareVer.toString() !== criteria.hardwareVer) errors.push(strings('Test.InvalidHardwareVer'));
+  if (criteria.firmwareVer && firmwareVer.toString() !== criteria.firmwareVer) errors.push(strings('Test.InvalidFirmwareVer'));
+  if (rssi >= 0 || rssi < criteria.rssi) errors.push(strings('Test.InvalidRssi'));
+  if (battery > 100 || battery < criteria.battery) errors.push(strings('Test.InvalidBattery'));
   if (errors.length === 0) {
     return yield put(verifyBroadcastInfoSuccess());
   }
@@ -81,6 +81,7 @@ export function* registerLockToDMSAsync() {
     yield put(registerLockToDMS());
     const { test: { lockObj } } = yield select();
     yield API.addLockToDMS(lockObj.lockMac, lockObj.deviceID);
+    // throw new Error('test!!!');
     yield put(registerLockToDMSSuccess());
   } catch (error) {
     yield put(registerLockToDMSFailed(error));
@@ -107,8 +108,8 @@ export function* testRTCAsync() {
     yield delay(2000);
     const { timestamp: timestamp2 } = yield lockObj.getLockTime();
     const diff = parseTimeStamp(timestamp2) - parseTimeStamp(timestamp);
-    if (diff < 0 || diff > 1000) {
-      throw new Error(`RTC error, time diff is ${diff / 1000}s. Should between 0 to 5s.`);
+    if (diff < 0 || diff > 5000) {
+      throw new Error(strings('Test.RTCError') + (diff / 1000) + 's. ' + strings('Test.RTCRange'));
     }
     yield put(testRTCSuccess());
   } catch (error) {
@@ -133,7 +134,7 @@ export function* testDoorSensorAsync() {
   const { test: { lockObj } } = yield select();
   try {
     const { doorSensorEnabled } = yield lockObj.isDoorSensorEnabled();
-    if (!doorSensorEnabled) throw new Error('Door sensor is not enabled');
+    if (!doorSensorEnabled) throw new Error(strings('Test.doorSensorDisabled'));
     yield put(testDoorSensorSuccess());
   } catch (error) {
     yield put(testDoorSensorFailed(error));

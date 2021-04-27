@@ -31,7 +31,7 @@ const defaultState = {
     hardwareVer: '',
     firmwareVer: '',
     rssi: -100,
-    battery: 1,
+    battery: 0,
     fobNumber: '',
   },
   checkEnabled: false,

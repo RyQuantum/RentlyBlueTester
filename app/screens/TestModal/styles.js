@@ -18,6 +18,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     padding: 3,
   },
+  instruction: {
+    color: 'orange',
+    fontSize: 20,
+    padding: 3,
+  },
   result: {
     color: '#00bb00',
     fontSize: 20,
