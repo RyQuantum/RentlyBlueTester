@@ -2,15 +2,15 @@ import React, { PureComponent } from 'react';
 import { ActivityIndicator, Alert, Button, Image, Modal, ScrollView, Text, View } from 'react-native';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { Icon } from 'react-native-elements';
+import Toast from 'react-native-simple-toast';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import styles from './styles';
 import * as types from '../../store/actions/types';
-// import Toast from "react-native-simple-toast";
 import Camera from '../../components/Camera';
 import {
   scanBroadcast,
   verifyBroadcastInfoSuccess,
-  registerLockToDMSSuccess,
   initializeLockSuccess,
   testRTCSuccess,
   testHallSuccess,
@@ -24,7 +24,7 @@ import {
 } from '../../store/actions/testActions';
 import { strings } from '../../utils/i18n';
 
-const Step0 = () => {
+const Step1 = () => {
   const {
     testBroadcastState,
     broadcastInfo: {
@@ -40,11 +40,11 @@ const Step0 = () => {
   return (
     <View>
       <View style={styles.title}>
-        <Text style={styles.text}>0. {strings('Test.verifyBroadcast')}</Text>
+        <Text style={styles.text}>1. {strings('Test.verifyBroadcast')}</Text>
         {testBroadcastState === types.PENDING && <ActivityIndicator />}
         {testBroadcastState === types.SUCCESS && <Icon name="check" type="entypo" color="green" size={28} />}
         {testBroadcastState === types.FAILED && <Icon name="cross" type="entypo" color="red" size={28} />}
-        {testBroadcastState === types.FAILED && <RetryButton no="0" />}
+        {testBroadcastState === types.FAILED && <RetryButton no="1" />}
       </View>
       <Text style={styles.text}>
         {strings('Test.mac')}: <Text style={styles.result}>{lockMac}</Text>
@@ -62,7 +62,7 @@ const Step0 = () => {
       </Text>
       {testBroadcastState === types.SUCCESS && <Text style={styles.result}>{strings('Test.pass')}</Text>}
       {testBroadcastState === types.FAILED && <Text style={styles.error}>{error.message}</Text>}
-      {testBroadcastState === types.FAILED && <RetryInstruction no="0" />}
+      {testBroadcastState === types.FAILED && <RetryInstruction no="1" />}
     </View>
   );
 };
@@ -167,6 +167,7 @@ const Step10 = ({ onPressScan }) => {
       {uploadSerialNoState === types.PENDING && <Text style={styles.result}>{strings('Test.upload')}: {serialNo}...</Text>}
       {uploadSerialNoState === types.SUCCESS && <Text style={styles.result}>{strings('Test.serialNo')}: {serialNo} {strings('Test.uploadSuccess')}</Text>}
       {uploadSerialNoState === types.FAILED && <Text style={styles.error}>{error.message}</Text>}
+      {uploadSerialNoState !== types.SUCCESS && <RetryInstruction no="10" />}
     </View>
   );
 };
@@ -178,15 +179,11 @@ const RetryButton = ({ no }) => {
   let retry = () => {};
   let disabled = !touchedLocks.find(lock => lock.lockMac === lockObj.lockMac);
   switch (no) {
-    case '0':
+    case '1':
       retry = () => dispatch(scanBroadcast());
       break;
-    case '1':
-      retry = () => dispatch(verifyBroadcastInfoSuccess());
-      disabled = false;
-      break;
     case '2':
-      retry = () => dispatch(registerLockToDMSSuccess());
+      retry = () => dispatch(verifyBroadcastInfoSuccess());
       break;
     case '3':
       retry = () => dispatch(initializeLockSuccess());
@@ -221,50 +218,34 @@ const RetryButton = ({ no }) => {
   );
 };
 
-// const ErrorMessage = () => {
-//   const { error } = useSelector(state => state.test);
-//   return error && (
-//       <View>
-//         <Text style={styles.error}>{error.message}</Text>
-//       </View>
-//   );
-// };
-
 const RetryInstruction = ({ no }) => {
   const { test: { lockObj }, locks: { touchedLocks } } = useSelector(state => state);
   const isTouched = touchedLocks.find(lock => lock.lockMac === lockObj.lockMac);
-  const touchToRetry = !isTouched && (
-    <View style={styles.retryInstruction}>
-      <Text style={styles.text}>{strings('Test.touchToRetry')}</Text>
-      <Image
-        source={require('../../assets/touch.png')}
-        style={styles.image}
-        resizeMode="contain"
-      />
-    </View>
-  );
-  const enableDoorSensor = (
-    <View style={styles.retryInstruction}>
-      <Text style={styles.text}>Enable the door sensor{'\n'} switch on the back panel</Text>
-      <Image
-        source={require('../../assets/door-sensor-switch.png')}
-        style={styles.image}
-        resizeMode="contain"
-      />
-    </View>
-  );
+  const touch = require('../../assets/touch.png');
+  const doorSensorSwitch = require('../../assets/door-sensor-switch.png');
+  const snLength = require('../../assets/sn-length.png')
   const map = {
-    0: touchToRetry,
-    1: <></>,
-    2: touchToRetry,
-    3: touchToRetry,
-    4: touchToRetry,
-    5: enableDoorSensor,
-    6: touchToRetry,
-    7: touchToRetry,
-    8: touchToRetry,
+    1: { pic: touch, txt: strings('Test.touchToRetry'), isShow: !isTouched },
+    2: { pic: touch, txt: strings('Test.touchToRetry'), isShow: !isTouched },
+    3: { pic: touch, txt: strings('Test.touchToRetry'), isShow: !isTouched },
+    4: { pic: touch, txt: strings('Test.touchToRetry'), isShow: !isTouched },
+    5: { pic: doorSensorSwitch, txt: strings('Test.enableDoorSensorSwitch'), isShow: true },
+    6: { pic: touch, txt: strings('Test.touchToRetry'), isShow: !isTouched },
+    7: { pic: touch, txt: strings('Test.touchToRetry'), isShow: !isTouched },
+    8: { pic: touch, txt: strings('Test.touchToRetry'), isShow: !isTouched },
+    10: { pic: snLength, txt: strings('Test.uploadSNInstruction'), isShow: true },
   };
-  return map[no];
+  const { pic, txt, isShow } = map[no];
+  return isShow && (
+      <View style={styles.retryInstruction}>
+        <Text style={styles.text}>{txt}</Text>
+        <Image
+          source={pic}
+          style={styles.image}
+          resizeMode="contain"
+        />
+      </View>
+  );
 };
 
 class TestModal extends PureComponent {
@@ -272,8 +253,7 @@ class TestModal extends PureComponent {
     super(props);
     this.state = {
       isScanning: false,
-      // loading: false,
-      // serialNo: '',
+      loading: false,
     };
   }
 
@@ -286,16 +266,47 @@ class TestModal extends PureComponent {
     this.props.uploadSerialNo(serialNo);
   };
 
-  endTest = async () => {
-    //TODO upload lock test record
-    if (this.props.testState === types.SUCCESS) return this.props.endTest();
-    Alert.alert(
-      strings('Test.warning'),
-      strings('Test.warningInfo'),
-      [
+  interruptTest = async () => {
+    if (!this.props.lockObj.ekey) {
+      return Alert.alert(strings('Test.warning'), strings('Test.warningInfo'), [
+        { text: strings('Test.cancel'), onPress: () => {} },
+        { text: strings('Test.backHome'), onPress: async () => await this.endTest(false) },
+      ]);
+    }
+    Alert.alert( strings('Test.warning'), strings('Test.warningInfo2'), [
       { text: strings('Test.cancel'), onPress: () => {} },
-      { text: strings('Test.backHome'), onPress: this.props.endTest },
+      { text: strings('Home.reset'), onPress: this.resetAgain },
     ]);
+  };
+
+  resetFailed = async () => Alert.alert(strings('Test.resetFailed'), strings('Test.resetFailedInfo'), [
+    { text: strings('Test.cancel'), onPress: () => {} },
+    { text: strings('Home.reset'), onPress: this.resetAgain },
+    { text: strings('Test.backHome'), onPress: async () => await this.endTest(false) },
+  ]);
+
+
+  resetAgain = () =>
+    this.setState({ loading: true }, async () => {
+      try {
+        await this.props.lockObj.setLockTime();
+        await this.props.lockObj.resetLock();
+      } catch (error) {
+        return this.setState({ loading: false }, () => setTimeout(this.resetFailed, 150));
+      }
+      this.setState({ loading: false }, async () => {
+        await this.endTest(true);
+        setTimeout(() => Toast.show(strings('Home.resetSuccess'), Toast.SHORT), 300);
+      });
+    });
+
+  endTest = async isReset => {
+    if (typeof isReset !== 'boolean') isReset = undefined;
+    try {
+      await this.props.endTest(isReset);
+    } catch (error) {
+      Toast.show(error.message, Toast.SHORT);
+    }
   };
 
   //TODO reorder steps
@@ -304,10 +315,9 @@ class TestModal extends PureComponent {
       <Modal visible={this.props.testState !== types.NOT_STARTED}>
         <ScrollView style={styles.container}>
           <View style={styles.back}>
-            <Button title={strings('Test.back')} onPress={this.endTest} disabled={!this.props.error} />
+            <Button title={strings('Test.back')} onPress={this.interruptTest} disabled={!this.props.error} />
           </View>
-          <Step0 />
-          <Step no="1" state={this.props.registerLockToDMSState} name={strings('Test.registerToDMS')} />
+          <Step1 />
           <Step no="2" state={this.props.initLockState} name={strings('Test.initialization')} />
           <Step no="3" state={this.props.testRTCState} name={strings('Test.RTC')} />
           <Step no="4" state={this.props.testHallState} name={strings('Test.hall')} />
@@ -332,6 +342,7 @@ class TestModal extends PureComponent {
             <Button title={strings('Test.done')} style={styles.button} onPress={this.endTest} disabled={this.props.testState !== types.SUCCESS}/>
           </View>
         </ScrollView>
+        <Spinner visible={this.state.loading}/>
         {this.state.isScanning && <Camera dismiss={this.cameraDismiss} callback={this.barcodeCallBack} />}
       </Modal>
     );

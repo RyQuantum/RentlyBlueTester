@@ -19,7 +19,6 @@ const slides = [
     title: '第二步 - 设置界面',
     text: '1. 登录成功后点击左上角"设置"，进入设置界面\n2. 根据测试需求设定评价标准\n*3. 当多人同时测试时设定RSSI阈值，防止互相干扰',
     image: require('../../assets/2.png'),
-    settingsButton: require('../../assets/settings-button.png'),
     backgroundColor: 'rgb(93, 89, 184)',
   },
   {

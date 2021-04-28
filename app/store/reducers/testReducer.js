@@ -9,9 +9,6 @@ import {
   TEST_BROADCAST_INFO_PENDING,
   TEST_BROADCAST_INFO_SUCCESS,
   TEST_BROADCAST_INFO_FAILED,
-  ADD_LOCK_TO_DMS_PENDING,
-  ADD_LOCK_TO_DMS_SUCCESS,
-  ADD_LOCK_TO_DMS_FAILED,
   INIT_LOCK_PENDING,
   INIT_LOCK_SUCCESS,
   INIT_LOCK_FAILED,
@@ -41,12 +38,12 @@ import {
   UPLOAD_SERIAL_N0_SUCCESS,
   UPLOAD_SERIAL_N0_FAILED,
   END_TEST,
+  CLEAR_TEST,
 } from '../actions/types';
 
 const defaultState = {
   lockObj: null,
   testState: NOT_STARTED,
-  registerLockToDMSState: NOT_STARTED,
   testBroadcastState: NOT_STARTED,
   broadcastInfo: {
     lockMac: '',
@@ -87,12 +84,6 @@ export default (state = defaultState, action) => {
       return { ...state, testBroadcastState: SUCCESS, error: null };
     case TEST_BROADCAST_INFO_FAILED:
       return { ...state, testBroadcastState: FAILED, error };
-    case ADD_LOCK_TO_DMS_PENDING:
-      return { ...state, registerLockToDMSState: PENDING };
-    case ADD_LOCK_TO_DMS_SUCCESS:
-      return { ...state, registerLockToDMSState: SUCCESS, error: null };
-    case ADD_LOCK_TO_DMS_FAILED:
-      return { ...state, registerLockToDMSState: FAILED, error };
     case INIT_LOCK_PENDING:
       return { ...state, initLockState: PENDING };
     case INIT_LOCK_SUCCESS:
@@ -149,11 +140,9 @@ export default (state = defaultState, action) => {
       return { ...state, uploadSerialNoState: SUCCESS, error: null };
     case UPLOAD_SERIAL_N0_FAILED:
       return { ...state, uploadSerialNoState: FAILED, error };
-    // case END_TEST_CONFIRM:
-    //   return defaultState;
-    // case END_TEST_REQUEST:
-    // case END_TEST_CANCEL:
     case END_TEST:
+      return state;
+    case CLEAR_TEST:
       return defaultState;
     default:
       return state;

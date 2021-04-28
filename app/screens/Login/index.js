@@ -124,12 +124,12 @@ class Login extends Component {
       return alert(strings('login.partnerEmptyMsg'));
 
     const isB2b = partnerId === partner_options[0].id;
-    const localServer = this.state.localServerIp;
+    const localServerIp = this.state.localServerIp;
     if (url === 'app2.keyless.rocks' && this.state.localServerIp === null) {
       return alert(strings('login.nonLocalServerMsg'));
     }
 
-    this.props.requestLogin({ url, username, password, batchNo, language, partnerId, isB2b, localServer });
+    this.props.requestLogin({ url, username, password, batchNo, language, partnerId, isB2b, localServerIp });
   };
 
   render() {
@@ -144,7 +144,7 @@ class Login extends Component {
           typeof error.response === 'object' &&
           typeof error.response.status === 'number' &&
           error.response.status.toString().startsWith('4')
-        ) ? strings('login.invalidCredentials') : strings('login.loginFailed')}
+        ) ? strings('login.invalidCredentials') : error.message}
       </Text>;
 
     return (

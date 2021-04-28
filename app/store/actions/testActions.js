@@ -23,19 +23,6 @@ export const verifyBroadcastInfoFailed = error => ({
   error,
 });
 
-export const registerLockToDMS = () => ({
-  type: types.ADD_LOCK_TO_DMS_PENDING,
-});
-
-export const registerLockToDMSSuccess = () => ({
-  type: types.ADD_LOCK_TO_DMS_SUCCESS,
-});
-
-export const registerLockToDMSFailed = error => ({
-  type: types.ADD_LOCK_TO_DMS_FAILED,
-  error,
-});
-
 export const initializeLock = () => ({
   type: types.INIT_LOCK_PENDING,
 });
@@ -164,14 +151,11 @@ export const testSuccess = () => ({
   type: types.TEST_SUCCESS,
 });
 
-export const endTest = () => ({
+export const endTest = payload => ({
   type: types.END_TEST,
+  payload,
 });
 
-// export const endTestConfirm = () => ({
-//   type: types.END_TEST_CONFIRM,
-// });
-//
-// export const endTestCancel = () => ({
-//   type: types.END_TEST_CANCEL,
-// });
+export const clearTest = () => ({
+  type: types.CLEAR_TEST,
+});
