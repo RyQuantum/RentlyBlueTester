@@ -31,6 +31,8 @@ const APIs = [
   { value: 'Red' },
   { value: 'Black' },
   { value: 'Green' },
+  { value: 'Sapphire' },
+  { value: 'White' },
   { value: 'QE' },
 ];
 if (__DEV__) {
@@ -237,7 +239,10 @@ class Login extends Component {
             </TouchableHighlight>
           </View>
         </ScrollView>
-        <Text>local server: {this.state.localServerIp || 'none'}</Text>
+        <View style={{ flexDirection: 'row' }}>
+          <Text testID="local-server" accessibilityLabel="local-server" style={{ padding: 10 }}>local server: {this.state.localServerIp || 'none'}</Text>
+          <Text testID="version" accessibilityLabel="version" style={{ padding: 10 }}>Version: {require('../../../package.json').version}</Text>
+        </View>
       </SafeAreaView>
     );
   }

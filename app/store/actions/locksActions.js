@@ -1,7 +1,7 @@
 import * as types from './types';
 
 export const foundLock = payload => ({
-  type: types.UPDATE_LOCK,
+  type: types.FIND_LOCK,
   payload,
 });
 

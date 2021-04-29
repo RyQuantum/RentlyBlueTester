@@ -6,7 +6,7 @@ export const LOGIN_FAILED = 'LOGIN_FAILED';
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 
 //locks
-export const UPDATE_LOCK = 'UPDATE_LOCK';
+export const FIND_LOCK = 'FIND_LOCK';
 export const UPDATE_LOCKS = 'UPDATE_LOCKS';
 export const CLEAR_LOCKS = 'CLEAR_LOCKS';
 

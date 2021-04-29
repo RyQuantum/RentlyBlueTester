@@ -33,7 +33,7 @@ import {
   gotOfflineCode,
   uploadSerialNoFailed,
   uploadSerialNoSuccess,
-  endTest,
+  // endTest,
   clearTest,
 } from '../actions/testActions';
 import API from '../../services/API';
@@ -46,7 +46,7 @@ import { SUCCESS } from '../actions/types';
 
 export function* verifyBroadcastInfoAsync({ payload: lockObj }) {
   const { lockMac, modelNum, hardwareVer, firmwareVer, rssi, battery } = lockObj;
-  const { locks:{ criteria } } = yield select();
+  const { criteria } = yield select(state => state.locks);
   yield put(verifyBroadcastInfo({ lockMac, modelNum, hardwareVer, firmwareVer, rssi, battery }));
 
   const errors = [];
@@ -57,8 +57,7 @@ export function* verifyBroadcastInfoAsync({ payload: lockObj }) {
   if (battery > 100 || battery < criteria.battery) errors.push(strings('Test.InvalidBattery'));
   if (errors.length === 0) {
     try {
-      const res = yield API.addLockToDMS(lockObj.lockMac, lockObj.deviceID);
-      if (!res.success) throw new Error('/addLockToDMS API failed: ' + JSON.stringify(res));
+      yield API.addLockToDMS(lockObj.lockMac, lockObj.deviceID);
       return yield put(verifyBroadcastInfoSuccess());
     } catch (error) {
       return yield put(verifyBroadcastInfoFailed(error));
@@ -88,7 +87,6 @@ export function* initializeLockAsync() {
   const { test: { lockObj }, auth: { isB2b } } = yield select();
   try {
     yield lockObj.addAdministrator();
-    //TODO test reset button
     if (!isB2b) yield lockObj.setResetButton(true);
     yield put(initializeLockSuccess());
   } catch (error) {
@@ -98,7 +96,7 @@ export function* initializeLockAsync() {
 
 export function* testRTCAsync() {
   yield put(testRTC());
-  const { test: { lockObj } } = yield select();
+  const { lockObj } = yield select(state => state.test);
   try {
     const promise = API.setDeviceTimezone(lockObj.lockMac, lockObj.deviceAuthToken);
     yield lockObj.setLockTime();
@@ -109,8 +107,7 @@ export function* testRTCAsync() {
     if (diff < 0 || diff > 5000) {
       throw new Error(strings('Test.RTCError') + (diff / 1000) + 's. ' + strings('Test.RTCRange'));
     }
-    const res = yield promise;
-    if (!res.success) throw new Error('/setDeviceTimezone API failed: ' + JSON.stringify(res));
+    yield promise;
     yield put(testRTCSuccess());
   } catch (error) {
     yield put(testRTCFailed(error));
@@ -119,7 +116,7 @@ export function* testRTCAsync() {
 
 export function* testHallAsync() {
   yield put(testHall());
-  const { test: { lockObj } } = yield select();
+  const { lockObj } = yield select(state => state.test);
   try {
     yield lockObj.unlock();
     yield put(testHallSuccess());
@@ -130,7 +127,7 @@ export function* testHallAsync() {
 
 export function* testDoorSensorAsync() {
   yield put(testDoorSensor());
-  const { test: { lockObj } } = yield select();
+  const { lockObj } = yield select(state => state.test);
   try {
     const { doorSensorEnabled } = yield lockObj.isDoorSensorEnabled();
     if (!doorSensorEnabled) throw new Error(strings('Test.doorSensorDisabled'));
@@ -142,7 +139,7 @@ export function* testDoorSensorAsync() {
 
 export function* testTouchKeyAsync() {
   yield put(testTouchKey());
-  const { test: { lockObj } } = yield select();
+  const { lockObj } = yield select(state => state.test);
   try {
     // const { keys } = yield lockObj.sendFactoryTestingCommand(1);
     // if (!keys.every(key => key === true)) {
@@ -158,7 +155,7 @@ export function* testTouchKeyAsync() {
 
 export function* testNfcChipAsync() {
   yield put(testNfcChip());
-  const { test: { lockObj } } = yield select();
+  const { lockObj } = yield select(state => state.test);
   try {
     // let { fobNumber } = yield lockObj.sendFactoryTestingCommand(2);
     // fobNumber = parseInt(fobNumber, 16).toString().padStart(10, '0');
@@ -176,7 +173,7 @@ export function* testNfcChipAsync() {
 
 export function* testAutoLockAsync() {
   yield put(testAutoLock());
-  const { test: { lockObj } } = yield select();
+  const { lockObj } = yield select(state => state.test);
   try {
     yield lockObj.setAutoLockTime(1);
     yield put(testAutoLockSuccess());
@@ -195,10 +192,6 @@ export function* testOfflineCodeAsync() {
     const req1 = API.createAutoCode(lockMac, deviceAuthToken);
     const req2 = API.updateDeviceBySuperAdmin(params);
     const res = yield Promise.all([req1, req2]);
-    // if (!res[0].success) throw res[0];
-    if (!res[0].success) throw new Error('/createAutoCode API failed: ' + JSON.stringify(res[0]));
-    // if (!res[1].success) throw res[1];
-    if (!res[1].success) throw new Error('/updateDeviceBySuperAdmin API failed: ' + JSON.stringify(res[1]));
     yield put(gotOfflineCode(res[0].code));
   } catch (error) {
     yield put(testOfflineCodeFailed(error));
@@ -228,10 +221,13 @@ export function* uploadSerialNoAsync({ payload: serialNoStr }) {
       throw new Error(serialNoStr + ' - ' + strings('Test.invalidSN'));
     }
     const params = { deviceMac: lockMac, batchNum: batchNo, serialNo };
-    const res = yield API.updateDeviceBySuperAdmin(params);
-    if (!res.success) {
-      if (res.errorCode === 1201) throw new Error(serialNoStr + ' - ' + strings('Test.duplicateSN'));
-      throw new Error(serialNoStr + ' - ' + '/updateDeviceBySuperAdmin API failed: ' + JSON.stringify(res));
+    try {
+      yield API.updateDeviceBySuperAdmin(params);
+    } catch (error) {
+      if (error.message.slice(-5, -1) === '1201') {
+        throw new Error(strings('Test.duplicateSN'));
+      }
+      throw error;
     }
     if (localServerIp) {
       yield postToLocalServer(localServerIp, serialNoStr).catch(error => {
@@ -246,11 +242,9 @@ export function* uploadSerialNoAsync({ payload: serialNoStr }) {
 }
 //TODO add all incomplete cases
 export function* uploadTestRecordAsync({ payload: isReset }) {
-  // yield put(uploadTestRecord());
   const {
     lockObj: { lockMac },
     testBroadcastState,
-    // registerLockToDMSState,
     initLockState,
     testRTCState,
     testHallState,
@@ -263,10 +257,8 @@ export function* uploadTestRecordAsync({ payload: isReset }) {
     serialNo,
     error,
   } = yield select(state => state.test);
-  // const test = yield select(state => state.test);
 
   let errorCode = (testBroadcastState !== SUCCESS) ? 1 :
-    // (registerLockToDMSState !== SUCCESS) ? 2 :
     (initLockState !== SUCCESS) ? 2 :
       (testRTCState !== SUCCESS) ? 3 :
         (testHallState !== SUCCESS) ? 4 :
@@ -282,7 +274,6 @@ export function* uploadTestRecordAsync({ payload: isReset }) {
     const errorInfo = [
       'Success',
       'Verify broadcast failed',
-      // 'Register to DMS failed',
       'Init failed',
       'Test RTC failed',
       'Test hall failed',

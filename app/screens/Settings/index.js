@@ -54,7 +54,6 @@ const FobNumberInput = ({ callback, value }) => {
       placeholder={strings('Settings.fobNumber')}
       value={fobNumber}
       leftIcon={{ type: 'font-awesome', name: 'credit-card' }}
-      style={styles} //TODO fix style
       errorMessage={errorMessage}
       onChangeText={text => {
         setFobNumber(text);

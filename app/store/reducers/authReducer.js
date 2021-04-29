@@ -8,7 +8,7 @@ const defaultState = {
   password: '',
   language: 'en',
   partnerId: 0,
-  isB2b: false,
+  isB2b: true,
   batchNo: '',
   isLoggedIn: false,
   accessToken: '',

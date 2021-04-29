@@ -33,6 +33,14 @@ instance.interceptors.request.use(async (config) => {
   return newConfig;
 });
 
-//TODO responseError
+instance.interceptors.response.use(response => {
+  console.log(`res: ${response.config.url} ${JSON.stringify(response.data)}`);
+  const { data = {} } = response;
+  const { success = true, message, errorCode } = data;
+  if (!success) {
+    return Promise.reject(new Error(`${response.config.url} -> ${message}${errorCode ? (`, [errorCode: ${errorCode}]`) : ''}`));
+  }
+  return response;
+});
 
 export default instance;

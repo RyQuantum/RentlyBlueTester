@@ -1,9 +1,9 @@
 import { put, select } from 'redux-saga/effects';
 
-import { getMaximumSerialNoFailed, getMaximumSerialNoSuccess, updateLocks } from "../actions/locksActions";
-import API from "../../services/API";
+import { getMaximumSerialNoFailed, getMaximumSerialNoSuccess, updateLocks } from '../actions/locksActions';
+import API from '../../services/API';
 
-export function* updateLockAsync({ payload }) {
+export function* updateLocksAsync({ payload }) {
   let { locks: { touchedLocks, settingLocks, nonSettingLocks, libraryObj } } = yield select();
   const { lockMac, touch, settingMode, battery, rssi } = payload;
   const index = touchedLocks.findIndex(lock => lock.lockMac === lockMac);
@@ -32,4 +32,4 @@ export function* getMaximumSerialNoAsync({ payload }) {
   } catch (error) {
     yield put(getMaximumSerialNoFailed(error));
   }
-};
+}

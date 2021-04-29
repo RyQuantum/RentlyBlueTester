@@ -22,7 +22,7 @@ export const alertIOS = (...args: any[]) => {
   });
 };
 
-export const alertIOSwithParams = (...args: any[]) => {
+export const Alert_alertIOS = (...args: any[]) => {
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       Alert.alert(...args);

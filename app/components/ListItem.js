@@ -20,7 +20,7 @@ import { requestTest } from '../store/actions/testActions';
 // import { clearLocks } from '../redux/locks';
 import { strings } from '../utils/i18n';
 import API from '../services/API';
-import { alertIOS, alertIOSwithParams } from '../utils';
+import { alertIOS, Alert_alertIOS } from '../utils';
 // import { startTest1 } from '../redux/test1';
 // import { startTest2 } from '../redux/test2';
 
@@ -87,7 +87,7 @@ class ListItem extends PureComponent {
       const errorMessage =
         typeof error === 'object' ? error.message :
           typeof error === 'string' ? error : 'unknown';
-      this.props.onChangeLoading(false, () => alertIOSwithParams(strings('Home.resetFailed'), 'Error: ' + errorMessage));
+      this.props.onChangeLoading(false, () => Alert_alertIOS(strings('Home.resetFailed'), 'Error: ' + errorMessage));
     // } finally {
     //   this.props.clearLocks(lockObj.lockMac);
     }
@@ -180,7 +180,7 @@ class ListItem extends PureComponent {
             <Text style={styles.text}>{'2.  '}</Text>
             <Text style={styles.flexText}>{strings('Home.turnThumbturn')}</Text>
             <Image
-              source={require('../assets/unlock.png')}
+              source={require('../assets/lock.png')}
               style={styles.image}
               resizeMode='contain'/>
           </View>

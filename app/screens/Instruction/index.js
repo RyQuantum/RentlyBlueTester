@@ -1,6 +1,6 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -31,7 +31,7 @@ const slides = [
   {
     key: 'four',
     title: '第四步 - 测试进行',
-    text: '1. 共11个测试项目\n2. 请根据提示完成对应操作\n3. 如有错误按照提示尝试修复，无法修复则汇报\n4. 所有都通过点击完成，继续下一把锁',
+    text: '1. 共10个测试项目\n2. 请根据提示完成对应操作\n3. 如有错误按照提示尝试修复，无法修复则汇报\n4. 所有都通过点击"完成"，继续下一把锁',
     image: require('../../assets/4.png'),
     backgroundColor: 'rgb(98, 177, 91)',
   },

@@ -23,6 +23,7 @@ import {
   endTest,
 } from '../../store/actions/testActions';
 import { strings } from '../../utils/i18n';
+import { Alert_alertIOS } from '../../utils';
 
 const Step1 = () => {
   const {
@@ -207,7 +208,6 @@ const RetryButton = ({ no }) => {
       retry = () => dispatch(testNfcChipSuccess(fobNumber));
       break;
     case '9':
-      //TODO implement and test error case of offline code
       retry = () => dispatch(testAutoLockSuccess());
       break;
     default:
@@ -279,7 +279,7 @@ class TestModal extends PureComponent {
     ]);
   };
 
-  resetFailed = async () => Alert.alert(strings('Test.resetFailed'), strings('Test.resetFailedInfo'), [
+  resetFailed = async () => Alert_alertIOS(strings('Test.resetFailed'), strings('Test.resetFailedInfo'), [
     { text: strings('Test.cancel'), onPress: () => {} },
     { text: strings('Home.reset'), onPress: this.resetAgain },
     { text: strings('Test.backHome'), onPress: async () => await this.endTest(false) },
@@ -292,11 +292,14 @@ class TestModal extends PureComponent {
         await this.props.lockObj.setLockTime();
         await this.props.lockObj.resetLock();
       } catch (error) {
-        return this.setState({ loading: false }, () => setTimeout(this.resetFailed, 150));
+        return this.setState({ loading: false }, this.resetFailed);
       }
       this.setState({ loading: false }, async () => {
         await this.endTest(true);
-        setTimeout(() => Toast.show(strings('Home.resetSuccess'), Toast.SHORT), 300);
+        Toast.show(strings('Home.resetSuccess'), Toast.SHORT, [
+          'RCTModalHostViewController',
+          'UIAlertController',
+        ]);
       });
     });
 
@@ -309,7 +312,6 @@ class TestModal extends PureComponent {
     }
   };
 
-  //TODO reorder steps
   render() {
     return (
       <Modal visible={this.props.testState !== types.NOT_STARTED}>

@@ -8,5 +8,7 @@ export const MapUrl = [
   { name: 'Green', url: 'keyless.rentlygreen.com' },
   { name: 'QE', url: 'keyless.rentlyqe.com' },
   { name: 'Certify', url: 'keyless.rentlycertify.com' },
+  { name: 'Sapphire', url: 'keyless.rentlysapphire.com' },
+  { name: 'White', url: 'keyless.rentlywhite.com' },
   { name: '192.168.2.8:3000', url: '192.168.2.8:3000' },
 ];

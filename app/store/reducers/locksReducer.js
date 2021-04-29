@@ -1,5 +1,5 @@
 import {
-  UPDATE_LOCK,
+  FIND_LOCK,
   CLEAR_LOCKS,
   SET_INDEX,
   SET_ENABLED,
@@ -17,15 +17,17 @@ import {
 } from '../../services/BleLibrary/lib';
 import API from '../../services/API';
 
-const libraryObj = new OaksBleLockLibrary(API.getDeviceToken, new RNBlePlugin(), new PersistencePlugin());
+const libraryObj = new OaksBleLockLibrary(
+  API.getDeviceToken,
+  new RNBlePlugin(),
+  new PersistencePlugin(),
+);
 libraryObj.timezoneString = 'Pacific Time (US & Canada)';
 const defaultState = {
   touchedLocks: [],
   settingLocks: [],
   nonSettingLocks: [],
-  codes: {}, //TODO
   libraryObj,
-  // isDevelopmentMode: false,
   criteria: {
     model: '',
     hardwareVer: '',
@@ -44,7 +46,7 @@ const defaultState = {
 export default (state = defaultState, action) => {
   const { type, payload, error } = action;
   switch (type) {
-    case UPDATE_LOCK:
+    case FIND_LOCK:
       return state;
 
     case UPDATE_LOCKS:
