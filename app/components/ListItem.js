@@ -20,7 +20,7 @@ import { requestTest } from '../store/actions/testActions';
 // import { clearLocks } from '../redux/locks';
 import { strings } from '../utils/i18n';
 import API from '../services/API';
-import { alertIOS, Alert_alertIOS } from '../utils';
+import { Alert_alertIOS } from '../utils';
 // import { startTest1 } from '../redux/test1';
 // import { startTest2 } from '../redux/test2';
 
@@ -82,7 +82,7 @@ class ListItem extends PureComponent {
       if (!lockObj.deviceAuthToken) await lockObj.refreshToken();
       await lockObj.setLockTime();
       await lockObj.resetLock();
-      this.props.onChangeLoading(false, () => alertIOS(strings('Home.resetSuccess')));
+      this.props.onChangeLoading(false, () => Alert_alertIOS(strings('Home.resetSuccess')));
     } catch (error) {
       const errorMessage =
         typeof error === 'object' ? error.message :

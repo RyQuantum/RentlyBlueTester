@@ -2,7 +2,7 @@ import { put, select } from 'redux-saga/effects';
 
 import { getMaximumSerialNoFailed, getMaximumSerialNoSuccess, updateLocks } from '../actions/locksActions';
 import API from '../../services/API';
-
+//TODO add timeout of no battery lock
 export function* updateLocksAsync({ payload }) {
   let { locks: { touchedLocks, settingLocks, nonSettingLocks, libraryObj } } = yield select();
   const { lockMac, touch, settingMode, battery, rssi } = payload;

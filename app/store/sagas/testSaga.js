@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { put, select } from 'redux-saga/effects';
 
 import {
@@ -37,7 +36,7 @@ import {
   clearTest,
 } from '../actions/testActions';
 import API from '../../services/API';
-import { delay, parseTimeStamp } from '../../utils';
+import { delay, parseTimeStamp, postToLocalServer } from '../../utils';
 import { strings } from '../../utils/i18n';
 import { SUCCESS } from '../actions/types';
 
@@ -46,9 +45,10 @@ import { SUCCESS } from '../actions/types';
 
 export function* verifyBroadcastInfoAsync({ payload: lockObj }) {
   const { lockMac, modelNum, hardwareVer, firmwareVer, rssi, battery } = lockObj;
-  const { criteria } = yield select(state => state.locks);
+  const { criteria, libraryObj } = yield select(state => state.locks);
   yield put(verifyBroadcastInfo({ lockMac, modelNum, hardwareVer, firmwareVer, rssi, battery }));
-
+  const blePlugin = libraryObj._lockController._blePlugin;
+  blePlugin.connectToDevice(blePlugin.getDeviceId(lockMac));
   const errors = [];
   if (criteria.model && modelNum.toString() !== criteria.model) errors.push(strings('Test.InvalidModel'));
   if (criteria.hardwareVer && hardwareVer.toString() !== criteria.hardwareVer) errors.push(strings('Test.InvalidHardwareVer'));
@@ -141,12 +141,11 @@ export function* testTouchKeyAsync() {
   yield put(testTouchKey());
   const { lockObj } = yield select(state => state.test);
   try {
-    // const { keys } = yield lockObj.sendFactoryTestingCommand(1);
-    // if (!keys.every(key => key === true)) {
-    //   const arr = keys.map((key, i) => key || i + 1).filter(key => key !== true);
-    //   throw new Error(`[${arr.toString()}] are not been touched`);
-    // }
-    yield lockObj.getLockTime();
+    const { keys } = yield lockObj.sendFactoryTestingCommand(1);
+    if (!keys.every(key => key === true)) {
+      const arr = keys.map((key, i) => key || i + 1).filter(key => key !== true);
+      throw new Error(`[${arr.toString()}] are not been touched`);
+    }
     yield put(testTouchKeySuccess());
   } catch (error) {
     yield put(testTouchKeyFailed(error));
@@ -155,16 +154,13 @@ export function* testTouchKeyAsync() {
 
 export function* testNfcChipAsync() {
   yield put(testNfcChip());
-  const { lockObj } = yield select(state => state.test);
+  const { test: { lockObj }, locks: { criteria } } = yield select();
   try {
-    // let { fobNumber } = yield lockObj.sendFactoryTestingCommand(2);
-    // fobNumber = parseInt(fobNumber, 16).toString().padStart(10, '0');
-    // if (!keys.every(key => key === true)) {
-    //   const arr = keys.map((key, i) => key || i + 1).filter(key => key !== true);
-    //   throw new Error(`[${arr.toString()}] are not been touched`);
-    // }
-    yield lockObj.getLockTime();
-    const fobNumber = '1234567890';
+    let { fobNumber } = yield lockObj.sendFactoryTestingCommand(2);
+    fobNumber = parseInt(fobNumber, 16).toString().padStart(10, '0');
+    if (criteria.fobNumber && fobNumber !== criteria.fobNumber) {
+      throw new Error(`FobNumber:${fobNumber} is not the preset one(${criteria.fobNumber})`);
+    }
     yield put(testNfcChipSuccess(fobNumber));
   } catch (error) {
     yield put(testNfcChipFailed(error));
@@ -175,7 +171,8 @@ export function* testAutoLockAsync() {
   yield put(testAutoLock());
   const { lockObj } = yield select(state => state.test);
   try {
-    yield lockObj.setAutoLockTime(1);
+    yield lockObj.sendFactoryTestingCommand(3);
+    yield lockObj.sendFactoryTestingCommand(0);
     yield put(testAutoLockSuccess());
   } catch (error) {
     yield put(testAutoLockFailed(error));
@@ -196,21 +193,6 @@ export function* testOfflineCodeAsync() {
   } catch (error) {
     yield put(testOfflineCodeFailed(error));
   }
-}
-
-const postToLocalServer = async (ip, serial_number) => {
-  let success = false;
-  const postRequest = async timeout => {
-    await axios.post('http://' + ip + ':6379/lock', { serial_number }, { timeout });
-    success = true;
-  }
-  const promise1 = delay(0).then(async () => await postRequest(11000));
-  const promise2 = delay(1000).then(async () => success || await postRequest(10000));
-  const promise3 = delay(2000).then(async () => success || await postRequest(9000));
-  const promise4 = delay(3000).then(async () => success || await postRequest(8000));
-  const promise5 = delay(4000).then(async () => success || await postRequest(7000));
-  const timeout = delay(10000).then(() => {throw new Error(strings('Test.uploadLocalServerTimeout'))});
-  await Promise.race([promise1, promise2, promise3, promise4, promise5, timeout]);
 }
 
 export function* uploadSerialNoAsync({ payload: serialNoStr }) {

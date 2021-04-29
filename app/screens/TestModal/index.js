@@ -121,7 +121,8 @@ const Step7 = () => {
       </View>
       {testNfcChipState === types.PENDING && <Text style={styles.instruction}>{strings('Test.nfcChipInstruction')}</Text>}
       {testNfcChipState === types.SUCCESS && <Text style={styles.result}>{strings('Test.fobNumber')}: {fobNumber}. {strings('Test.pass')}</Text>}
-      {testNfcChipState === types.FAILED && <Text style={styles.error}>{strings('Test.fobNumber')}: {fobNumber}. {strings('Test.wrongFobNumber')}</Text>}
+      {/*{testNfcChipState === types.FAILED && <Text style={styles.error}>{strings('Test.fobNumber')}: {fobNumber}. {strings('Test.wrongFobNumber')}</Text>}*/}
+      {testNfcChipState === types.FAILED && <Text style={styles.error}>{error.message}</Text>}
       {testNfcChipState === types.FAILED && <RetryInstruction no="7" />}
     </View>
   );

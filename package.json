@@ -1,5 +1,5 @@
 {
-  "name": "rentlybluetester",
+  "name": "RentlyBlueTester",
   "version": "1.0.1",
   "private": true,
   "scripts": {
@@ -20,7 +20,7 @@
     "@react-navigation/stack": "^6.0.0-next.9",
     "@types/react": "^17",
     "axios": "^0.21.1",
-    "blelocklibrary": "git+https://github.com/rently-com/OaksBleLockLibrary#develop",
+    "blelocklibrary": "git+https://github.com/rently-com/OaksBleLockLibrary#DLI-1851_FactoryTestingCommand",
     "buffer": "^6.0.3",
     "react": "17.0.1",
     "react-native": "0.64.0",

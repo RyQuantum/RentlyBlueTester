@@ -10,7 +10,7 @@ const slides = [
   {
     key: 'one',
     title: '第一步 - 用户登录',
-    text: '1. 正确填写用户信息 \n2. 电脑打开本地服务器，local server显示IP地址\n3. 登录',
+    text: '1. 请正确填写账户信息和生产批次 \n2. 电脑打开本地服务器，local server显示其IP地址\n3. 点击"登录"',
     image: require('../../assets/1.png'),
     backgroundColor: '#59b2ab',
   },

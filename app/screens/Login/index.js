@@ -76,7 +76,7 @@ class Login extends Component {
     this.zeroconf.on('resolved', service => {
       console.log('[Resolve] host:', service.addresses[0]);
       this.setState({
-        localServerIp: service.host === 'ryan-MBA.local.' ? service.addresses[0] : this.state.localServerIp
+        localServerIp: service.name === "Ryan's MacBook Air" ? service.addresses[0] : this.state.localServerIp
       })
     });
     this.zeroconf.on('error', err => {
@@ -239,9 +239,10 @@ class Login extends Component {
             </TouchableHighlight>
           </View>
         </ScrollView>
-        <View style={{ flexDirection: 'row' }}>
-          <Text testID="local-server" accessibilityLabel="local-server" style={{ padding: 10 }}>local server: {this.state.localServerIp || 'none'}</Text>
-          <Text testID="version" accessibilityLabel="version" style={{ padding: 10 }}>Version: {require('../../../package.json').version}</Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text testID="local-server" accessibilityLabel="local-server" style={{ flex: 1 }}>local server: {this.state.localServerIp || 'none'}</Text>
+          <Text testID="version" accessibilityLabel="version">v{require('../../../package.json').version}</Text>
+          <View style={{ flex: 1 }} />
         </View>
       </SafeAreaView>
     );
