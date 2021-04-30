@@ -48,14 +48,14 @@ class Scanner extends Component {
     this.props.libraryObj.on('foundDevice', (device) => {
       this.props.foundLock(device);
     });
-    this.props.libraryObj.startScan(5);
+    this.props.libraryObj.startScan(6);
     const intervalID = setInterval(() => {
       try {
-        this.props.libraryObj.startScan(5);
+        this.props.libraryObj.startScan(6);
       } catch (err) {
         alert(err);
       }
-    }, 6000);
+    }, 7000);
     this.setState({ intervalID })
   }
 

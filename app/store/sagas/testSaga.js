@@ -47,8 +47,8 @@ export function* verifyBroadcastInfoAsync({ payload: lockObj }) {
   const { lockMac, modelNum, hardwareVer, firmwareVer, rssi, battery } = lockObj;
   const { criteria, libraryObj } = yield select(state => state.locks);
   yield put(verifyBroadcastInfo({ lockMac, modelNum, hardwareVer, firmwareVer, rssi, battery }));
-  const blePlugin = libraryObj._lockController._blePlugin;
-  blePlugin.connectToDevice(blePlugin.getDeviceId(lockMac));
+  // const blePlugin = libraryObj._lockController._blePlugin;
+  // blePlugin.connectToDevice(blePlugin.getDeviceId(lockMac));
   const errors = [];
   if (criteria.model && modelNum.toString() !== criteria.model) errors.push(strings('Test.InvalidModel'));
   if (criteria.hardwareVer && hardwareVer.toString() !== criteria.hardwareVer) errors.push(strings('Test.InvalidHardwareVer'));
@@ -118,6 +118,7 @@ export function* testHallAsync() {
   yield put(testHall());
   const { lockObj } = yield select(state => state.test);
   try {
+    yield lockObj.lock();
     yield lockObj.unlock();
     yield put(testHallSuccess());
   } catch (error) {
@@ -144,7 +145,13 @@ export function* testTouchKeyAsync() {
     const { keys } = yield lockObj.sendFactoryTestingCommand(1);
     if (!keys.every(key => key === true)) {
       const arr = keys.map((key, i) => key || i + 1).filter(key => key !== true);
-      throw new Error(`[${arr.toString()}] are not been touched`);
+      const res = arr.map(key => {
+        if (key === 10) return '🔒';
+        if (key === 11) return 0;
+        if (key === 12) return '🔓';
+        return key;
+      });
+      throw new Error(`${strings('Test.keys')} [${res.toString()}] ${strings('Test.notBeenTouched')}`);
     }
     yield put(testTouchKeySuccess());
   } catch (error) {
@@ -159,7 +166,7 @@ export function* testNfcChipAsync() {
     let { fobNumber } = yield lockObj.sendFactoryTestingCommand(2);
     fobNumber = parseInt(fobNumber, 16).toString().padStart(10, '0');
     if (criteria.fobNumber && fobNumber !== criteria.fobNumber) {
-      throw new Error(`FobNumber:${fobNumber} is not the preset one(${criteria.fobNumber})`);
+      throw new Error(`${strings('Test.fobNumber')}:${fobNumber}${strings('Test.wrongFobNumber')}(${criteria.fobNumber})`);
     }
     yield put(testNfcChipSuccess(fobNumber));
   } catch (error) {
@@ -172,6 +179,17 @@ export function* testAutoLockAsync() {
   const { lockObj } = yield select(state => state.test);
   try {
     yield lockObj.sendFactoryTestingCommand(3);
+  } catch (error) {
+    if (![179, 180, 181].includes(error.code))
+      return yield put(testAutoLockFailed(error));
+    try {
+      yield lockObj.unlock();
+      yield lockObj.sendFactoryTestingCommand(3);
+    } catch (err) {
+      return yield put(testAutoLockFailed(err));
+    }
+  }
+  try {
     yield lockObj.sendFactoryTestingCommand(0);
     yield put(testAutoLockSuccess());
   } catch (error) {
@@ -271,7 +289,6 @@ export function* uploadTestRecordAsync({ payload: isReset }) {
   }
   yield put(clearTest());
   try {
-    console.log('upload testing record', lockMac, params);
     yield API.lockTestRecord(lockMac, params);
   } catch (error) {
     console.log('error:', error);

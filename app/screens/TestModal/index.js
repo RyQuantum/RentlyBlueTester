@@ -42,7 +42,7 @@ const Step1 = () => {
     <View>
       <View style={styles.title}>
         <Text style={styles.text}>1. {strings('Test.verifyBroadcast')}</Text>
-        {testBroadcastState === types.PENDING && <ActivityIndicator />}
+        {testBroadcastState === types.PENDING && <ActivityIndicator color="grey"/>}
         {testBroadcastState === types.SUCCESS && <Icon name="check" type="entypo" color="green" size={28} />}
         {testBroadcastState === types.FAILED && <Icon name="cross" type="entypo" color="red" size={28} />}
         {testBroadcastState === types.FAILED && <RetryButton no="1" />}
@@ -75,7 +75,7 @@ const Step = ({ state, name, no }) => {
     <View>
       <View style={styles.title}>
         <Text style={styles.text}>{no}. {name}</Text>
-        {state === types.PENDING && <ActivityIndicator />}
+        {state === types.PENDING && <ActivityIndicator color="grey"/>}
         {state === types.SUCCESS && <Icon name="check" type="entypo" color="green" size={28} />}
         {state === types.FAILED && <Icon name="cross" type="entypo" color="red" size={28} />}
         {state === types.FAILED && <RetryButton no={no} />}
@@ -94,7 +94,7 @@ const Step6 = () => {
     <View>
       <View style={styles.title}>
         <Text style={styles.text}>6. {strings('Test.touchKey')}</Text>
-        {testTouchKeyState === types.PENDING && <ActivityIndicator />}
+        {testTouchKeyState === types.PENDING && <ActivityIndicator color="grey"/>}
         {testTouchKeyState === types.SUCCESS && <Icon name="check" type="entypo" color="green" size={28} />}
         {testTouchKeyState === types.FAILED && <Icon name="cross" type="entypo" color="red" size={28} />}
         {testTouchKeyState === types.FAILED && <RetryButton no="6" />}
@@ -114,10 +114,10 @@ const Step7 = () => {
     <View>
       <View style={styles.title}>
         <Text style={styles.text}>7. {strings('Test.nfcChip')}</Text>
-        {testNfcChipState === types.PENDING && <ActivityIndicator />}
+        {testNfcChipState === types.PENDING && <ActivityIndicator color="grey"/>}
         {testNfcChipState === types.SUCCESS && <Icon name="check" type="entypo" color="green" size={28} />}
         {testNfcChipState === types.FAILED && <Icon name="cross" type="entypo" color="red" size={28} />}
-        {testNfcChipState === types.FAILED && <RetryButton no={7} />}
+        {testNfcChipState === types.FAILED && <RetryButton no="7" />}
       </View>
       {testNfcChipState === types.PENDING && <Text style={styles.instruction}>{strings('Test.nfcChipInstruction')}</Text>}
       {testNfcChipState === types.SUCCESS && <Text style={styles.result}>{strings('Test.fobNumber')}: {fobNumber}. {strings('Test.pass')}</Text>}
@@ -136,14 +136,14 @@ const Step9 = () => {
     <View>
       <View style={styles.title}>
         <Text style={styles.text}>9. {strings('Test.offlineCode')}</Text>
-        {testOfflineCodeState === types.PENDING && <ActivityIndicator />}
+        {testOfflineCodeState === types.PENDING && <ActivityIndicator color="grey"/>}
         {testOfflineCodeState === types.SUCCESS && <Icon name="check" type="entypo" color="green" size={28} />}
         {testOfflineCodeState === types.FAILED && <Icon name="cross" type="entypo" color="red" size={28} />}
         {testOfflineCodeState === types.FAILED && <RetryButton no="9" />}
       </View>
       {code !== '' && <Text style={styles.result}>{strings('Test.oneTimeCode')}: {code}, {strings('Test.offlineCodeInstruction')}</Text>}
       {code !== '' && testOfflineCodeState !== types.SUCCESS && (
-        <View style={{ alignSelf: 'start'}}>
+        <View style={{ alignSelf: 'flex-start' }}>
           <Button
             title={strings('Test.valid')}
             onPress={() => dispatch(testOfflineCodeSuccess())}
@@ -163,7 +163,7 @@ const Step10 = ({ onPressScan }) => {
       <View style={styles.title}>
         <Text style={styles.text}>10. {strings('Test.upload')} {strings('Test.serialNo')}</Text>
         <Button title={strings('Test.scan')} onPress={onPressScan} disabled={uploadSerialNoState === types.SUCCESS} />
-        {uploadSerialNoState === types.PENDING && <ActivityIndicator />}
+        {uploadSerialNoState === types.PENDING && <ActivityIndicator color="grey"/>}
         {uploadSerialNoState === types.SUCCESS && <Icon name="check" type="entypo" color="green" size={28} />}
       </View>
       {uploadSerialNoState === types.PENDING && <Text style={styles.result}>{strings('Test.upload')}: {serialNo}...</Text>}

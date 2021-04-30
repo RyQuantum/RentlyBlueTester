@@ -76,8 +76,8 @@ class Login extends Component {
     this.zeroconf.on('resolved', service => {
       console.log('[Resolve] host:', service.addresses[0]);
       this.setState({
-        localServerIp: service.name === "Ryan's MacBook Air" ? service.addresses[0] : this.state.localServerIp
-      })
+        localServerIp: service.name === "Ryan's MacBook Air" ? service.addresses[0] : this.state.localServerIp,
+      });
     });
     this.zeroconf.on('error', err => {
       console.log('[Error]:', err);

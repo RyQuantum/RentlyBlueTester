@@ -1,6 +1,6 @@
 import {
   FIND_LOCK,
-  CLEAR_LOCKS,
+  // CLEAR_LOCKS,\
   SET_INDEX,
   SET_ENABLED,
   SET_THRESHOLD,
@@ -52,8 +52,8 @@ export default (state = defaultState, action) => {
     case UPDATE_LOCKS:
       return { ...state, ...payload };
 
-    case CLEAR_LOCKS:
-      return { ...state, touchedLocks: [], settingLocks: [], nonSettingLocks: [] };
+    // case CLEAR_LOCKS:
+    //   return { ...state, touchedLocks: [], settingLocks: [], nonSettingLocks: [] };
 
     case UPDATE_CRITERIA:
       return { ...state, criteria: payload };

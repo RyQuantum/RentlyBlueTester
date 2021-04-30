@@ -8,7 +8,7 @@ export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 //locks
 export const FIND_LOCK = 'FIND_LOCK';
 export const UPDATE_LOCKS = 'UPDATE_LOCKS';
-export const CLEAR_LOCKS = 'CLEAR_LOCKS';
+// export const CLEAR_LOCKS = 'CLEAR_LOCKS';
 
 export const UPDATE_CRITERIA = 'UPDATE_CRITERIA';
 
