@@ -88,7 +88,7 @@ class BlePlugin extends BluetoothPluginInterface {
         this.activeDevices = new Map();
         const subscription = this.manager.onStateChange((state) => {
             if (state === 'PoweredOn') {
-                let ScanOptions = { scanMode: ScanMode.LowLatency }
+                let ScanOptions = { scanMode: ScanMode.LowLatency, allowDuplicates: true };
                 this.manager.startDeviceScan(
                   [this._lockServiceUUIDs],
                   ScanOptions,
@@ -116,11 +116,11 @@ class BlePlugin extends BluetoothPluginInterface {
                           };
 
                           // When device already exists in found list and settingMode & touch parameters are not changed then dont emit lock.
-                          let activeDevice = this.activeDevices.get(deviceUUID);
-                          if (activeDevice && activeDevice.info.settingMode === manufacturerData.settingMode && activeDevice.info.touch === manufacturerData.touch) {
-
-                              return;
-                          }
+                          // let activeDevice = this.activeDevices.get(deviceUUID);
+                          // if (activeDevice && activeDevice.info.settingMode === manufacturerData.settingMode && activeDevice.info.touch === manufacturerData.touch) {
+                          //
+                          //     return;
+                          // }
 
                           // Save mapping between lockmac and deviceUUID
                           this.deviceIdMapping.set(lockMac, deviceUUID);
