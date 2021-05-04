@@ -225,7 +225,7 @@ export function* uploadSerialNoAsync({ payload: serialNoStr }) {
       yield API.updateDeviceBySuperAdmin(params);
     } catch (error) {
       if (error.message.slice(-5, -1) === '1201') {
-        throw new Error(strings('Test.duplicateSN'));
+        throw new Error(serialNo + ' - ' + strings('Test.duplicateSN'));
       }
       throw error;
     }
